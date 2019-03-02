@@ -1,0 +1,27 @@
+//
+// Created by revetoon on 3/2/19.
+//
+
+#include "Node.hh"
+
+Node::Node() = default;
+
+Node::Node(const Point3D &pt, Node *parent) : pt(std::move(pt)), parent(parent) {}
+
+Node::Node(Node *parent) : parent(parent) {}
+
+Point3D &Node::getPt() {
+    return pt;
+}
+
+std::vector<Node *> &Node::getChildren() {
+    return children;
+}
+
+Node *Node::getParent() const {
+    return parent;
+}
+
+void Node::setParent(Node *parent) {
+    Node::parent = parent;
+}
