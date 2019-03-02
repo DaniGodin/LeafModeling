@@ -26,7 +26,7 @@ The venation pattern is formed by the particle trajectories. The thickness of a 
 by the number of merged particules following this trajectory.
 
 Diagram of a particle movement:
-![alt text](https://github.com/JuggerDan/LeafModeling/blob/master/AlgoLeaf/Documentation/Pictures/attraction.png "Attraction") 
+![alt text](https://github.com/JuggerDan/LeafModeling/blob/master/AlgoLeaf/Documentation/Pictures/Attraction.png "Attraction") 
 
 
 
