@@ -1,8 +1,14 @@
+"""
+This module implement the class Leaf and Venation Point
+"""
+
+
 import numpy as np
 from pylab import *
 from matplotlib import collections as mc
 import matplotlib.pyplot as plt
 from matplotlib.patches import Ellipse
+
 
 class Leaf:
     """
@@ -31,16 +37,19 @@ class Leaf:
         print(self.petiole)
         self.display_shape()
         line = [[self.petiole, self.venation.coord]]
-        lc = mc.LineCollection(line, linewidths=self.venation.PhotoEnergy)
+        lc = mc.LineCollection(line, linewidths=self.venation.PhotoEnergy, color='black')
         self.ax.add_collection(lc)
         self.venation.display_venation(self.ax)
         self.ax.autoscale()
         ylim(0, 6)
-        xlim(-3, 3)
+        xlim(-4, 4)
         show()
 
     def display_shape(self):
+        self.shape.set_alpha(0.1)
+        self.shape.set_facecolor("Green")
         self.ax.add_artist(self.shape)
+
 
 
 class VenationPoint:
@@ -66,7 +75,7 @@ class VenationPoint:
         if self.children:
             for elt in self.children:
                 line = [self.coord, elt.coord]
-                lc = mc.LineCollection([line], linewidths=elt.PhotoEnergy)
+                lc = mc.LineCollection([line], linewidths=elt.PhotoEnergy, color='black')
                 ax.add_collection(lc)
                 elt.display_venation(ax)
 

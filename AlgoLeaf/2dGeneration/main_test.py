@@ -6,7 +6,7 @@ from Leaf_objects import Leaf, VenationPoint
 
 if __name__ == '__main__':
 
-    leaf_shape = Ellipse((0, 3), 6, 3, 90, fill = False)
+    leaf_shape = Ellipse((0, 3), 6, 3.5, 90)
 
     Ven5 = VenationPoint((0.5, 2.5), [])
     Ven4 = VenationPoint((1.5, 2.5), [])
