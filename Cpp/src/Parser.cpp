@@ -137,7 +137,6 @@ FaceEl Parser::parseF(std::ifstream &s, Object &currObj) {
         std::istringstream is2(word);
         for (int i = 0; !is2.eof() && i < 3; ++i) {
             getline(is2, num, '/');
-            std::cout << "[" << num << "] ";
             try {
                 tuple[i] = std::stoi(num);
             } catch (const std::exception &unused) {}

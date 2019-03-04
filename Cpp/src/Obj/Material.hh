@@ -6,7 +6,13 @@
 #define OBJPARSER_MATERIAL_HH
 
 
+#include <string>
+
 class Material {
+
+
+private:
+    std::string name;
 
 };
 

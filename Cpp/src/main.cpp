@@ -2,13 +2,18 @@
 #include "Parser.hh"
 #include "Tree/Node.hh"
 #include "Generator.hh"
+#include "L-Systems/LRule.hh"
+#include "L-Systems/LObject.hh"
+#include "L-Systems/LNode.hh"
+#include "L-Systems/LTranslator.hh"
+#include "L-Systems/TurtleTranslator.hh"
 
 void parseFileExample() {
     // parse blender cube file
-    Parser parser("../Data/cube.obj");
+    Parser parser("../Data/2cubes1sphere.obj");
     Scene *scene = parser.parse();
     // write back into new file
-    Generator gen = Generator("mycube.obj");
+    Generator gen = Generator("my2cubes1sphere.obj");
     gen.write(scene);
 
 }
@@ -62,8 +67,53 @@ void treeExample() {
 
 }
 
+void lSystemExample() {
+
+    auto r1 = LRule<std::string>({LNode<std::string>("F")},  {LNode<std::string>("F"),
+                                                              LNode<std::string>("-"),
+                                                              LNode<std::string>("F"),
+                                                              LNode<std::string>("+"),
+                                                              LNode<std::string>("F"),
+                                                              LNode<std::string>("+"),
+                                                              LNode<std::string>("F"),
+                                                              LNode<std::string>("F"),
+                                                              LNode<std::string>("-"),
+                                                              LNode<std::string>("F"),
+                                                              LNode<std::string>("-"),
+                                                              LNode<std::string>("F"),
+                                                              LNode<std::string>("+"),
+                                                              LNode<std::string>("F")});
+
+    auto obj = LObject<std::string>({LNode<std::string>("F"),
+                                     LNode<std::string>("-"),
+                                     LNode<std::string>("F"),
+                                     LNode<std::string>("-"),
+                                     LNode<std::string>("F"),
+                                     LNode<std::string>("-"),
+                                     LNode<std::string>("F")}, {r1});
+
+    obj.iterate(3);
+
+    for (const auto& n : obj.getNodes()) {
+        std::cout << n.getId();
+    }
+    std::cout << std::endl;
+
+    TurtleTranslator t = TurtleTranslator("+", "-", "F");
+
+    Object o = t.transcript(obj);
+
+    Generator gen = Generator("Lsys.obj");
+
+    Scene scene = Scene();
+    scene.getObjects().push_back(o);
+    // write scene to file
+    gen.write(&scene);
+}
+
 int main() {
 //    treeExample();
-    parseFileExample();
+//    parseFileExample();
+    lSystemExample();
     return 0;
 }

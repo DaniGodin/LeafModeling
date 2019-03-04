@@ -2,6 +2,7 @@
 // Created by revetoon on 3/2/19.
 //
 
+#include <iomanip>
 #include "Generator.hh"
 
 Generator::Generator(const std::string &filename) : filename(filename) {
@@ -56,6 +57,7 @@ void Generator::genTreeO(Node *n, Object &o, long rootIndex) {
 
 std::string Generator::write(Scene *s) {
     std::ofstream os = std::ofstream(filename);
+    os << std::fixed << std::setprecision(8);
 
     // line write order
     // 1) object

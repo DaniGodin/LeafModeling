@@ -27,3 +27,5 @@ bool Vector3D::operator==(const Vector3D &rhs) const {
 bool Vector3D::operator!=(const Vector3D &rhs) const {
     return !(rhs == *this);
 }
+
+Vector3D::Vector3D() {}

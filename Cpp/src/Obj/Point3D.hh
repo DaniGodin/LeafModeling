@@ -6,6 +6,8 @@
 #define OBJPARSER_POINT3D_HH
 
 
+#include "Vector3D.hh"
+
 class Point3D {
 public:
     Point3D();
@@ -25,6 +27,10 @@ public:
     bool operator==(const Point3D &rhs) const;
 
     bool operator!=(const Point3D &rhs) const;
+
+    Point3D operator+(const Vector3D &rhs) const;
+
+    Point3D operator*(const Vector3D &rhs) const;
 
 private:
     double x;

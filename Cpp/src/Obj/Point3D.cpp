@@ -36,3 +36,11 @@ bool Point3D::operator==(const Point3D &rhs) const {
 bool Point3D::operator!=(const Point3D &rhs) const {
     return !(rhs == *this);
 }
+
+Point3D Point3D::operator+(const Vector3D &rhs) const {
+    return Point3D(x + rhs.getX(), y + rhs.getY(), z + rhs.getZ());
+}
+
+Point3D Point3D::operator*(const Vector3D &rhs) const {
+    return Point3D(x * rhs.getX(), y * rhs.getY(), z * rhs.getZ());
+}
