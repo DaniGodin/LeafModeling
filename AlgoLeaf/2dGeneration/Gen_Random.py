@@ -1,4 +1,4 @@
-from Leaf_objects import Particle
+from particle_object import Particle
 import random
 
 """
@@ -24,7 +24,7 @@ def get_initial(shape, num_particles):
 
         x_rand = (1 - r1**0.5) * Vertices[0][0] + (r1**0.5) * (1 - r2) * Vertices[1][0] + Vertices[2][0] * r2 * (r1**0.5)
         y_rand = (1 - r1**0.5) * Vertices[0][1] + (r1**0.5) * (1 - r2) * Vertices[1][1] + Vertices[2][1] * r2 * (r1**0.5)
-        P = Particle((x_rand, y_rand))
+        P = Particle([x_rand, y_rand])
         particles_list.append(P)
 
     return particles_list

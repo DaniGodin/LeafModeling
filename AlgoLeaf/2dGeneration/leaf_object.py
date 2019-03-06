@@ -9,7 +9,6 @@ from matplotlib import collections as mc
 import matplotlib.pyplot as plt
 from matplotlib.patches import Ellipse
 
-
 class Leaf:
     """
     This object decribe the leaf shape
@@ -26,26 +25,23 @@ class Leaf:
     venation = None
     ax = None
 
-    def __init__(self, shape, petiole, venation):
+    def __init__(self, shape, petiole, venations, ax):
         self.shape = shape
         self.petiole = petiole
-        self.venation = venation
-        fig, ax = subplots()
+        self.venation = VenationPoint(petiole, venations)
         self.ax = ax
 
-    def display_leaf(self):
-        plot([0],[0], 'bo')  # display the petiole
-        self.display_shape() #display the shape
+    def display_venation(self):
         if self.venation:
             line = [[self.petiole, self.venation.coord]]
-            lc = mc.LineCollection(line, linewidths=self.venation.PhotoEnergy, color='black')
+            lc = mc.LineCollection(line, linewidths= 0.01, color='black')
             self.ax.add_collection(lc)
             self.venation.display_venation(self.ax)
 
         self.ax.autoscale()
-        ylim(0, 6)
-        xlim(-4, 4)
-        show()
+
+    def display_petiole(self):
+        plot(self.petiole[0], self.petiole[1], 'bo')
 
     def display_shape(self):
         self.shape.set_alpha(0.1)
@@ -54,19 +50,70 @@ class Leaf:
 
 
 
+
+
+
+
+class Particle_set:
+    """
+    This object represent a set of Partciles object.
+    """
+
+    particles = []
+    petiole = None
+
+    def __init__(self, particles, petiole):
+        self.particles = particles
+        self.petiole = petiole
+        self.init_venation()
+        self.init_vector()
+
+
+    def display_particles(self):
+         for p in self.particles:
+            p.display_particle()
+
+    def init_venation(self):
+        for p in self.particles:
+            p.last_venation = VenationPoint(p.coord, [])
+
+
+    def init_vector(self):
+        for p in self.particles:
+            p.dir_to_p = [self.petiole[0] - p.coord[0], self.petiole[1] - p.coord[1]]
+
+    def move_particles(self):
+        for p in self.particles:
+            p.move()
+        self.init_vector()
+
+    def get_venations(self):
+        venations = []
+        for p in self.particles:
+            venations.append(p.last_venation)
+        return venations
 class Particle:
     """
     This object represent a Particle of light
-    """
 
+    attributes:
+        coord: currant position of the particle
+        last_venation: VenationPoint object, corresponding to the last position of the particle
+        dir_to_p: the direction to go to the petiole
+    """
+    dir_to_p = None
     coord = None
-    energy = 1
+    last_venation = None
 
     def __init__(self, coord):
         self.coord = coord
 
     def display_particle(self):
         plot(self.coord[0], self.coord[1], 'ro')
+
+    def move(self):
+        self.coord = [self.coord[0] + 0.3 * self.dir_to_p[0], self.coord[1] + 0.1 * self.dir_to_p[1]]
+        self.last_venation = VenationPoint(self.coord, [self.last_venation])
 
 
 class VenationPoint:
