@@ -34,12 +34,14 @@ class Leaf:
         self.ax = ax
 
     def display_leaf(self):
-        print(self.petiole)
-        self.display_shape()
-        line = [[self.petiole, self.venation.coord]]
-        lc = mc.LineCollection(line, linewidths=self.venation.PhotoEnergy, color='black')
-        self.ax.add_collection(lc)
-        self.venation.display_venation(self.ax)
+        plot([0],[0], 'bo')  # display the petiole
+        self.display_shape() #display the shape
+        if self.venation:
+            line = [[self.petiole, self.venation.coord]]
+            lc = mc.LineCollection(line, linewidths=self.venation.PhotoEnergy, color='black')
+            self.ax.add_collection(lc)
+            self.venation.display_venation(self.ax)
+
         self.ax.autoscale()
         ylim(0, 6)
         xlim(-4, 4)
@@ -50,6 +52,21 @@ class Leaf:
         self.shape.set_facecolor("Green")
         self.ax.add_artist(self.shape)
 
+
+
+class Particle:
+    """
+    This object represent a Particle of light
+    """
+
+    coord = None
+    energy = 1
+
+    def __init__(self, coord):
+        self.coord = coord
+
+    def display_particle(self):
+        plot(self.coord[0], self.coord[1], 'ro')
 
 
 class VenationPoint:
