@@ -6,6 +6,7 @@
 #define OBJPARSER_LRULE_HH
 
 #include <vector>
+#include <string>
 #include "LNode.hh"
 
 template <typename T>
@@ -21,10 +22,13 @@ public:
         return finish;
     }
 
+    static std::vector<LNode<T>> genRule(const std::string &rule);
+
 private:
     std::vector<LNode<T>>  start;
     std::vector<LNode<T>> finish;
 };
+
 
 #include "LRule.hxx"
 

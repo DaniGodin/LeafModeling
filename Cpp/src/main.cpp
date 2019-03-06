@@ -69,41 +69,49 @@ void treeExample() {
 
 void lSystemExample() {
 
-    auto r1 = LRule<std::string>({LNode<std::string>("F")},  {LNode<std::string>("F"),
-                                                              LNode<std::string>("-"),
-                                                              LNode<std::string>("F"),
-                                                              LNode<std::string>("+"),
-                                                              LNode<std::string>("F"),
-                                                              LNode<std::string>("+"),
-                                                              LNode<std::string>("F"),
-                                                              LNode<std::string>("F"),
-                                                              LNode<std::string>("-"),
-                                                              LNode<std::string>("F"),
-                                                              LNode<std::string>("-"),
-                                                              LNode<std::string>("F"),
-                                                              LNode<std::string>("+"),
-                                                              LNode<std::string>("F")});
+//    auto r1 = LRule<std::string>({LNode<std::string>("F")},  LRule<std::string>::genRule(R"(F\F/F/FF\F\F/F)"));
+//
+//    auto obj = LObject<std::string>(LRule<std::string>::genRule(R"(F\F\F\F)"), {r1});
 
-    auto obj = LObject<std::string>({LNode<std::string>("F"),
-                                     LNode<std::string>("-"),
-                                     LNode<std::string>("F"),
-                                     LNode<std::string>("-"),
-                                     LNode<std::string>("F"),
-                                     LNode<std::string>("-"),
-                                     LNode<std::string>("F")}, {r1});
+    auto r1 = LRule<std::string>({LNode<std::string>("F")},  LRule<std::string>::genRule("FF-[-F+F+F]+[+F-F-F]"));
 
-    obj.iterate(3);
+    auto obj = LObject<std::string>({LNode<std::string>("F")}, {r1});
+
+//    auto r1 = LRule<std::string>({LNode<std::string>("A")}, LRule<std::string>::genRule("B-F+CFC+F-D&F^D-F+&&CFC+F+B//"));
+//    auto r2 = LRule<std::string>({LNode<std::string>("B")}, LRule<std::string>::genRule("A&F^CFB^F^D^^-F-D^|F^B|FC^F^A//"));
+//    auto r3 = LRule<std::string>({LNode<std::string>("C")}, LRule<std::string>::genRule("|D^|F^B-F+C^F^A&&FA&F^C+F+B^F^D//"));
+//    auto r4 = LRule<std::string>({LNode<std::string>("D")}, LRule<std::string>::genRule("|CFB-F+B|FA&F^A&&FB-F+B|FC//"));
+//    auto obj = LObject<std::string>({LNode<std::string>("A")}, {r1, r2, r3, r4});
+
+// ^\XF^\XFX-F^//XFX&F+//XFX-F/X-/
+//    auto r1 = LRule<std::string>({LNode<std::string>("X")}, LRule<std::string>::genRule("^\\XF^\\XFX-F^//XFX&F+//XFX-F/X-//"));
+
+
+//    TurtleTranslator t = TurtleTranslator("+", "-", "F");
+//    TurtleTranslator t = TurtleTranslator(std::vector<std::string>{"+"}, std::vector<std::string>{"-"}, std::vector<std::string>{"Fl", "Fr"});
+
+
+//    TurtleTranslator t = TurtleTranslator(
+//            std::vector<std::string>{"+"},   // left
+//            std::vector<std::string>{"-"},   // right
+//            std::vector<std::string>{"^"},   // up
+//            std::vector<std::string>{"&"},   // down
+//            std::vector<std::string>{"\\"},  // roll left
+//            std::vector<std::string>{"/"},   // roll right
+//            std::vector<std::string>{"|"},   // turn around
+//            std::vector<std::string>{"F"});  // forward
+    TurtleTranslator t = TurtleTranslator(22.5);
+
+    obj.iterate(4);
 
     for (const auto& n : obj.getNodes()) {
         std::cout << n.getId();
     }
     std::cout << std::endl;
 
-    TurtleTranslator t = TurtleTranslator("+", "-", "F");
-
     Object o = t.transcript(obj);
 
-    Generator gen = Generator("Lsys.obj");
+    Generator gen = Generator("LsysRamifications2.obj");
 
     Scene scene = Scene();
     scene.getObjects().push_back(o);

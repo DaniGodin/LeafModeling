@@ -40,4 +40,4 @@ add_executable(objParser
         src/L-Systems/LObject.hxx
         src/L-Systems/LObject.hh
         src/L-Systems/LRule.hxx
-        src/L-Systems/LRule.hh src/L-Systems/LTranslator.cpp src/L-Systems/LTranslator.hh src/L-Systems/TurtleTranslator.hxx src/L-Systems/TurtleTranslator.hh)
+        src/L-Systems/LRule.hh src/L-Systems/LTranslator.cpp src/L-Systems/LTranslator.hh src/L-Systems/TurtleTranslator.hxx src/L-Systems/TurtleTranslator.hh src/L-Systems/LRule.cpp src/L-Systems/Turtle.cpp src/L-Systems/Turtle.hh)

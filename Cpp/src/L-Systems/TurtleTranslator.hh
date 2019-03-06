@@ -6,28 +6,56 @@
 #define OBJPARSER_TURTLETRANSLATOR_HH
 
 
+#include <stack>
 #include "LTranslator.hh"
+#include "Turtle.hh"
 
 class TurtleTranslator : public LTranslator<std::string> {
 
 public:
-    TurtleTranslator(const std::string &left, const std::string &right, const std::string &forward);
+
+    TurtleTranslator(const std::string &rleft, const std::string &rright, const std::string &forward);
+
+    TurtleTranslator(const std::vector<std::string> &rleft, const std::vector<std::string> &rright,
+                     const std::vector<std::string> &forward);
+
+    TurtleTranslator(const std::vector<std::string> &rleft, const std::vector<std::string> &rright,
+                     const std::vector<std::string> &rup, const std::vector<std::string> &rdown,
+                     const std::vector<std::string> &rrolll, const std::vector<std::string> &rrollr,
+                     const std::vector<std::string> &rturnaround, const std::vector<std::string> &forward);
+
+    TurtleTranslator(double angle);
 
     Object transcript(LObject<std::string> lobj) override;
 
 private:
     double DegreesToRadians(double degrees);
 
-    Vector3D rotateDir(Vector3D dir, double angle);
+    void rotateDir(Vector3D rotVect, double angle);
 
+    void rotateDir(double angle);
+
+    bool compareAll(const std::string &l, const std::vector<std::string> &r);
+
+    void pushturtle();
+
+    void popturtle();
 
 private:
-    std::string left;
-    std::string right;
-    std::string forward;
+    std::vector<std::string> rleft              = {"+"};
+    std::vector<std::string> rright             = {"-"};
+    std::vector<std::string> rup                = {"^"};
+    std::vector<std::string> rdown              = {"&"};
+    std::vector<std::string> rrolll             = {"\\"};
+    std::vector<std::string> rrollr             = {"/"};
+    std::vector<std::string> rturnaround        = {"|"};
+    std::vector<std::string> forward            = {"F"};
+    std::vector<std::string> puturtle           = {"["};
+    std::vector<std::string> poturtle           = {"]"};
     Object obj;
-    Vector3D dir;
-    Point3D curr;
+    Turtle turtle;
+    std::stack<Turtle> turtles;
+    double angle = 90.0; // degree
 };
 
 #include "TurtleTranslator.hxx"
