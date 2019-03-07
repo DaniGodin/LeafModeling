@@ -1,6 +1,6 @@
 from leaf_object import VenationPoint
 from pylab import *
-from math_stuff import *
+from math_stuff import translation, get_unit_vector,nearest_neigbour, get_distance, merge_pos
 
 
 class Particle_set:
@@ -29,12 +29,28 @@ class Particle_set:
 
     def init_vector(self):
         for p in self.particles:
-            p.dir_to_p = [self.petiole[0] - p.coord[0], self.petiole[1] - p.coord[1]]
+            p.dir_to_p = get_unit_vector(p.coord, self.petiole)
+
+    def get_closest(self, particle):
+        neighbours = list(self.particles)
+        neighbours.remove(particle)
+        return nearest_neigbour(particle, neighbours)
 
     def move_particles(self):
-        for p in self.particles:
-            p.move()
+        print(len(self.particles))
+        if len(self.particles) == 1:
+            return
+        else:
+            for p in self.particles:
+                q = self.get_closest(p)
+                if get_distance(p, q) < 0.4:
+                    p.last_venation = VenationPoint(merge_pos(p, q), [p.last_venation, q.last_venation])
+                    self.particles.remove(q)
+                else:
+                    dir_closer = get_unit_vector(p.coord, q.coord)
+                    p.move(dir_closer)
         self.init_vector()
+
 
     def get_venations(self):
         venations = []
@@ -62,8 +78,8 @@ class Particle:
     def display_particle(self):
         plot(self.coord[0], self.coord[1], 'ro')
 
-    def move(self):
+    def move(self, dir_closer):
 
-        self.coord = translation(self.coord, self.dir_to_p, self.dir_to_p)
+        self.coord = translation(self.coord, self.dir_to_p, dir_closer, 0.4)
         self.last_venation = VenationPoint(self.coord, [self.last_venation])
 

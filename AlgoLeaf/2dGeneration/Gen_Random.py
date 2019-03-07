@@ -7,6 +7,7 @@ inside the leaf shapes
 
 """
 
+
 def get_initial(shape, num_particles):
     """
 
