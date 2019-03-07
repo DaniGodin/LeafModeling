@@ -1,7 +1,10 @@
 #include <iostream>
+#include <cstdlib>
 #include "Parser.hh"
 #include "Tree/Node.hh"
 #include "Generator.hh"
+#include "L-Systems/LRuleStoch.hh"
+#include "L-Systems/LRuleBasic.hh"
 #include "L-Systems/LRule.hh"
 #include "L-Systems/LObject.hh"
 #include "L-Systems/LNode.hh"
@@ -69,22 +72,22 @@ void treeExample() {
 
 void lSystemExample() {
 
-//    auto r1 = LRule<std::string>({LNode<std::string>("F")},  LRule<std::string>::genRule(R"(F\F/F/FF\F\F/F)"));
+//    auto r1 = LRuleBasic<std::string>({LNode<std::string>("F")},  LRuleBasic<std::string>::genRule(R"(F\F/F/FF\F\F/F)"));
 //
-//    auto obj = LObject<std::string>(LRule<std::string>::genRule(R"(F\F\F\F)"), {r1});
+//    auto obj = LObject<std::string>(LRuleBasic<std::string>::genRule(R"(F\F\F\F)"), {r1});
 
-    auto r1 = LRule<std::string>({LNode<std::string>("F")},  LRule<std::string>::genRule("FF-[-F+F+F]+[+F-F-F]"));
+    LRuleStoch<std::string> r1 = LRuleStoch<std::string>({LNode<std::string>("F")},
+            std::vector<std::vector<LNode<std::string>>> {LRule<std::string>::genRule("F[+F]F[-F]F"), LRule<std::string>::genRule("F[+F]F"), LRule<std::string>::genRule("F[-F]F")});
+    auto obj = LObject<std::string>({LNode<std::string>("F")}, {&r1});
 
-    auto obj = LObject<std::string>({LNode<std::string>("F")}, {r1});
-
-//    auto r1 = LRule<std::string>({LNode<std::string>("A")}, LRule<std::string>::genRule("B-F+CFC+F-D&F^D-F+&&CFC+F+B//"));
-//    auto r2 = LRule<std::string>({LNode<std::string>("B")}, LRule<std::string>::genRule("A&F^CFB^F^D^^-F-D^|F^B|FC^F^A//"));
-//    auto r3 = LRule<std::string>({LNode<std::string>("C")}, LRule<std::string>::genRule("|D^|F^B-F+C^F^A&&FA&F^C+F+B^F^D//"));
-//    auto r4 = LRule<std::string>({LNode<std::string>("D")}, LRule<std::string>::genRule("|CFB-F+B|FA&F^A&&FB-F+B|FC//"));
+//    auto r1 = LRuleBasic<std::string>({LNode<std::string>("A")}, LRuleBasic<std::string>::genRule("B-F+CFC+F-D&F^D-F+&&CFC+F+B//"));
+//    auto r2 = LRuleBasic<std::string>({LNode<std::string>("B")}, LRuleBasic<std::string>::genRule("A&F^CFB^F^D^^-F-D^|F^B|FC^F^A//"));
+//    auto r3 = LRuleBasic<std::string>({LNode<std::string>("C")}, LRuleBasic<std::string>::genRule("|D^|F^B-F+C^F^A&&FA&F^C+F+B^F^D//"));
+//    auto r4 = LRuleBasic<std::string>({LNode<std::string>("D")}, LRuleBasic<std::string>::genRule("|CFB-F+B|FA&F^A&&FB-F+B|FC//"));
 //    auto obj = LObject<std::string>({LNode<std::string>("A")}, {r1, r2, r3, r4});
 
 // ^\XF^\XFX-F^//XFX&F+//XFX-F/X-/
-//    auto r1 = LRule<std::string>({LNode<std::string>("X")}, LRule<std::string>::genRule("^\\XF^\\XFX-F^//XFX&F+//XFX-F/X-//"));
+//    auto r1 = LRuleBasic<std::string>({LNode<std::string>("X")}, LRuleBasic<std::string>::genRule("^\\XF^\\XFX-F^//XFX&F+//XFX-F/X-//"));
 
 
 //    TurtleTranslator t = TurtleTranslator("+", "-", "F");
@@ -111,7 +114,7 @@ void lSystemExample() {
 
     Object o = t.transcript(obj);
 
-    Generator gen = Generator("LsysRamifications2.obj");
+    Generator gen = Generator("LsysRamifications4.obj");
 
     Scene scene = Scene();
     scene.getObjects().push_back(o);
@@ -120,6 +123,8 @@ void lSystemExample() {
 }
 
 int main() {
+    std::srand(std::time(nullptr));
+
 //    treeExample();
 //    parseFileExample();
     lSystemExample();

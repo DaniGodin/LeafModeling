@@ -43,7 +43,7 @@ class Particle_set:
         else:
             for p in self.particles:
                 q = self.get_closest(p)
-                if get_distance(p, q) < 0.4:
+                if get_distance(p, q) < 0.3:
                     p.last_venation = VenationPoint(merge_pos(p, q), [p.last_venation, q.last_venation])
                     self.particles.remove(q)
                 else:
@@ -80,6 +80,6 @@ class Particle:
 
     def move(self, dir_closer):
 
-        self.coord = translation(self.coord, self.dir_to_p, dir_closer, 0.4)
+        self.coord = translation(self.coord, self.dir_to_p, dir_closer, 0.2)
         self.last_venation = VenationPoint(self.coord, [self.last_venation])
 

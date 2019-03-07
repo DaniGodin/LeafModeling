@@ -10,8 +10,8 @@ def translation(point, dir_petiole, dir_neighbour, s):
     :param s: let us control the translation
     :return: The coord of the point translated by the two vectors
     """
-    x = point[0] + s * dir_petiole[0] + s * dir_neighbour[0]
-    y = point[1] + s * dir_petiole[1] + s * dir_neighbour[1]
+    x = point[0] + 2 * s * dir_petiole[0] + s * dir_neighbour[0]
+    y = point[1] + 2 * s * dir_petiole[1] + s * dir_neighbour[1]
     return [x, y]
 
 

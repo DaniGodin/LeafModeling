@@ -11,6 +11,10 @@ class LNode {
 public:
     explicit LNode(T id);
 
+    LNode(const LNode& other) { // copy constructor
+        id = other.id;
+    }
+
     T getId() const;
 
     bool operator==(const LNode &rhs) const;

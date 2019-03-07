@@ -4,23 +4,13 @@
 
 //#include "LObject.hh"
 
+#include <iostream>
+
 template <typename T>
 LObject<T>::LObject(std::vector<LNode<T>> nodes) : nodes(std::move(nodes)){}
 
 template <typename T>
-LObject<T>::LObject(std::vector<LNode<T>> nodes, const std::vector<LRule<T>> &rules) : nodes(std::move(nodes)) ,rules(rules) {}
-
-template<typename T>
-template<typename It1, typename It2>
-bool LObject<T>::vectCmp(It1 lhs, It2 rhs, unsigned count) {
-    for (unsigned i = 0; i < count; ++i) {
-        if (*lhs != *rhs)
-            return false;
-        ++lhs;
-        ++rhs;
-    }
-    return true;
-}
+LObject<T>::LObject(std::vector<LNode<T>> nodes, const std::vector<LRule<T>*> &rules) : nodes(std::move(nodes)) ,rules(rules) {}
 
 template <typename T>
 void LObject<T>::iter() {
@@ -31,15 +21,15 @@ void LObject<T>::iter() {
 
     for (; it < nodes.end(); ++it) {
         foundRule = false;
-        for (LRule<T> &rule : rules) {
-            if (vectCmp(it, rule.getStart().begin(), rule.getStart().size())) {
+        for (LRule<T> *rule : rules) {
+            if (rule->accept(it)) {
                 // RULE CAN BE APPLIED
                 // use rule to add to new vector
                 foundRule = true;
-                for (const auto &n : rule.getFinish()) {
+
+                for (const auto &n : rule->getResult()) {
                     newNodes.insert(newNodes.end(), std::move(n));
                 }
-//                newNodes.insert(newNodes.end(), rule.getFinish().begin(), rule.getFinish().end());
                 break;
             }
         }
@@ -60,7 +50,7 @@ void LObject<T>::iterate(unsigned count) {
 }
 
 template<typename T>
-const std::vector<LRule<T>> &LObject<T>::getRules() const {
+const std::vector<LRule<T>*> &LObject<T>::getRules() const {
     return rules;
 }
 
