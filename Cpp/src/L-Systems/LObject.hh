@@ -8,7 +8,7 @@
 
 #include <vector>
 #include "LNode.hh"
-#include "LRule.hh"
+#include "LRuleBasic.hh"
 
 template <typename T>
 class LObject {
@@ -27,8 +27,6 @@ private:
 
     void iter();
 
-    template <typename It1, typename It2>
-    bool vectCmp(It1 lhs, It2 rhs, unsigned count);
 
 private:
     std::vector<LRule<T>> rules;
