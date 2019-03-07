@@ -11,6 +11,6 @@ LRuleBasic<T>::LRuleBasic(const std::vector<LNode<T>> &start, const std::vector<
 
 template<typename T>
 std::vector<LNode<T>> LRuleBasic<T>::getResult() {
-    return std::move(finish);
+    return finish;
 }
 

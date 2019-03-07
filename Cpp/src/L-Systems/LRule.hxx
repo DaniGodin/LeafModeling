@@ -2,6 +2,7 @@
 // Created by revetoon on 3/4/19.
 //
 
+#include <iostream>
 #include "LRule.hh"
 
 template<typename T>
@@ -29,5 +30,6 @@ bool LRule<T>::accept(It1 it) {
 
 template<typename T>
 std::vector<LNode<T>> LRule<T>::getResult() {
+    std::cerr << "DO NOT USE" << std::endl;
     return std::vector<LNode<T>>();
 }

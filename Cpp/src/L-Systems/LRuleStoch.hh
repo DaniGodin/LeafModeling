@@ -24,6 +24,6 @@ private:
     std::vector<std::vector<LNode<T>>> finishes;
 };
 
-#include "LRuleStoch.hh"
+#include "LRuleStoch.hxx"
 
 #endif //OBJPARSER_LRULESTOCH_HH

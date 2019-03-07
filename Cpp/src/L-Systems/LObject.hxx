@@ -4,11 +4,13 @@
 
 //#include "LObject.hh"
 
+#include <iostream>
+
 template <typename T>
 LObject<T>::LObject(std::vector<LNode<T>> nodes) : nodes(std::move(nodes)){}
 
 template <typename T>
-LObject<T>::LObject(std::vector<LNode<T>> nodes, const std::vector<LRule<T>> &rules) : nodes(std::move(nodes)) ,rules(rules) {}
+LObject<T>::LObject(std::vector<LNode<T>> nodes, const std::vector<LRule<T>*> &rules) : nodes(std::move(nodes)) ,rules(rules) {}
 
 template <typename T>
 void LObject<T>::iter() {
@@ -19,13 +21,13 @@ void LObject<T>::iter() {
 
     for (; it < nodes.end(); ++it) {
         foundRule = false;
-        for (LRule<T> &rule : rules) {
-            if (rule.accept(it)) {
+        for (LRule<T> *rule : rules) {
+            if (rule->accept(it)) {
                 // RULE CAN BE APPLIED
                 // use rule to add to new vector
                 foundRule = true;
 
-                for (const auto &n : rule.getResult()) {
+                for (const auto &n : rule->getResult()) {
                     newNodes.insert(newNodes.end(), std::move(n));
                 }
                 break;
@@ -48,7 +50,7 @@ void LObject<T>::iterate(unsigned count) {
 }
 
 template<typename T>
-const std::vector<LRule<T>> &LObject<T>::getRules() const {
+const std::vector<LRule<T>*> &LObject<T>::getRules() const {
     return rules;
 }
 

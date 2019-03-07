@@ -15,9 +15,9 @@ class LObject {
 public:
     explicit LObject(std::vector<LNode<T>> nodes);
 
-    LObject(std::vector<LNode<T>> nodes, const std::vector<LRule<T>> &rules);
+    LObject(std::vector<LNode<T>> nodes, const std::vector<LRule<T>*> &rules);
 
-    const std::vector<LRule<T>> &getRules() const;
+    const std::vector<LRule<T>*> &getRules() const;
 
     const std::vector<LNode<T>> &getNodes() const;
 
@@ -29,7 +29,7 @@ private:
 
 
 private:
-    std::vector<LRule<T>> rules;
+    std::vector<LRule<T>*> rules;
     std::vector<LNode<T>> nodes;
 
 };

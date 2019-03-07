@@ -1,7 +1,9 @@
 #include <iostream>
+#include <cstdlib>
 #include "Parser.hh"
 #include "Tree/Node.hh"
 #include "Generator.hh"
+#include "L-Systems/LRuleStoch.hh"
 #include "L-Systems/LRuleBasic.hh"
 #include "L-Systems/LRule.hh"
 #include "L-Systems/LObject.hh"
@@ -74,10 +76,9 @@ void lSystemExample() {
 //
 //    auto obj = LObject<std::string>(LRuleBasic<std::string>::genRule(R"(F\F\F\F)"), {r1});
 
-    std::vector<LNode<std::string>> v = LRule<std::string>::genRule("FF-[-F+F+F]+[+F-F-F]");
-    LRuleBasic<std::string> r1 = LRuleBasic<std::string>({LNode<std::string>("F")},  v);
-    LRule<std::string> &r11 = r1;
-    auto obj = LObject<std::string>({LNode<std::string>("F")}, {r11});
+    LRuleStoch<std::string> r1 = LRuleStoch<std::string>({LNode<std::string>("F")},
+            std::vector<std::vector<LNode<std::string>>> {LRule<std::string>::genRule("F[+F]F[-F]F"), LRule<std::string>::genRule("F[+F]F"), LRule<std::string>::genRule("F[-F]F")});
+    auto obj = LObject<std::string>({LNode<std::string>("F")}, {&r1});
 
 //    auto r1 = LRuleBasic<std::string>({LNode<std::string>("A")}, LRuleBasic<std::string>::genRule("B-F+CFC+F-D&F^D-F+&&CFC+F+B//"));
 //    auto r2 = LRuleBasic<std::string>({LNode<std::string>("B")}, LRuleBasic<std::string>::genRule("A&F^CFB^F^D^^-F-D^|F^B|FC^F^A//"));
@@ -122,6 +123,8 @@ void lSystemExample() {
 }
 
 int main() {
+    std::srand(std::time(nullptr));
+
 //    treeExample();
 //    parseFileExample();
     lSystemExample();
