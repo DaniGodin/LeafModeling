@@ -73,7 +73,7 @@ class VenationPoint:
         if self.children:
             for elt in self.children:
                 line = [self.coord, elt.coord]
-                lc = mc.LineCollection([line], linewidths=0.08 * elt.PhotoEnergy, color='black')
+                lc = mc.LineCollection([line], linewidths=0.1 * elt.PhotoEnergy, color='black')
                 ax.add_collection(lc)
                 elt.display_venation(ax)
 

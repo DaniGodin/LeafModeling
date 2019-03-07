@@ -12,10 +12,10 @@ if __name__ == '__main__':
     fig, ax = plt.subplots()
 
     leaf_shape = Polygon([(-3, 0), (0, 6), (3, 0)], closed=True)
-    particles = Particle_set(get_initial(leaf_shape, 500), [0, 0])
+    particles = Particle_set(get_initial(leaf_shape, 1000), [0, 0])
 
-    for i in range(15):
-        particles.move_particles()
+    for i in range(100):
+        particles.move_particles(0.2, 1, 2)
         """
         particles.display_particles()
         ylim(0, 6)

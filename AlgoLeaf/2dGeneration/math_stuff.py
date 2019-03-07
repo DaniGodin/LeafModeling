@@ -1,7 +1,7 @@
 from scipy.spatial import distance
 
 
-def translation(point, dir_petiole, dir_neighbour, s):
+def translation(point, direction, stepsize):
     """
 
     :param point: coord of the particle we want to translate
@@ -10,9 +10,25 @@ def translation(point, dir_petiole, dir_neighbour, s):
     :param s: let us control the translation
     :return: The coord of the point translated by the two vectors
     """
-    x = point[0] + 2 * s * dir_petiole[0] + s * dir_neighbour[0]
-    y = point[1] + 2 * s * dir_petiole[1] + s * dir_neighbour[1]
+    x = point[0] + stepsize * direction[0]
+    y = point[1] + stepsize * direction[1]
     return [x, y]
+
+
+def compute_dir(dir_t, dir_n, weight_n, weight_t):
+    """
+
+    :param dir_t: vector direction to target
+    :param dir_n: vector direction to neighbour
+    :param weight_n: weight of neighbout
+    :param weight_t: weight of target
+    :return: normalise vector to the direction
+    """
+
+    x = (dir_t[0] * weight_t + dir_n[0] * weight_n) / (weight_t + weight_n)
+    y = (dir_t[1] * weight_t + dir_n[1] * weight_n) / (weight_t + weight_n)
+    norme = (x**2 + y**2)**0.5
+    return [x / norme, y /norme]
 
 
 def get_unit_vector(point1, point2):
