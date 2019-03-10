@@ -6,7 +6,7 @@
 #include "LRule.hh"
 
 
-bool LRule::vectCmp(std::vector<LNode>::iterator lhs, std::vector<LNode>::iterator rhs, unsigned count) {
+bool LRule::vectCmp(v_iter lhs, v_iter rhs, unsigned count) {
     for (unsigned i = 0; i < count; ++i) {
         if (*lhs != *rhs)
             return false;

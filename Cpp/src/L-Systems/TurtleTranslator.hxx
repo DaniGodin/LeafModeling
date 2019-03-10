@@ -27,6 +27,13 @@ TurtleTranslator::TurtleTranslator(const std::vector<std::string> &rleft, const 
 TurtleTranslator::TurtleTranslator(double angle) : angle(angle) {}
 
 
+TurtleTranslator::TurtleTranslator(const std::vector<std::string> &rleft, const std::vector<std::string> &rright,
+                                   const std::vector<std::string> &forward, double angle) : rleft(rleft),
+                                                                                            rright(rright),
+                                                                                            forward(forward),
+                                                                                            angle(angle) {}
+
+
 Object TurtleTranslator::transcript(LObject lobj) {
 
     unsigned index = 0;

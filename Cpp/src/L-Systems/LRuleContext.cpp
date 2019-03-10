@@ -4,18 +4,20 @@
 
 #include "LRuleContext.hh"
 #include <stack>
+#include <iostream>
 
-bool LRuleContext::accept(std::vector<LNode>::iterator it) {
+bool LRuleContext::accept(std::vector<LNode> &v, unsigned index) {
     // check if "basic" rule apply
-    if (!vectCmp(it, start.begin(), start.size()))
+    std::vector<LNode>::iterator nth = v.begin() + index;
+    if (!vectCmp(nth, start.begin(), start.size()))
         return false;
 
     // check the precede
-    if (!acceptPrecede(it))
+    if (!acceptPrecede(v, index))
         return false;
 
     // check the follow
-    if (!acceptFollow(it))
+    if (!acceptFollow(v, index))
         return false;
 
     return true;
@@ -44,105 +46,106 @@ bool LRuleContext::vectContains(const std::vector<LNode> &v, const LNode &n) {
     return false;
 }
 
-void LRuleContext::skipToMatchingBracket(std::vector<LNode>::iterator &it, bool reverse) {
+unsigned LRuleContext::skipToMatchingBracket(std::vector<LNode> &v, int index, bool reverse) {
     int i = reverse ? -1 : 1;
-    while (!(*it).getId().empty()) {
-        if (reverse && (*it).getId() == "[")
-            return;
-        if (!reverse && (*it).getId() == "]")
-            return;
-        it += i;
+    while (index >= 0 && index < v.size()) {
+        if (reverse && v[index].getId() == "[")
+            break;
+        if (!reverse && v[index].getId() == "]")
+            break;
+        index += i;
     }
+    return index;
 }
 
-bool LRuleContext::acceptPrecede(const std::vector<LNode>::iterator &it) {
+bool LRuleContext::acceptPrecede(std::vector<LNode> &v, int index) {
 
-    auto stack = std::stack<std::vector<LNode>::iterator>();
+    auto stack = std::stack<int>();
 
     // check for the precede rule
-    auto pit = std::move(it - 1);
+    --index;
 
     if (!precede.empty()) {
-        auto p = precede.end() - 1;
+        int pi = static_cast<int>(precede.size()) - 1;
 
         // while still LNodes to match
-        while (!(*p).getId().empty()) {
+        while (pi >= 0) {
 
             // manage special chars
-            while (!(*pit).getId().empty()) {
-                if (vectContains(ignore, *pit)) {   // skip ignored chars
-                    --pit;
-                } else if ((*pit).getId() == "]") {
-                    stack.push(std::move(p));       // store iterator
-                    --pit;
-                } else if ((*pit).getId() == "[") {
+            while (index >= 0) {
+                if (vectContains(ignore, v[index])) {   // skip ignored chars
+                    --index;
+                } else if (v[index].getId() == "]") {
+                    stack.push(pi);       // store iterator
+                    --index;
+                } else if (v[index].getId() == "[") {
                     if (!stack.empty()) {
-                        p = stack.top();            // restore iterator from before the brackets
+                        pi = stack.top();            // restore iterator from before the brackets
                         stack.pop();
                     }
-                    --pit;
+                    --index;
                 } else {
                     break;                          // stop skipping
                 }
             }
 
             // try matching the char
-            if ((*pit).getId() != (*p).getId()) {   // no match
+            if (v[index].getId() != precede[pi].getId()) {   // no match
                 if (!stack.empty()) {                   // if inside a bracket, skip bracket
-                    skipToMatchingBracket(pit, true);
+                    index = skipToMatchingBracket(v, index, true);
                 } else {                                // else return false
                     return false;
                 }
             } else {                                // match
-                --pit;
-                --p;
+                --index;
+                --pi;
             }
         }
     }
     return true;
 }
 
-bool LRuleContext::acceptFollow(const std::vector<LNode>::iterator &it) {
+bool LRuleContext::acceptFollow(std::vector<LNode> &v, int index) {
 
-    auto stack = std::stack<std::vector<LNode>::iterator>();
+    auto stack = std::stack<int>();
 
-    // check for the precede rule
-    auto fit = std::move(it + 1);
+    // check for the follow rule
+    ++index;
 
     if (!follow.empty()) {
-        auto p = follow.begin();
+        auto pi = 0;
 
         // while still LNodes to match
-        while (!(*p).getId().empty()) {
+        while (pi < follow.size()) {
 
             // manage special chars
-            while (!(*fit).getId().empty()) {
-                if (vectContains(ignore, *fit)) {   // skip ignored chars
-                    ++fit;
-                } else if ((*fit).getId() == "[") {
-                    stack.push(std::move(p));       // store iterator
-                    ++fit;
-                } else if ((*fit).getId() == "]") {
+            while (index < v.size()) {
+                if (vectContains(ignore, v[index])) {   // skip ignored chars
+                    ++index;
+                } else if (v[index].getId() == "[") {
+                    stack.push(std::move(pi));       // store iterator
+                    ++index;
+                } else if (v[index].getId() == "]") {
                     if (!stack.empty()) {
-                        p = stack.top();            // restore iterator from before the brackets
+                        pi = stack.top();            // restore iterator from before the brackets
                         stack.pop();
                     }
-                    ++fit;
+                    ++index;
                 } else {
                     break;                          // stop skipping
                 }
             }
 
             // try matching the char
-            if ((*fit).getId() != (*p).getId()) {   // no match
+            if (v[index].getId() != follow[pi].getId()) {   // no match
                 if (!stack.empty()) {                   // if inside a bracket, skip bracket
-                    skipToMatchingBracket(fit, true);
+                    index = skipToMatchingBracket(v, index, false);
                 } else {                                // else return false
                     return false;
                 }
             } else {                                // match
-                ++fit;
-                ++p;
+                ++index;
+                ++pi;
             }
         }
     }

@@ -11,8 +11,12 @@
 
 class LRule {
 
+protected:
+    typedef std::vector<LNode>::iterator v_iter;
+    typedef std::vector<LNode>::reverse_iterator v_riter;
+
 public:
-    virtual bool accept(std::vector<LNode>::iterator it) = 0;
+    virtual bool accept(std::vector<LNode> &v, unsigned index) = 0;
 
     virtual std::vector<LNode> getResult() = 0;
 
@@ -20,7 +24,7 @@ public:
 
 
 protected:
-    bool vectCmp(std::vector<LNode>::iterator lhs, std::vector<LNode>::iterator rhs, unsigned count);
+    bool vectCmp(v_iter lhs, v_iter rhs, unsigned count);
 
 
 

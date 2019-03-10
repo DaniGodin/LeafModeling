@@ -26,6 +26,10 @@ public:
 
     TurtleTranslator(double angle);
 
+    TurtleTranslator(const std::vector<std::string> &rleft, const std::vector<std::string> &rright,
+                     const std::vector<std::string> &forward, double angle);
+
+
     Object transcript(LObject lobj) override;
 
 private:
@@ -57,6 +61,7 @@ private:
     std::stack<Turtle> turtles;
     double angle = 90.0; // degree
 };
+
 
 #include "TurtleTranslator.hxx"
 

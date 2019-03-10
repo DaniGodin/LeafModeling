@@ -17,19 +17,20 @@ public:
                  const std::vector<LNode> &finish, const std::vector<LNode> &ignore);
 
 public:
-    bool accept(std::vector<LNode>::iterator it) override;
+    bool accept(std::vector<LNode> &v, unsigned index) override;
 
     std::vector<LNode> getResult() override;
 
 private:
 
-    bool acceptPrecede(const std::vector<LNode>::iterator &it);
+    bool acceptPrecede(std::vector<LNode> &v, int index);
 
-    bool acceptFollow(const std::vector<LNode>::iterator &it);
+    bool acceptFollow(std::vector<LNode> &v, int index);
 
     bool vectContains(const std::vector<LNode> &v, const LNode &n);
 
-    void skipToMatchingBracket(std::vector<LNode>::iterator &it, bool reverse);
+    unsigned skipToMatchingBracket(std::vector<LNode> &v, int index, bool reverse);
+
 private:
     std::vector<LNode> precede;
     std::vector<LNode> start;

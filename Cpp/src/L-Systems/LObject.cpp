@@ -13,13 +13,12 @@ LObject::LObject(std::vector<LNode> nodes, const std::vector<LRule*> &rules) : n
 void LObject::iter() {
     auto newNodes = std::vector<LNode>();
 
-    auto it = nodes.begin();
-    bool foundRule = false;
+    bool foundRule;
 
-    for (; it < nodes.end(); ++it) {
+    for (int i = 0; i < nodes.size(); ++i) {
         foundRule = false;
         for (LRule *rule : rules) {
-            if (rule->accept(it)) {
+            if (rule->accept(nodes, i)) {
                 // RULE CAN BE APPLIED
                 // use rule to add to new vector
                 foundRule = true;
@@ -33,7 +32,7 @@ void LObject::iter() {
         if (!foundRule) {
             // RULE CANNOT BE APPLIED
             // copy current node to new vector
-            newNodes.insert(newNodes.end(), *it);
+            newNodes.insert(newNodes.end(), nodes[i]);
         }
     }
     nodes = newNodes;

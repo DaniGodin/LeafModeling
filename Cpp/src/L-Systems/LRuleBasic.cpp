@@ -13,7 +13,8 @@ std::vector<LNode> LRuleBasic::getResult() {
     return finish;
 }
 
-bool LRuleBasic::accept(std::vector<LNode>::iterator it) {
-    return vectCmp(it, start.begin(), start.size());
+bool LRuleBasic::accept(std::vector<LNode> &v, unsigned index) {
+    std::vector<LNode>::iterator nth = v.begin() + index;
+    return vectCmp(nth, start.begin(), start.size());
 }
 

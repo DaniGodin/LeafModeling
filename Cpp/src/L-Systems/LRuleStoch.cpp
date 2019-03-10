@@ -41,6 +41,7 @@ std::vector<LNode> LRuleStoch::getResult() {
     return finishes[finishes.size() - 1];
 }
 
-bool LRuleStoch::accept(std::vector<LNode>::iterator it) {
-    return LRule::vectCmp(it, start.begin(), start.size());
+bool LRuleStoch::accept(std::vector<LNode> &v, unsigned index) {
+    std::vector<LNode>::iterator nth = v.begin() + index;
+    return vectCmp(nth, start.begin(), start.size());
 }
