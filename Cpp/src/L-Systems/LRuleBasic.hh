@@ -10,22 +10,20 @@
 #include "LNode.hh"
 #include "LRule.hh"
 
-template <typename T>
-class LRuleBasic : public LRule<T> {
+class LRuleBasic : public LRule {
 public:
-    LRuleBasic(const std::vector<LNode<T>> &start, const std::vector<LNode<T>> &finish);
+    LRuleBasic(const std::vector<LNode> &start, const std::vector<LNode> &finish);
 
-    const std::vector<LNode<T>> &getFinish() const {
+    const std::vector<LNode> &getFinish() const {
         return finish;
     }
 
-    std::vector<LNode<T>> getResult() override;
+    std::vector<LNode> getResult() override;
 
 private:
-    std::vector<LNode<T>> finish;
+    std::vector<LNode> finish;
 };
 
 
-#include "LRuleBasic.hxx"
 
 #endif //OBJPARSER_LRULEBASIC_HH

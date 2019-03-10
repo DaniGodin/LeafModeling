@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstdlib>
+#include <ctime>
 #include "Parser.hh"
 #include "Tree/Node.hh"
 #include "Generator.hh"
@@ -72,37 +73,37 @@ void treeExample() {
 
 void lSystemExample() {
 
-//    auto r1 = LRuleBasic<std::string>({LNode<std::string>("F")},  LRuleBasic<std::string>::genRule(R"(F\F/F/FF\F\F/F)"));
+//    auto r1 = LRuleBasic({LNode("F")},  LRuleBasic::genRule(R"(F\F/F/FF\F\F/F)"));
 //
-//    auto obj = LObject<std::string>(LRuleBasic<std::string>::genRule(R"(F\F\F\F)"), {r1});
+//    auto obj = LObject(LRuleBasic::genRule(R"(F\F\F\F)"), {r1});
 
-    LRuleStoch<std::string> r1 = LRuleStoch<std::string>({LNode<std::string>("F")},
-            std::vector<std::vector<LNode<std::string>>> {LRule<std::string>::genRule("F[+F]F[-F]F"), LRule<std::string>::genRule("F[+F]F"), LRule<std::string>::genRule("F[-F]F")});
-    auto obj = LObject<std::string>({LNode<std::string>("F")}, {&r1});
+    LRuleStoch r1 = LRuleStoch({LNode("F")},
+            std::vector<std::vector<LNode>> {LRule::genRule("F[+F]F[-F]F"), LRule::genRule("F[+F]F"), LRule::genRule("F[-F]F")});
+    auto obj = LObject({LNode("F")}, {&r1});
 
-//    auto r1 = LRuleBasic<std::string>({LNode<std::string>("A")}, LRuleBasic<std::string>::genRule("B-F+CFC+F-D&F^D-F+&&CFC+F+B//"));
-//    auto r2 = LRuleBasic<std::string>({LNode<std::string>("B")}, LRuleBasic<std::string>::genRule("A&F^CFB^F^D^^-F-D^|F^B|FC^F^A//"));
-//    auto r3 = LRuleBasic<std::string>({LNode<std::string>("C")}, LRuleBasic<std::string>::genRule("|D^|F^B-F+C^F^A&&FA&F^C+F+B^F^D//"));
-//    auto r4 = LRuleBasic<std::string>({LNode<std::string>("D")}, LRuleBasic<std::string>::genRule("|CFB-F+B|FA&F^A&&FB-F+B|FC//"));
-//    auto obj = LObject<std::string>({LNode<std::string>("A")}, {r1, r2, r3, r4});
+//    auto r1 = LRuleBasic({LNode("A")}, LRuleBasic::genRule("B-F+CFC+F-D&F^D-F+&&CFC+F+B//"));
+//    auto r2 = LRuleBasic({LNode("B")}, LRuleBasic::genRule("A&F^CFB^F^D^^-F-D^|F^B|FC^F^A//"));
+//    auto r3 = LRuleBasic({LNode("C")}, LRuleBasic::genRule("|D^|F^B-F+C^F^A&&FA&F^C+F+B^F^D//"));
+//    auto r4 = LRuleBasic({LNode("D")}, LRuleBasic::genRule("|CFB-F+B|FA&F^A&&FB-F+B|FC//"));
+//    auto obj = LObject({LNode("A")}, {r1, r2, r3, r4});
 
 // ^\XF^\XFX-F^//XFX&F+//XFX-F/X-/
-//    auto r1 = LRuleBasic<std::string>({LNode<std::string>("X")}, LRuleBasic<std::string>::genRule("^\\XF^\\XFX-F^//XFX&F+//XFX-F/X-//"));
+//    auto r1 = LRuleBasic({LNode("X")}, LRuleBasic::genRule("^\\XF^\\XFX-F^//XFX&F+//XFX-F/X-//"));
 
 
 //    TurtleTranslator t = TurtleTranslator("+", "-", "F");
-//    TurtleTranslator t = TurtleTranslator(std::vector<std::string>{"+"}, std::vector<std::string>{"-"}, std::vector<std::string>{"Fl", "Fr"});
+//    TurtleTranslator t = TurtleTranslator(std::vector{"+"}, std::vector{"-"}, std::vector{"Fl", "Fr"});
 
 
 //    TurtleTranslator t = TurtleTranslator(
-//            std::vector<std::string>{"+"},   // left
-//            std::vector<std::string>{"-"},   // right
-//            std::vector<std::string>{"^"},   // up
-//            std::vector<std::string>{"&"},   // down
-//            std::vector<std::string>{"\\"},  // roll left
-//            std::vector<std::string>{"/"},   // roll right
-//            std::vector<std::string>{"|"},   // turn around
-//            std::vector<std::string>{"F"});  // forward
+//            std::vector{"+"},   // left
+//            std::vector{"-"},   // right
+//            std::vector{"^"},   // up
+//            std::vector{"&"},   // down
+//            std::vector{"\\"},  // roll left
+//            std::vector{"/"},   // roll right
+//            std::vector{"|"},   // turn around
+//            std::vector{"F"});  // forward
     TurtleTranslator t = TurtleTranslator(22.5);
 
     obj.iterate(4);

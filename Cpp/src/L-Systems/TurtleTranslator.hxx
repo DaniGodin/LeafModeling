@@ -27,13 +27,13 @@ TurtleTranslator::TurtleTranslator(const std::vector<std::string> &rleft, const 
 TurtleTranslator::TurtleTranslator(double angle) : angle(angle) {}
 
 
-Object TurtleTranslator::transcript(LObject<std::string> lobj) {
+Object TurtleTranslator::transcript(LObject lobj) {
 
     unsigned index = 0;
     bool turtleMoved = false;
     double angleR = DegreesToRadians(angle);
     obj.getV().push_back(std::move(turtle.curr));
-    for (const LNode<std::string> &n : lobj.getNodes()) {
+    for (const LNode &n : lobj.getNodes()) {
         turtleMoved = false;
         // each node
         if (compareAll(n.getId(), forward)) {

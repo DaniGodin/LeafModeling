@@ -10,16 +10,15 @@
 #include "LNode.hh"
 #include "LRuleBasic.hh"
 
-template <typename T>
 class LObject {
 public:
-    explicit LObject(std::vector<LNode<T>> nodes);
+    explicit LObject(std::vector<LNode> nodes);
 
-    LObject(std::vector<LNode<T>> nodes, const std::vector<LRule<T>*> &rules);
+    LObject(std::vector<LNode> nodes, const std::vector<LRule*> &rules);
 
-    const std::vector<LRule<T>*> &getRules() const;
+    const std::vector<LRule*> &getRules() const;
 
-    const std::vector<LNode<T>> &getNodes() const;
+    const std::vector<LNode> &getNodes() const;
 
     void iterate(unsigned count);
 
@@ -29,11 +28,10 @@ private:
 
 
 private:
-    std::vector<LRule<T>*> rules;
-    std::vector<LNode<T>> nodes;
+    std::vector<LRule*> rules;
+    std::vector<LNode> nodes;
 
 };
 
-#include "LObject.hxx"
 
 #endif //OBJPARSER_LOBJECT_HH

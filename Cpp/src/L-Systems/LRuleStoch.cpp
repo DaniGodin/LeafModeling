@@ -8,25 +8,22 @@
 #include "LRuleStoch.hh"
 
 
-template<typename T>
-LRuleStoch<T>::LRuleStoch(const std::vector<LNode<T>> &start, const std::vector<std::vector<LNode<T>>> &finishes,
+LRuleStoch::LRuleStoch(const std::vector<LNode> &start, const std::vector<std::vector<LNode>> &finishes,
                           const std::vector<double> &probabilities)
-        : LRule<T>(start), finishes(finishes), probabilities(probabilities)
+        : LRule(start), finishes(finishes), probabilities(probabilities)
 {
 
 }
 
-template<typename T>
-LRuleStoch<T>::LRuleStoch(const std::vector<LNode<T>> &start, const std::vector<std::vector<LNode<T>>> &finishes)
-    : LRule<T>(start), finishes(finishes) {
+LRuleStoch::LRuleStoch(const std::vector<LNode> &start, const std::vector<std::vector<LNode>> &finishes)
+    : LRule(start), finishes(finishes) {
 
     double p = 1.0/static_cast<double>(finishes.size());
     probabilities = std::vector(finishes.size() - 1, p);
 }
 
 
-template<typename T>
-std::vector<LNode<T>> LRuleStoch<T>::getResult() {
+std::vector<LNode> LRuleStoch::getResult() {
     float r = static_cast <float> (std::rand()) / static_cast <float> (RAND_MAX);
 //    float r = 0;
     for (int i = 0; i < finishes.size() - 1; ++i) {

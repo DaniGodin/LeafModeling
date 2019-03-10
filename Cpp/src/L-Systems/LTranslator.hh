@@ -12,10 +12,9 @@
 #include "../Obj/Object.hh"
 #include "LObject.hh"
 
-template <typename T>
 class LTranslator {
 public:
-    virtual Object transcript(LObject<T> lobj) = 0;
+    virtual Object transcript(LObject lobj) = 0;
 
 };
 

@@ -10,7 +10,7 @@
 #include "LTranslator.hh"
 #include "Turtle.hh"
 
-class TurtleTranslator : public LTranslator<std::string> {
+class TurtleTranslator : public LTranslator {
 
 public:
 
@@ -26,7 +26,7 @@ public:
 
     TurtleTranslator(double angle);
 
-    Object transcript(LObject<std::string> lobj) override;
+    Object transcript(LObject lobj) override;
 
 private:
     double DegreesToRadians(double degrees);

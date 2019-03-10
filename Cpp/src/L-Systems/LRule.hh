@@ -9,31 +9,27 @@
 #include <vector>
 #include "LNode.hh"
 
-template <typename T>
 class LRule {
 
 protected:
-    LRule(const std::vector<LNode<T>> &start);
+    LRule(const std::vector<LNode> &start);
 
 public:
-    template <typename It1>
-    bool accept(It1 it);
+    virtual bool accept(std::vector<LNode>::iterator it);
 
-    virtual std::vector<LNode<T>> getResult();
+    virtual std::vector<LNode> getResult();
 
     template <typename It1, typename It2>
     bool vectCmp(It1 lhs, It2 rhs, unsigned count);
 
-    static std::vector<LNode<T>> genRule(const std::string &rule);
+    static std::vector<LNode> genRule(const std::string &rule);
 
-    const std::vector<LNode<T>> &getStart() const {
+    const std::vector<LNode> &getStart() const {
         return start;
     }
 
 protected:
-    std::vector<LNode<T>> start;
+    std::vector<LNode> start;
 };
-
-#include "LRule.hxx"
 
 #endif //OBJPARSER_LRULE_HH

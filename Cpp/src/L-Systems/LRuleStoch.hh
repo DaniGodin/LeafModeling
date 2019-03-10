@@ -10,20 +10,18 @@
 #include "LRule.hh"
 #include "LNode.hh"
 
-template <typename T>
-class LRuleStoch : public LRule<T> {
+class LRuleStoch : public LRule {
 
 public:
-    LRuleStoch(const std::vector<LNode<T>> &start, const std::vector<std::vector<LNode<T>>> &finishes, const std::vector<double> &probabilities);
-    LRuleStoch(const std::vector<LNode<T>> &start, const std::vector<std::vector<LNode<T>>> &finishes);
+    LRuleStoch(const std::vector<LNode> &start, const std::vector<std::vector<LNode>> &finishes, const std::vector<double> &probabilities);
+    LRuleStoch(const std::vector<LNode> &start, const std::vector<std::vector<LNode>> &finishes);
 
-    std::vector<LNode<T>> getResult() override;
+    std::vector<LNode> getResult() override;
 
 private:
     std::vector<double> probabilities;
-    std::vector<std::vector<LNode<T>>> finishes;
+    std::vector<std::vector<LNode>> finishes;
 };
 
-#include "LRuleStoch.hxx"
 
 #endif //OBJPARSER_LRULESTOCH_HH
