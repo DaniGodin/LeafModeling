@@ -11,6 +11,7 @@
 #include "L-Systems/LNode.hh"
 #include "L-Systems/LTranslator.hh"
 #include "L-Systems/TurtleTranslator.hh"
+#include "L-Systems/LRuleContext.hh"
 
 void parseFileExample() {
     // parse blender cube file
@@ -77,9 +78,15 @@ void lSystemExample() {
 //
 //    auto obj = LObject(LRuleBasic::genRule(R"(F\F\F\F)"), {r1});
 
-    LRuleStoch r1 = LRuleStoch({LNode("F")},
-            std::vector<std::vector<LNode>> {LRule::genRule("F[+F]F[-F]F"), LRule::genRule("F[+F]F"), LRule::genRule("F[-F]F")});
-    auto obj = LObject({LNode("F")}, {&r1});
+//    LRuleStoch r1 = LRuleStoch({LNode("F")},
+//            std::vector<std::vector<LNode>> {LRule::genRule("F[+F]F[-F]F"), LRule::genRule("F[+F]F"), LRule::genRule("F[-F]F")});
+
+//    LRuleContext r1 = LRuleContext({LNode("b")}, {LNode("a")}, {}, {LNode("b")});
+//    LRuleBasic r2 = LRuleBasic({LNode("b")}, {LNode("a")});
+    LRuleContext r1 = LRuleContext({LNode("Fb")}, {LNode("Fa")}, {}, {LNode("Fb")}, {LNode("+"), LNode("-")});
+
+    // Fb[+Fa]Fa[−Fa]Fa[+Fa]Fa
+    auto obj = LObject({LNode("Fb"), LNode("["), LNode("+"), LNode("Fa"), LNode("]"), LNode("Fa"), LNode("["), LNode("-"), LNode("Fa"), LNode("]"), LNode("Fa"), LNode("["), LNode("+"), LNode("Fa"), LNode("]"), LNode("Fa"), }, {&r1});
 
 //    auto r1 = LRuleBasic({LNode("A")}, LRuleBasic::genRule("B-F+CFC+F-D&F^D-F+&&CFC+F+B//"));
 //    auto r2 = LRuleBasic({LNode("B")}, LRuleBasic::genRule("A&F^CFB^F^D^^-F-D^|F^B|FC^F^A//"));
@@ -106,12 +113,9 @@ void lSystemExample() {
 //            std::vector{"F"});  // forward
     TurtleTranslator t = TurtleTranslator(22.5);
 
+    obj.print();
     obj.iterate(4);
 
-    for (const auto& n : obj.getNodes()) {
-        std::cout << n.getId();
-    }
-    std::cout << std::endl;
 
     Object o = t.transcript(obj);
 

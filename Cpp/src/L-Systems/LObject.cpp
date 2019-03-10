@@ -42,6 +42,7 @@ void LObject::iter() {
 void LObject::iterate(unsigned count) {
     for (unsigned i = 0; i < count; ++i) {
         iter();
+        print();
     }
 }
 
@@ -51,5 +52,12 @@ const std::vector<LRule*> &LObject::getRules() const {
 
 const std::vector<LNode> &LObject::getNodes() const {
     return nodes;
+}
+
+void LObject::print() const {
+    for (const auto& n : nodes) {
+        std::cout << n.getId();
+    }
+    std::cout << std::endl;
 }
 

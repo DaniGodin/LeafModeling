@@ -37,6 +37,7 @@ public:
 
     const std::string &getName() const;
 
+
 private:
     std::string name = "default";
 

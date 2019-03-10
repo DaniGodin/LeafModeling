@@ -22,6 +22,8 @@ public:
 
     void iterate(unsigned count);
 
+    void print() const;
+
 private:
 
     void iter();
