@@ -1,26 +1,34 @@
 import numpy as np
-from matplotlib.patches import Ellipse
+from matplotlib import pyplot as plt
+from pylab import *
 from matplotlib.patches import Polygon
-from Leaf_objects import Leaf, VenationPoint, Particle
+from leaf_object import Leaf, VenationPoint
+from particle_object import Particle, Particle_set
 from Gen_Random import get_initial
 
 
 if __name__ == '__main__':
 
+    fig, ax = plt.subplots()
+
     leaf_shape = Polygon([(-3, 0), (0, 6), (3, 0)], closed=True)
-    initial_particles = get_initial(leaf_shape, 10)
-    print(initial_particles)
-    """
-    Ven5 = VenationPoint((0.5, 2.5), [])
-    Ven4 = VenationPoint((1.5, 2.5), [])
-    Ven3 = VenationPoint((1, 2), [Ven4, Ven5])
-    Ven2 = VenationPoint((-1, 2), [])
-    Ven1 = VenationPoint((0, 1), [Ven2, Ven3])
-    """
-    L = Leaf(leaf_shape, (0, 0), None)
-    for p in initial_particles:
-        p.display_particle()
-    L.display_leaf()
+    particles = Particle_set(get_initial(leaf_shape, 1000), [0, 0])
 
+    for i in range(100):
+        particles.move_particles(0.2, 1, 2)
+        """
+        particles.display_particles()
+        ylim(0, 6)
+        xlim(-4, 4)
+        show()
+        """
 
+    L = Leaf(leaf_shape, [0, 0], particles.get_venations(), ax)
+    L.display_petiole()
+    L.display_shape()
+    L.display_venation()
+    particles.display_particles()
 
+    ylim(0, 6)
+    xlim(-4, 4)
+    show()
