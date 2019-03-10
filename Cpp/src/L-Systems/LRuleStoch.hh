@@ -16,9 +16,20 @@ public:
     LRuleStoch(const std::vector<LNode> &start, const std::vector<std::vector<LNode>> &finishes, const std::vector<double> &probabilities);
     LRuleStoch(const std::vector<LNode> &start, const std::vector<std::vector<LNode>> &finishes);
 
+    const std::vector<std::vector<LNode>> &getFinish() const {
+        return finishes;
+    }
+
+    const std::vector<LNode> &getStart() const {
+        return start;
+    }
+
     std::vector<LNode> getResult() override;
 
+    bool accept(std::vector<LNode>::iterator it) override;
+
 private:
+    std::vector<LNode> start;
     std::vector<double> probabilities;
     std::vector<std::vector<LNode>> finishes;
 };

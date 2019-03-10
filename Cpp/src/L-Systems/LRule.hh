@@ -11,25 +11,20 @@
 
 class LRule {
 
-protected:
-    LRule(const std::vector<LNode> &start);
-
 public:
-    virtual bool accept(std::vector<LNode>::iterator it);
+    virtual bool accept(std::vector<LNode>::iterator it) = 0;
 
-    virtual std::vector<LNode> getResult();
-
-    template <typename It1, typename It2>
-    bool vectCmp(It1 lhs, It2 rhs, unsigned count);
+    virtual std::vector<LNode> getResult() = 0;
 
     static std::vector<LNode> genRule(const std::string &rule);
 
-    const std::vector<LNode> &getStart() const {
-        return start;
-    }
 
 protected:
-    std::vector<LNode> start;
+    bool vectCmp(std::vector<LNode>::iterator lhs, std::vector<LNode>::iterator rhs, unsigned count);
+
+
+
+protected:
 };
 
 #endif //OBJPARSER_LRULE_HH

@@ -10,13 +10,13 @@
 
 LRuleStoch::LRuleStoch(const std::vector<LNode> &start, const std::vector<std::vector<LNode>> &finishes,
                           const std::vector<double> &probabilities)
-        : LRule(start), finishes(finishes), probabilities(probabilities)
+        : start(start), finishes(finishes), probabilities(probabilities)
 {
 
 }
 
 LRuleStoch::LRuleStoch(const std::vector<LNode> &start, const std::vector<std::vector<LNode>> &finishes)
-    : LRule(start), finishes(finishes) {
+    : start(start), finishes(finishes) {
 
     double p = 1.0/static_cast<double>(finishes.size());
     probabilities = std::vector(finishes.size() - 1, p);
@@ -39,4 +39,8 @@ std::vector<LNode> LRuleStoch::getResult() {
 
     // default
     return finishes[finishes.size() - 1];
+}
+
+bool LRuleStoch::accept(std::vector<LNode>::iterator it) {
+    return LRule::vectCmp(it, start.begin(), start.size());
 }
