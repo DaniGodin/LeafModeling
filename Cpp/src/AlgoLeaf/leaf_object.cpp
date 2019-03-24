@@ -7,27 +7,32 @@
 namespace algoLeaf {
 
 
-    int venationPoint::getPhotoEnergy() const {
-        return photoEnergy;
+    int compute_energy(std::vector<venationPoint *> childrens) {
+        int energy = 0;
+        for (auto c : childrens){
+
+            energy += c->photoEnergy;
+        }
+
+        return energy > 0 ? energy : 1;
     }
 
-    void venationPoint::setPhotoEnergy(int photoEnergy) {
-        venationPoint::photoEnergy = photoEnergy;
+
+
+    venationPoint::venationPoint(Point3D position, std::vector<venationPoint *> childrens) {
+
+        venationPoint::photoEnergy = compute_energy(childrens);
+        venationPoint::childrens = childrens;
+        venationPoint::position = position;
+
     }
 
-    Node *venationPoint::getVen_node() const {
-        return ven_node;
+
+    Leaf::Leaf(int shape, Point3D petiole, std::vector<venationPoint *> venations) {
+        Leaf::shape = shape;
+        Leaf::start = new venationPoint(petiole, venations);
+        Leaf::petiole = petiole;
+
     }
 
-    void venationPoint::setVen_node(Node *ven_node) {
-        venationPoint::ven_node = ven_node;
-    }
-
-    const venationPoint &Leaf::getStart() const {
-        return start;
-    }
-
-    void Leaf::setStart(const venationPoint &start) {
-        Leaf::start = start;
-    }
 }

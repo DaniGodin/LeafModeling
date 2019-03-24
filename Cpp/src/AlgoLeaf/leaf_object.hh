@@ -3,7 +3,8 @@
 //
 
 #include "../Obj/Point3D.hh"
-#include "../Tree/Node.hh"
+#include <iostream>
+#include <vector>
 
 #ifndef OBJPARSER_LEAF_OBJECT_H
 #define OBJPARSER_LEAF_OBJECT_H
@@ -19,35 +20,33 @@ namespace algoLeaf {
 
     public:
 
-        venationPoint(Point3D position, Node *childrens);
+        venationPoint(Point3D position, std::vector<venationPoint *> childrens);
 
-        int getPhotoEnergy() const;
+        std::ostream&operator <<(std::ostream &out);
 
-        void setPhotoEnergy(int photoEnergy);
-        //number of photons at this point
+    public:
 
-        Node *getVen_node() const;
-
-        void setVen_node(Node *ven_node);
-
-    private:
-
-        Node *ven_node = nullptr;
-
+        Point3D position;
+        std::vector<venationPoint*> childrens;
         int photoEnergy;
 
     };
 
+
     class Leaf{
 
     public:
-        const venationPoint &getStart() const;
 
-        void setStart(const venationPoint &start);
+        Leaf(int shape, Point3D petiole, std::vector<venationPoint *> venations);
+
+        std::ostream&operator <<(std::ostream &out);
+
+
+    public:
 
         int shape; // should have a proper object for the leaf shape
         Point3D petiole; //position of the node of the leaf
-        venationPoint  start; // structure containing all the venations intersection points of the leaf.
+        venationPoint *start; // structure containing all the venations intersection points of the leaf.
 
 
     };
