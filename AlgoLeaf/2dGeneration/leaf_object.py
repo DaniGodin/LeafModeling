@@ -35,7 +35,7 @@ class Leaf:
     def display_venation(self):
         if self.venation:
             line = [[self.petiole, self.venation.coord]]
-            lc = mc.LineCollection(line, linewidths=self.venation.PhotoEnergy, color='black')
+            lc = mc.LineCollection(line, linewidths=self.venation.PhotoEnergy * 0.8, color='black')
             self.ax.add_collection(lc)
             self.venation.display_venation(self.ax)
 
@@ -73,7 +73,7 @@ class VenationPoint:
         if self.children:
             for elt in self.children:
                 line = [self.coord, elt.coord]
-                lc = mc.LineCollection([line], linewidths=0.1 * elt.PhotoEnergy, color='black')
+                lc = mc.LineCollection([line], linewidths=0.08 * elt.PhotoEnergy, color='black')
                 ax.add_collection(lc)
                 elt.display_venation(ax)
 
