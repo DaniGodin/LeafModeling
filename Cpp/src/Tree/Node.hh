@@ -30,6 +30,7 @@ private:
     Point3D pt;
     std::vector<Node *> children;
     Node *parent = nullptr;
+    double energy;
 
 };
 

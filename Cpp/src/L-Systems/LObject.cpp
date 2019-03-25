@@ -18,7 +18,7 @@ void LObject::iter() {
     for (int i = 0; i < nodes.size(); ++i) {
         foundRule = false;
         for (LRule *rule : rules) {
-            if (rule->accept(nodes, i)) {
+            if (rule->accept(nodes, i, env)) {
                 // RULE CAN BE APPLIED
                 // use rule to add to new vector
                 foundRule = true;

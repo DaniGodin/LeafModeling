@@ -26,7 +26,7 @@ public:
 
     std::vector<LNode> getResult() override;
 
-    bool accept(std::vector<LNode> &v, unsigned index) override;
+    bool accept(std::vector<LNode> &v, unsigned index, Environment &env) override;
 
 private:
     std::vector<LNode> start;

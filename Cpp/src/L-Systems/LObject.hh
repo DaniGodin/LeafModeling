@@ -9,6 +9,7 @@
 #include <vector>
 #include "LNode.hh"
 #include "LRuleBasic.hh"
+#include "Environment.hh"
 
 class LObject {
 public:
@@ -32,6 +33,7 @@ private:
 private:
     std::vector<LRule*> rules;
     std::vector<LNode> nodes;
+    Environment env = Environment();
 
 };
 

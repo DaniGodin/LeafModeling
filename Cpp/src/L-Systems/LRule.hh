@@ -8,6 +8,7 @@
 #include <string>
 #include <vector>
 #include "LNode.hh"
+#include "Environment.hh"
 
 class LRule {
 
@@ -16,7 +17,7 @@ protected:
     typedef std::vector<LNode>::reverse_iterator v_riter;
 
 public:
-    virtual bool accept(std::vector<LNode> &v, unsigned index) = 0;
+    virtual bool accept(std::vector<LNode> &v, unsigned index, Environment &env) = 0;
 
     virtual std::vector<LNode> getResult() = 0;
 

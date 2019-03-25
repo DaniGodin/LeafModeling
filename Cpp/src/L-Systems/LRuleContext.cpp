@@ -6,7 +6,7 @@
 #include <stack>
 #include <iostream>
 
-bool LRuleContext::accept(std::vector<LNode> &v, unsigned index) {
+bool LRuleContext::accept(std::vector<LNode> &v, unsigned index, Environment &env) {
     // check if "basic" rule apply
     std::vector<LNode>::iterator nth = v.begin() + index;
     if (!vectCmp(nth, start.begin(), start.size()))
@@ -89,6 +89,10 @@ bool LRuleContext::acceptPrecede(std::vector<LNode> &v, int index) {
                 }
             }
 
+            // end of string without a match
+            if (index < 0)
+                return false;
+
             // try matching the char
             if (v[index].getId() != precede[pi].getId()) {   // no match
                 if (!stack.empty()) {                   // if inside a bracket, skip bracket
@@ -135,6 +139,10 @@ bool LRuleContext::acceptFollow(std::vector<LNode> &v, int index) {
                     break;                          // stop skipping
                 }
             }
+
+            // end of string without a match
+            if (index >= v.size())
+                return false;
 
             // try matching the char
             if (v[index].getId() != follow[pi].getId()) {   // no match
