@@ -1,0 +1,8 @@
+//
+// Created by dany on 24/03/19.
+//
+
+#ifndef ALGOLEAF_PARTICLE_OBJECT_HH
+#define ALGOLEAF_PARTICLE_OBJECT_HH
+
+#endif //ALGOLEAF_PARTICLE_OBJECT_HH

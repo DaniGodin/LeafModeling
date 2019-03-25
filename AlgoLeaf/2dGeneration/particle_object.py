@@ -38,17 +38,18 @@ class Particle_set:
 
     def move_particles(self, stepsize, weight_n, weight_t):
         print(len(self.particles))
-        if len(self.particles) == 1:
+        if len(self.particles) == 4:
             return
         else:
             for p in self.particles:
                 q = self.get_closest(p)
-                if get_distance(p, q) < 0.01:
+                if get_distance(p, q) < 0.1:
                     p.last_venation = VenationPoint(merge_pos(p, q), [p.last_venation, q.last_venation])
                     self.particles.remove(q)
                 else:
                     dir_closer = get_unit_vector(p.coord, q.coord)
                     p.move(dir_closer, stepsize, weight_n, weight_t)
+
         self.init_vector()
 
 

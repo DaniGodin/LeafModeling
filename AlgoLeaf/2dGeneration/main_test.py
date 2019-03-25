@@ -1,5 +1,3 @@
-import numpy as np
-from matplotlib import pyplot as plt
 from pylab import *
 from matplotlib.patches import Polygon
 from leaf_object import Leaf, VenationPoint
@@ -14,7 +12,7 @@ if __name__ == '__main__':
     leaf_shape = Polygon([(-3, 0), (0, 6), (3, 0)], closed=True)
     particles = Particle_set(get_initial(leaf_shape, 1000), [0, 0])
 
-    for i in range(100):
+    for i in range(40):
         particles.move_particles(0.2, 1, 2)
         """
         particles.display_particles()
