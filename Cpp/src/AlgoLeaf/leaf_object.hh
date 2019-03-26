@@ -20,6 +20,8 @@ namespace algoLeaf {
 
     public:
 
+        venationPoint(){};
+
         venationPoint(Point3D position, std::vector<venationPoint *> childrens);
 
         std::ostream&operator <<(std::ostream &out);

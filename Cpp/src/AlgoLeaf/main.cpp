@@ -6,8 +6,8 @@ int main() {
 
     algoLeaf::venationPoint v;
 
-    int p = v.getPhotoEnergy();
+    v.photoEnergy = 10;
 
-    std::cout << p << std::endl;
+    std::cout << v.photoEnergy << std::endl;
     return 0;
 }
