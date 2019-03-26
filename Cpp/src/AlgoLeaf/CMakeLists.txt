@@ -7,5 +7,7 @@ add_executable(AlgoLeaf main.cpp
                         leaf_object.cpp
                         leaf_object.hh
                         ../Obj/Point3D.hh
-                        ../Tree/Node.hh
+                        ../Obj/Point3D.cpp
+                        ../Obj/Vector3D.cpp
+                        ../Obj/Vector3D.hh
         particle_object.cpp particle_object.hh gen_random.cpp gen_random.hh math_stuff.cpp math_stuff.hh)
