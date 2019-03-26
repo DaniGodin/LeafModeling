@@ -22,6 +22,18 @@ public:
 
     bool operator!=(const Vector3D &rhs) const;
 
+    double scalar(const Vector3D &rhs) const;
+
+    Vector3D crossProduct(const Vector3D &rhs) const;
+
+    double length() const;
+
+    Vector3D &normalize();
+
+    const Vector3D normalized() const;
+
+    Vector3D operator*(const double &rhs);
+
 private:
     double x;
     double y;

@@ -44,3 +44,7 @@ Point3D Point3D::operator+(const Vector3D &rhs) const {
 Point3D Point3D::operator*(const Vector3D &rhs) const {
     return Point3D(x * rhs.getX(), y * rhs.getY(), z * rhs.getZ());
 }
+
+Vector3D Point3D::operator-(const Point3D &rhs) {
+    return Vector3D(x - rhs.getX(), y - rhs.getY(), z - rhs.getZ());
+}

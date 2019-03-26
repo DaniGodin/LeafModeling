@@ -38,7 +38,7 @@ public:
     const std::string &getName() const;
 
 
-private:
+protected:
     std::string name = "default";
 
     std::vector<Point3D> v;      // geometric vertices

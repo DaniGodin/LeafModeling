@@ -12,6 +12,7 @@
 #include "L-Systems/LTranslator.hh"
 #include "L-Systems/TurtleTranslator.hh"
 #include "L-Systems/LRuleContext.hh"
+#include "Obj/Meshes/Cylinder.hh"
 
 void parseFileExample() {
     // parse blender cube file
@@ -70,6 +71,17 @@ void treeExample() {
     // write scene to file
     gen.write(&scene);
 
+}
+
+void cylinderExample() {
+    Generator gen = Generator("cylinder.obj");
+
+    Cylinder cyl(Point3D(0, 1.5, 0), Vector3D(1, 4, 0.5), 5, 0.21, "cyl", 20);
+    // create a scene and put the object in it
+    Scene scene = Scene();
+    scene.getObjects().push_back(cyl);
+    // write scene to file
+    gen.write(&scene);
 }
 
 void lSystemExample() {
@@ -160,6 +172,7 @@ int main() {
 
 //    treeExample();
 //    parseFileExample();
-    lSystemExample();
+//    lSystemExample();
+    cylinderExample();
     return 0;
 }
