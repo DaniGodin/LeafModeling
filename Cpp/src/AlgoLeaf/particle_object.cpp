@@ -62,7 +62,7 @@ namespace particles {
     bool Particle_set::move_particles(float stepsize, float weight_n, float weight_t, float merge_dist) {
 
         std::cout << "number of particles: " << particles.size() << std::endl;
-        if (particles.size() < 3)
+        if (particles.size() < 2)
             return false;
 
         for (auto &p : particles){
@@ -74,7 +74,6 @@ namespace particles {
             } else {
                 Vector3D dir_closer = math::get_unit_vector(p.position, particles[closest].position);
                 p.move(dir_closer, stepsize, weight_n, weight_t);
-
             }
         }
 

@@ -16,11 +16,12 @@ int main() {
 
     std::cout << p_set;
 
-    p_set.move_particles(0.1, 1, 2, 0.1);
-
+    for (int i = 0; i < 15; i ++ ) {
+        p_set.move_particles(0.1, 1, 2, 0.1);
+    }
     std::cout << "after one iteration";
 
-    std::cout << p_set << std::endl;
+    std::cout << p_set;
 
 
 

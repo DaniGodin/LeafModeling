@@ -26,7 +26,7 @@ namespace math {
 
         double x = (dir_t.getX() * weight_t + dir_n.getX() * weight_n) / (weight_t + weight_n);
         double y = (dir_t.getY() * weight_t + dir_n.getY() * weight_n) / (weight_t + weight_n);
-        double z = (dir_t.getY() * weight_t + dir_n.getY() * weight_n) / (weight_t + weight_n);
+        double z = (dir_t.getZ() * weight_t + dir_n.getZ() * weight_n) / (weight_t + weight_n);
         double norme = sqrt(x*x + y*y + z*z);
 
         return Vector3D(x / norme, y / norme, z / norme);
@@ -40,6 +40,8 @@ namespace math {
         double x = p2.getX() - p1.getX();
         double y = p2.getY() - p1.getY();
         double z = p2.getZ() - p1.getZ();
+
+
 
         double norme = sqrt(x*x + y*y + z*z);
 
