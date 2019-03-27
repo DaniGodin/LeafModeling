@@ -5,7 +5,8 @@
 #ifndef OBJPARSER_POINT3D_HH
 #define OBJPARSER_POINT3D_HH
 
-
+#include <iostream>
+#include <iosfwd>
 #include "Vector3D.hh"
 
 class Point3D {
@@ -34,6 +35,7 @@ public:
 
     const Vector3D operator-(const Point3D &rhs) const;
 
+
 private:
     double x;
     double y;
@@ -41,5 +43,6 @@ private:
     double w = 1.0; // weight
 };
 
+std::ostream& operator<<(std::ostream& out, const Point3D& p);
 
 #endif //OBJPARSER_POINT3D_HH

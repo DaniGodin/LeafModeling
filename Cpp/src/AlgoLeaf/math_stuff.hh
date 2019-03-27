@@ -5,7 +5,7 @@
 #ifndef ALGOLEAF_MATH_STUFF_HH
 #define ALGOLEAF_MATH_STUFF_HH
 
-#endif //ALGOLEAF_MATH_STUFF_HH
+
 
 #include "../Obj/Point3D.hh"
 #include "../Obj/Vector3D.hh"
@@ -25,4 +25,9 @@ namespace math {
 
     Point3D merge_pos(particles::Particle p1, particles::Particle p2);
 
+    unsigned int get_neighbour(particles::Particle p, std::vector<particles::Particle> list_p);
+
 }
+
+
+#endif //ALGOLEAF_MATH_STUFF_HH

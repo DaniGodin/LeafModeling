@@ -10,6 +10,7 @@
 #include "../Obj/Vector3D.hh"
 #include "leaf_object.hh"
 
+
 namespace particles {
 
 
@@ -25,7 +26,12 @@ namespace particles {
     public:
 
 
-        Particle(Point3D pos) : position(pos){};
+        Particle(Point3D pos) {
+            position = pos;
+            dir_to_p = Vector3D(0,0,0);
+        };
+
+        bool operator==(const Particle& p);
 
         void move(Vector3D dir_closer, float stepsize, float weight_n, float weight_t);
 
@@ -33,6 +39,9 @@ namespace particles {
 
 
     };
+
+    std::ostream& operator<<(std::ostream& out, const Particle& p);
+
 
     class Particle_set {
 
@@ -45,31 +54,31 @@ namespace particles {
 
     public:
 
-        Particle_set(std::vector<Particle > p, Point3D pet_coord) : particles(p), petiole(pet_coord) {};
+        Particle_set(std::vector<Particle > p, Point3D pet_coord) : particles(p), petiole(pet_coord) {
+            init_venation();
+            init_vector();
+
+        };
 
         void init_venation();
 
-        void compute_dir();
-
-        Particle get_closest(Particle p);
-
-        void move_particles(float stepsize, float weight_n, float weight_t);
+        void init_vector();
 
 
-        std::vector<algoLeaf::venationPoint> get_venations();
+
+        unsigned int get_closest(Particle p);
+
+        bool move_particles(float stepsize, float weight_n, float weight_t, float merge_dist);
+
+
+        std::vector<algoLeaf::venationPoint* > get_venations();
+
 
 
     };
 
+    std::ostream& operator<<(std::ostream& out, Particle_set& p_set);
+
 }
-
-
-
-
-
-
-
-
-
 
 #endif //ALGOLEAF_PARTICLE_OBJECT_HH

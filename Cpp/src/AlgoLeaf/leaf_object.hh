@@ -9,7 +9,7 @@
 #ifndef OBJPARSER_LEAF_OBJECT_H
 #define OBJPARSER_LEAF_OBJECT_H
 
-#endif //OBJPARSER_LEAF_OBJECT_H
+
 
 
 
@@ -52,10 +52,6 @@ namespace algoLeaf {
 
 
     };
-
-
-
-
-
-
 }
+
+#endif //OBJPARSER_LEAF_OBJECT_H
