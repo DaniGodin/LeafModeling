@@ -66,9 +66,9 @@ namespace particles {
 
 
 
-        Particle get_closest(Particle p);
+        unsigned int get_closest(Particle p);
 
-        void move_particles(float stepsize, float weight_n, float weight_t);
+        bool move_particles(float stepsize, float weight_n, float weight_t, float merge_dist);
 
 
         std::vector<algoLeaf::venationPoint* > get_venations();
@@ -76,6 +76,8 @@ namespace particles {
 
 
     };
+
+    std::ostream& operator<<(std::ostream& out, Particle_set& p_set);
 
 }
 

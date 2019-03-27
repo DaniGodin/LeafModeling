@@ -25,7 +25,7 @@ namespace math {
 
     Point3D merge_pos(particles::Particle p1, particles::Particle p2);
 
-    unsigned int get_neighbour(particles::Particle p, particles::Particle_set set);
+    unsigned int get_neighbour(particles::Particle p, std::vector<particles::Particle> list_p);
 
 }
 

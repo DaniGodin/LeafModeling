@@ -54,9 +54,8 @@ namespace math {
     }
 
 
-    unsigned int get_neighbour(particles::Particle p, particles::Particle_set set){
+    unsigned int get_neighbour(particles::Particle p, std::vector<particles::Particle> vec){
 
-        std::vector<particles::Particle> vec = set.particles;
 
         unsigned int p_index = std::distance(vec.begin(), std::find(vec.begin(), vec.end(), p));
 

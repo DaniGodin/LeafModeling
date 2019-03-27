@@ -32,7 +32,7 @@ public:
     Point3D operator+(const Vector3D &rhs) const;
 
     Point3D operator*(const Vector3D &rhs) const;
-    
+
     Vector3D operator-(const Point3D &rhs);
 
 
