@@ -71,3 +71,4 @@ const Vector3D Vector3D::normalized() const {
 Vector3D Vector3D::operator*(const double &rhs) {
     return Vector3D(x * rhs, y * rhs, z * rhs);
 }
+

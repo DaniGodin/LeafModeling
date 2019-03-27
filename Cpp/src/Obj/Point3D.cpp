@@ -48,3 +48,10 @@ Point3D Point3D::operator*(const Vector3D &rhs) const {
 Vector3D Point3D::operator-(const Point3D &rhs) {
     return Vector3D(x - rhs.getX(), y - rhs.getY(), z - rhs.getZ());
 }
+
+std::ostream& operator<<(std::ostream &out, const Point3D &p) {
+    out << "X: " << p.getX() << std::endl;
+    out << "Y: " << p.getY() << std::endl;
+    out << "Z: " << p.getZ() << std::endl;
+
+}
