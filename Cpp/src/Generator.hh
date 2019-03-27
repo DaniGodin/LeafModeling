@@ -19,12 +19,10 @@ class Generator {
 public:
     explicit Generator(const std::string &filename);
 
-    Object generate(Node *root, std::string name);
 
     std::string write(Scene *s);
 
 private:
-    void genTreeO(Node *n, Object &o, long rootIndex);
 
     void writeO(std::ofstream &s, Object &o);
     void writeV(std::ofstream &s, Point3D &v);
@@ -37,6 +35,12 @@ private:
 
 private:
     std::string filename;
+
+    unsigned globalVCount = 1;
+    unsigned globalVnCount = 1;
+    unsigned globalVtCount = 1;
+    unsigned globalVpCount = 1;
+
 };
 
 

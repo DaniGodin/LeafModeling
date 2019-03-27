@@ -32,7 +32,10 @@ public:
 
     const Vector3D normalized() const;
 
-    Vector3D operator*(const double &rhs);
+    Vector3D operator*(const double &rhs) const;
+
+    static Vector3D up(double intensity);
+    static Vector3D up();
 
 private:
     double x;

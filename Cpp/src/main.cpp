@@ -13,6 +13,7 @@
 #include "L-Systems/TurtleTranslator.hh"
 #include "L-Systems/LRuleContext.hh"
 #include "Obj/Meshes/Cylinder.hh"
+#include "Tree/TreeTranslator.hh"
 
 void parseFileExample() {
     // parse blender cube file
@@ -35,18 +36,18 @@ void parseFileExample() {
 
 void treeExample() {
     // create nodes and links
-    Node a = Node(Point3D(), nullptr);
+    Node a = Node(Point3D(), nullptr, 1.5);
 
-    Node b = Node(Point3D(-2.0, 3.0, 0.0), &a);
-    Node e = Node(Point3D(0.0, 2.0, 0.0), &a);
-    Node i = Node(Point3D(1.0, 4.0, 0.0), &a);
+    Node b = Node(Point3D(-2.0, 3.0, 0.0), &a, 0.8);
+    Node e = Node(Point3D(0.0, 2.0, 0.0), &a, 0.8);
+    Node i = Node(Point3D(1.0, 4.0, 0.0), &a, 0.8);
 
-    Node c = Node(Point3D(-5.0, 5.0, 0.0), &b);
-    Node f = Node(Point3D(-1.0, 4.0, 0.0), &e);
-    Node h = Node(Point3D(2.0, 5.0, 0.0), &e);
+    Node c = Node(Point3D(-5.0, 5.0, 0.0), &b, 0.5);
+    Node f = Node(Point3D(-1.0, 4.0, 0.0), &e, 0.5);
+    Node h = Node(Point3D(2.0, 5.0, 0.0), &e, 0.5);
 
-    Node d = Node(Point3D(-3.0, 6.0, 0.0), &c);
-    Node g = Node(Point3D(0.0, 7.0, 0.0), &f);
+    Node d = Node(Point3D(-3.0, 6.0, 0.0), &c, 0.2);
+    Node g = Node(Point3D(0.0, 7.0, 0.0), &f, 0.2);
 
     a.getChildren().push_back(&b);
     a.getChildren().push_back(&e);
@@ -61,15 +62,31 @@ void treeExample() {
 
     f.getChildren().push_back(&g);
 
-    // instanciate generator
-    Generator gen = Generator("out.obj");
+    TreeTranslator translator = TreeTranslator();
+
+    //\\// LINE GENERATION
     // gen a leaf object based on the tree
-    Object leaf1 = gen.generate(&a, "leaf1");
+    std::vector<Object> leaf1 = translator.generate(&a, "leaf1", TreeTranslator::GENTYPE::line);
     // create a scene and put the object in it
     Scene scene = Scene();
-    scene.getObjects().push_back(leaf1);
+    for (const auto &o : leaf1)
+        scene.getObjects().push_back(o);
+    // instanciate generator
+    Generator gen = Generator("out_line.obj");
     // write scene to file
     gen.write(&scene);
+
+    //\\// CYLINDER GENERATION
+    std::vector<Object> leafCyl = translator.generate(&a, "Cyl", TreeTranslator::GENTYPE::cylinder);
+    // create a scene and put the object in it
+    Scene scene2 = Scene();
+    for (const auto &o : leafCyl)
+        scene2.getObjects().push_back(o);
+    // instanciate generator
+    Generator gen2 = Generator("out_cyl.obj");
+    // write scene to file
+    gen2.write(&scene2);
+
 
 }
 
@@ -170,9 +187,9 @@ void lSystemExample() {
 int main() {
     std::srand(std::time(nullptr));
 
-//    treeExample();
+    treeExample();
 //    parseFileExample();
 //    lSystemExample();
-    cylinderExample();
+//    cylinderExample();
     return 0;
 }

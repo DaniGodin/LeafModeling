@@ -10,51 +10,6 @@ Generator::Generator(const std::string &filename) : filename(filename) {
 }
 
 
-Object Generator::generate(Node *root, std::string name) {
-    Object o = Object(name);
-
-    // push the root
-    o.getV().push_back(std::move(root->getPt()));
-    genTreeO(root, o, 0);
-    return o;
-}
-
-void Generator::genTreeO(Node *n, Object &o, long rootIndex) {
-    // root already pushed -> gotta find its index
-//    auto it = std::find(o.getV().begin(), o.getV().end(), n);
-//    if (it == std::end(o.getV())) {
-//        std::cerr << "Error in getV" << std::endl;
-//        return;
-//    }
-//    // index of root
-//    long rootIndex = std::distance(o.getV().begin(), it);
-
-    // iterate through children (tree structure so each child is a new node)
-    for (auto &c : n->getChildren()) {
-        // push child & get its index
-        long index = o.getV().size();
-        o.getV().push_back(std::move(c->getPt()));
-        // create line elt from root to child
-        LineEl l = LineEl();
-        // root pt
-        l.getVertices().push_back(
-                std::make_tuple(
-                        std::make_tuple<int, Point3D *>(rootIndex, &o.getV()[rootIndex]),
-                        std::make_tuple<int, Texture2D *>(0, nullptr))
-                );
-        // child pt
-        l.getVertices().push_back(
-                std::make_tuple(
-                        std::make_tuple<int, Point3D *>(index, &o.getV()[index]),
-                        std::make_tuple<int, Texture2D *>(0, nullptr))
-        );
-        // push line elt
-        o.getLineEls().push_back(std::move(l));
-        // iterate through child
-        genTreeO(c, o, index);
-    }
-}
-
 std::string Generator::write(Scene *s) {
     std::ofstream os = std::ofstream(filename);
     os << std::fixed << std::setprecision(8);
@@ -72,25 +27,37 @@ std::string Generator::write(Scene *s) {
     // 5) f
 
     for (auto &o : s->getObjects()) {
+
+        // v, vn, vt, vp count per object
+        unsigned objectVCount = 0;
+        unsigned objectVnCount = 0;
+        unsigned objectVtCount = 0;
+        unsigned objectVpCount = 0;
+
+
         // write o
         writeO(os, o);
         // write v
         for (auto &v : o.getV()) {
             writeV(os, v);
+            ++objectVCount;
         }
         // write vt
         for (auto &vt : o.getVt()) {
             writeVt(os, vt);
+            ++objectVtCount;
         }
 
         // write vn
         for (auto &vn : o.getVn()) {
             writeVn(os, vn);
+            ++objectVnCount;
         }
 
         // write vp
         for (auto &vp : o.getVp()) {
             writeVp(os, vp);
+            ++objectVpCount;
         }
 
         // write usemtl
@@ -111,6 +78,12 @@ std::string Generator::write(Scene *s) {
         for (auto &f : o.getFaceEls()) {
             writeF(os, f, o);
         }
+
+        // update global v, vn, vt, vp count with current object count
+        globalVCount += objectVCount;
+        globalVnCount += objectVnCount;
+        globalVtCount += objectVtCount;
+        globalVpCount += objectVpCount;
     }
 
     return filename;
@@ -155,13 +128,13 @@ void Generator::writeL(std::ofstream &s, LineEl &l, Object &o) {
         // write index of v
         Point3D_i &v = std::get<0>(tuple);
         if (std::get<1>(v) != nullptr) {
-            s << std::get<0>(v) + 1;
+            s << std::get<0>(v) + globalVCount;
         }
         s << "/";
         // write index of vt
         Texture2D_i &vt = std::get<1>(tuple);
         if (std::get<1>(vt) != nullptr) {
-            s << std::get<0>(vt) + 1;
+            s << std::get<0>(vt) + globalVtCount;
         }
     }
     s << std::endl;
@@ -174,20 +147,22 @@ void Generator::writeF(std::ofstream &s, FaceEl &f, Object &o) {
         // write index of v
         Point3D_i &v = std::get<0>(tuple);
         if (std::get<1>(v) != nullptr) {
-            s << std::get<0>(v) + 1;
+            s << std::get<0>(v) + globalVCount;
         }
         s << "/";
         // write index of vt
         Texture2D_i &vt = std::get<1>(tuple);
         if (std::get<1>(vt) != nullptr) {
-            s << std::get<0>(vt) + 1;
+            s << std::get<0>(vt) + globalVtCount;
         }
         s << "/";
         // write index of vn
         Vector3D_i &vn = std::get<2>(tuple);
         if (std::get<1>(vn) != nullptr) {
-            s << std::get<0>(vn) + 1;
+            s << std::get<0>(vn) + globalVnCount;
         }
     }
     s << std::endl;
 }
+
+

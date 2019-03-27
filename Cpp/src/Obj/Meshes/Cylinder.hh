@@ -13,8 +13,13 @@ class Cylinder : public Object {
 
 public:
     Cylinder(const Point3D &pos, const Vector3D &up, double height, double radius);
+    Cylinder(const Point3D &pos, const Point3D &pos2, double height, double radius);
     Cylinder(const Point3D &pos, const Vector3D &up, double height, double radius, std::string name);
     Cylinder(const Point3D &pos, const Vector3D &up, double height, double radius, std::string name, int subdiv);
+
+
+    const Point3D getCenterUp() const;
+    const Point3D getCenterDown() const;
 
 private:
     void initGeom();

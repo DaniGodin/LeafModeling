@@ -8,6 +8,8 @@ Node::Node() = default;
 
 Node::Node(const Point3D &pt, Node *parent) : pt(std::move(pt)), parent(parent) {}
 
+Node::Node(const Point3D &pt, Node *parent, double energy) : pt(std::move(pt)), parent(parent), energy(energy) {}
+
 Node::Node(Node *parent) : parent(parent) {}
 
 Point3D &Node::getPt() {
@@ -24,4 +26,8 @@ Node *Node::getParent() const {
 
 void Node::setParent(Node *parent) {
     Node::parent = parent;
+}
+
+double Node::getEnergy() const {
+    return energy;
 }

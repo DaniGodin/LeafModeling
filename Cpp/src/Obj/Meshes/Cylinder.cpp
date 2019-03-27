@@ -12,6 +12,15 @@ Cylinder::Cylinder(const Point3D &pos, const Vector3D &up, double height, double
     genGeometry(subdiv);
 }
 
+Cylinder::Cylinder(const Point3D &pos, const Point3D &pos2, double height, double radius)
+        : pos(pos),
+          up((pos2 - pos).normalized()),
+          height(height),
+          radius(radius) {
+    initGeom();
+    genGeometry(subdiv);
+}
+
 Cylinder::Cylinder(const Point3D &pos, const Vector3D &up, double height, double radius, std::string name) : pos(pos),
                                                                                                              up(up.normalized()),
                                                                                                              height(height),
@@ -113,5 +122,13 @@ void Cylinder::genGeometry(int subdiv) {
     }
     faceEls.push_back(top);
 
+}
+
+const Point3D Cylinder::getCenterDown() const {
+    return Point3D(pos);
+}
+
+const Point3D Cylinder::getCenterUp() const {
+    return Point3D(pos + (up * height));
 }
 

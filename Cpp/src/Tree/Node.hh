@@ -14,6 +14,7 @@ public:
     Node(Node *parent);
 
     Node(const Point3D &pt, Node *parent);
+    Node(const Point3D &pt, Node *parent, double energy);
 
     Node();
 
@@ -25,12 +26,14 @@ public:
 
     void setParent(Node *parent);
 
+    double getEnergy() const;
+
 
 private:
     Point3D pt;
     std::vector<Node *> children;
     Node *parent = nullptr;
-    double energy;
+    double energy = 1;
 
 };
 

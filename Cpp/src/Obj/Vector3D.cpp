@@ -68,6 +68,14 @@ const Vector3D Vector3D::normalized() const {
     return Vector3D(x * inv, y * inv, z * inv);
 }
 
-Vector3D Vector3D::operator*(const double &rhs) {
+Vector3D Vector3D::operator*(const double &rhs) const {
     return Vector3D(x * rhs, y * rhs, z * rhs);
+}
+
+Vector3D Vector3D::up(double intensity = 1) {
+    return Vector3D(0, intensity, 0);
+}
+
+Vector3D Vector3D::up() {
+    return Vector3D(0, 1, 0);
 }
