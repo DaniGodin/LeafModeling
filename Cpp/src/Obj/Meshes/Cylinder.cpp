@@ -7,7 +7,8 @@
 
 Cylinder::Cylinder(const Point3D &pos, const Vector3D &up, double height, double radius) : pos(pos), up(up.normalized()),
                                                                                            height(height),
-                                                                                           radius(radius) {
+                                                                                           radiusBottom(radius),
+                                                                                           radiusTop(radius) {
     initGeom();
     genGeometry(subdiv);
 }
@@ -16,7 +17,7 @@ Cylinder::Cylinder(const Point3D &pos, const Point3D &pos2, double height, doubl
         : pos(pos),
           up((pos2 - pos).normalized()),
           height(height),
-          radius(radius) {
+          radiusBottom(radius) {
     initGeom();
     genGeometry(subdiv);
 }
@@ -24,7 +25,8 @@ Cylinder::Cylinder(const Point3D &pos, const Point3D &pos2, double height, doubl
 Cylinder::Cylinder(const Point3D &pos, const Vector3D &up, double height, double radius, std::string name) : pos(pos),
                                                                                                              up(up.normalized()),
                                                                                                              height(height),
-                                                                                                             radius(radius),
+                                                                                                             radiusBottom(radius),
+                                                                                                             radiusTop(radius),
                                                                                                              Object(name) {
     initGeom();
     genGeometry(subdiv);
@@ -35,10 +37,38 @@ Cylinder::Cylinder(const Point3D &pos, const Vector3D &up, double height, double
         : pos(pos),
           up(up.normalized()),
           height(height),
-          radius(radius),
+          radiusBottom(radius),
+          radiusTop(radius),
           Object(name),
           subdiv(subdiv) {
 
+    initGeom();
+    genGeometry(subdiv);
+}
+
+Cylinder::Cylinder(const Point3D &pos, const Vector3D &up, double height, double radiusBottom, double radiusTop,
+                   std::string name)
+        : pos(pos),
+          up(up.normalized()),
+          height(height),
+          radiusBottom(radiusBottom),
+          radiusTop(radiusTop),
+          Object(name)
+{
+    initGeom();
+    genGeometry(subdiv);
+}
+
+Cylinder::Cylinder(const Point3D &pos, const Vector3D &up, double height, double radiusBottom, double radiusTop,
+                   std::string name, int subdiv)
+        : pos(pos),
+          up(up.normalized()),
+          height(height),
+          radiusBottom(radiusBottom),
+          radiusTop(radiusTop),
+          Object(name),
+          subdiv(subdiv)
+{
     initGeom();
     genGeometry(subdiv);
 }
@@ -59,15 +89,15 @@ void Cylinder::genGeometry(int subdiv) {
     double full = 2 * M_PI;
     double angle = full / static_cast<double>(subdiv);
     for (int i = 0; i < subdiv / 2; ++i) {
-        Point3D pBottom = pos + (right * (cos(angle * i) * radius)) + (forward * (sin(angle * i) * radius));
-        Point3D pTop = pBottom + up * height;
+        Point3D pBottom = pos + (right * (cos(angle * i) * radiusBottom)) + (forward * (sin(angle * i) * radiusBottom));
+        Point3D pTop = (pos + up * height) + (right * (cos(angle * i) * radiusTop)) + (forward * (sin(angle * i) * radiusTop));
         v.push_back(pBottom);
         v.push_back(pTop);
     }
 
     for (int i = 0; i < subdiv; i += 2) {
         Point3D pBottom = pos + (pos - v[i]);
-        Point3D pTop = pBottom + up * height;
+        Point3D pTop = (pos + up * height) + ((pos + up * height) - v[i + 1]);
         v.push_back(pBottom);
         v.push_back(pTop);
     }
@@ -130,5 +160,13 @@ const Point3D Cylinder::getCenterDown() const {
 
 const Point3D Cylinder::getCenterUp() const {
     return Point3D(pos + (up * height));
+}
+
+double Cylinder::getRadiusBottom() const {
+    return radiusBottom;
+}
+
+double Cylinder::getRadiusTop() const {
+    return radiusTop;
 }
 

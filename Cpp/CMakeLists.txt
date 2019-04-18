@@ -42,4 +42,36 @@ add_executable(objParser
         src/L-Systems/LRuleBasic.hh
         src/L-Systems/LTranslator.cpp
         src/L-Systems/LTranslator.hh
-        src/L-Systems/TurtleTranslator.hh src/L-Systems/TurtleTranslator.hxx src/L-Systems/LRuleBasic.cpp src/L-Systems/Turtle.cpp src/L-Systems/Turtle.hh src/L-Systems/LRuleStoch.cpp src/L-Systems/LRuleStoch.hh src/L-Systems/LRule.cpp src/L-Systems/LRule.hh src/L-Systems/LRuleContext.cpp src/L-Systems/LRuleContext.hh src/L-Systems/LRuleParametric.cpp src/L-Systems/LRuleParametric.hh src/L-Systems/Condition.cpp src/L-Systems/Condition.hh src/L-Systems/Environment.cpp src/L-Systems/Environment.hh src/L-Systems/LVar.cpp src/L-Systems/LVar.hh src/L-Systems/LNodeFunc.cpp src/L-Systems/LNodeFunc.hh src/Obj/Meshes/Cylinder.cpp src/Obj/Meshes/Cylinder.hh src/Tree/TreeTranslator.cpp src/Tree/TreeTranslator.hh)
+        src/L-Systems/TurtleTranslator.hh
+        src/L-Systems/TurtleTranslator.hxx
+        src/L-Systems/LRuleBasic.cpp
+        src/L-Systems/Turtle.cpp
+        src/L-Systems/Turtle.hh
+        src/L-Systems/LRuleStoch.cpp
+        src/L-Systems/LRuleStoch.hh
+        src/L-Systems/LRule.cpp
+        src/L-Systems/LRule.hh
+        src/L-Systems/LRuleContext.cpp
+        src/L-Systems/LRuleContext.hh
+        src/L-Systems/LRuleParametric.cpp
+        src/L-Systems/LRuleParametric.hh
+        src/L-Systems/Condition.cpp
+        src/L-Systems/Condition.hh
+        src/L-Systems/Environment.cpp
+        src/L-Systems/Environment.hh
+        src/L-Systems/LVar.cpp
+        src/L-Systems/LVar.hh
+        src/L-Systems/LNodeFunc.cpp
+        src/L-Systems/LNodeFunc.hh
+        src/Obj/Meshes/Cylinder.cpp
+        src/Obj/Meshes/Cylinder.hh
+        src/Tree/TreeTranslator.cpp
+        src/Tree/TreeTranslator.hh
+        src/AlgoLeaf/gen_random.cpp
+        src/AlgoLeaf/gen_random.hh
+        src/AlgoLeaf/leaf_object.cpp
+        src/AlgoLeaf/leaf_object.hh
+        src/AlgoLeaf/math_stuff.cpp
+        src/AlgoLeaf/math_stuff.hh
+        src/AlgoLeaf/particle_object.cpp
+        src/AlgoLeaf/particle_object.hh)

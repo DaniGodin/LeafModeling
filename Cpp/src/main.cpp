@@ -14,6 +14,8 @@
 #include "L-Systems/LRuleContext.hh"
 #include "Obj/Meshes/Cylinder.hh"
 #include "Tree/TreeTranslator.hh"
+#include "AlgoLeaf/particle_object.hh"
+#include "AlgoLeaf/gen_random.hh"
 
 void parseFileExample() {
     // parse blender cube file
@@ -93,7 +95,8 @@ void treeExample() {
 void cylinderExample() {
     Generator gen = Generator("cylinder.obj");
 
-    Cylinder cyl(Point3D(0, 1.5, 0), Vector3D(1, 4, 0.5), 5, 0.21, "cyl", 20);
+//    Cylinder cyl(Point3D(0, 1.5, 0), Vector3D(1, 4, 0.5), 5, 0.21, "cyl", 20);
+    Cylinder cyl(Point3D(0, 1.5, 0), Vector3D(1, 4, 0.5), 5, 0.21, 0.72, "cyl", 20);
     // create a scene and put the object in it
     Scene scene = Scene();
     scene.getObjects().push_back(cyl);
@@ -184,10 +187,33 @@ void lSystemExample() {
     gen.write(&scene);
 }
 
+void algoLeafExample() {
+
+//      /\
+//     /  \
+//  -3/____\3
+
+    std::vector<particles::Particle > p_list = gen_rand::gen_triangle(Point3D(-3, 0, 0), Point3D(0, 6, 0), Point3D(3, 0, 0), 10);
+
+    particles::Particle_set p_set = particles::Particle_set(p_list, Point3D(0,0,0));
+
+
+    //std::cout << p_set;
+
+    for (int i = 0; i < 30; i++ ) {
+        p_set.move_particles(0.1, 1, 2, 0.1);
+    }
+
+    std::vector<algoLeaf::venationPoint *> tree = p_set.get_venations();
+
+
+}
+
 int main() {
     std::srand(std::time(nullptr));
 
     treeExample();
+//    algoLeafExample();
 //    parseFileExample();
 //    lSystemExample();
 //    cylinderExample();

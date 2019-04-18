@@ -17,9 +17,16 @@ public:
     Cylinder(const Point3D &pos, const Vector3D &up, double height, double radius, std::string name);
     Cylinder(const Point3D &pos, const Vector3D &up, double height, double radius, std::string name, int subdiv);
 
+    Cylinder(const Point3D &pos, const Vector3D &up, double height, double radiusBottom, double radiusTop, std::string name);
+    Cylinder(const Point3D &pos, const Vector3D &up, double height, double radiusBottom, double radiusTop, std::string name, int subdiv);
+
 
     const Point3D getCenterUp() const;
     const Point3D getCenterDown() const;
+
+    double getRadiusBottom() const;
+
+    double getRadiusTop() const;
 
 private:
     void initGeom();
@@ -29,8 +36,8 @@ private:
     Point3D pos;
     Vector3D up;
     double height;
-    double radius;
-
+    double radiusBottom;
+    double radiusTop;
     int subdiv = 12;
     Vector3D right;
     Vector3D forward;
