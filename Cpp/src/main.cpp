@@ -12,6 +12,7 @@
 #include "L-Systems/LTranslator.hh"
 #include "L-Systems/TurtleTranslator.hh"
 #include "L-Systems/LRuleContext.hh"
+#include "L-Systems/LRuleParametric.hh"
 #include "Obj/Meshes/Cylinder.hh"
 #include "Tree/TreeTranslator.hh"
 #include "AlgoLeaf/particle_object.hh"
@@ -109,29 +110,16 @@ void cylinderExample() {
 
 void lSystemExample() {
 
-//    auto r1 = LRuleBasic({LNode("F")},  LRuleBasic::genRule(R"(F\F/F/FF\F\F/F)"));
-//
-//    auto obj = LObject(LRuleBasic::genRule(R"(F\F\F\F)"), {r1});
-
-//    LRuleStoch r1 = LRuleStoch({LNode("F")},
-//            std::vector<std::vector<LNode>> {LRule::genRule("F[+F]F[-F]F"), LRule::genRule("F[+F]F"), LRule::genRule("F[-F]F")});
-
-//    LRuleContext r1 = LRuleContext({LNode("b")}, {LNode("a")}, {}, {LNode("b")});
-//    LRuleBasic r2 = LRuleBasic({LNode("b")}, {LNode("a")});
-
-//    LRuleContext r1 = LRuleContext({LNode("Fb")}, {LNode("Fa")}, {}, {LNode("Fb")}, {LNode("+"), LNode("-")});
-//    LRuleContext r1 = LRuleContext({}, {LNode("Fa")}, {LNode("Fb")}, {LNode("Fb")}, {LNode("+"), LNode("-")});
-
-    LRuleContext r1 = LRuleContext({LNode("0")}, {LNode("0")}, {LNode("0")}, {LNode("1")}, {LNode("-"), LNode("+"), LNode("F")});
-    LRuleContext r2 = LRuleContext({LNode("0")}, {LNode("0")}, {LNode("1")}, {LRule::genRule("1[-F1F1]")}, {LNode("-"), LNode("+"), LNode("F")});
-    LRuleContext r3 = LRuleContext({LNode("0")}, {LNode("1")}, {LNode("0")}, {LNode("1")}, {LNode("-"), LNode("+"), LNode("F")});
-    LRuleContext r4 = LRuleContext({LNode("0")}, {LNode("1")}, {LNode("1")}, {LNode("1")}, {LNode("-"), LNode("+"), LNode("F")});
-    LRuleContext r5 = LRuleContext({LNode("1")}, {LNode("0")}, {LNode("0")}, {LNode("0")}, {LNode("-"), LNode("+"), LNode("F")});
-    LRuleContext r6 = LRuleContext({LNode("1")}, {LNode("0")}, {LNode("1")}, {LRule::genRule("1F1")}, {LNode("-"), LNode("+"), LNode("F")});
-    LRuleContext r7 = LRuleContext({LNode("1")}, {LNode("1")}, {LNode("0")}, {LNode("1")}, {LNode("-"), LNode("+"), LNode("F")});
-    LRuleContext r8 = LRuleContext({LNode("1")}, {LNode("1")}, {LNode("1")}, {LNode("0")}, {LNode("-"), LNode("+"), LNode("F")});
-    LRuleBasic r9 = LRuleBasic({LNode("+")}, {LNode("-")});
-    LRuleBasic r10 = LRuleBasic({LNode("-")}, {LNode("+")});
+//    LRuleContext r1 = LRuleContext({LNode("0")}, {LNode("0")}, {LNode("0")}, {LNode("1")}, {LNode("-"), LNode("+"), LNode("F")});
+//    LRuleContext r2 = LRuleContext({LNode("0")}, {LNode("0")}, {LNode("1")}, {LRule::genRule("1[-F1F1]")}, {LNode("-"), LNode("+"), LNode("F")});
+//    LRuleContext r3 = LRuleContext({LNode("0")}, {LNode("1")}, {LNode("0")}, {LNode("1")}, {LNode("-"), LNode("+"), LNode("F")});
+//    LRuleContext r4 = LRuleContext({LNode("0")}, {LNode("1")}, {LNode("1")}, {LNode("1")}, {LNode("-"), LNode("+"), LNode("F")});
+//    LRuleContext r5 = LRuleContext({LNode("1")}, {LNode("0")}, {LNode("0")}, {LNode("0")}, {LNode("-"), LNode("+"), LNode("F")});
+//    LRuleContext r6 = LRuleContext({LNode("1")}, {LNode("0")}, {LNode("1")}, {LRule::genRule("1F1")}, {LNode("-"), LNode("+"), LNode("F")});
+//    LRuleContext r7 = LRuleContext({LNode("1")}, {LNode("1")}, {LNode("0")}, {LNode("1")}, {LNode("-"), LNode("+"), LNode("F")});
+//    LRuleContext r8 = LRuleContext({LNode("1")}, {LNode("1")}, {LNode("1")}, {LNode("0")}, {LNode("-"), LNode("+"), LNode("F")});
+//    LRuleBasic r9 = LRuleBasic({LNode("+")}, {LNode("-")});
+//    LRuleBasic r10 = LRuleBasic({LNode("-")}, {LNode("+")});
 
 //    LRuleContext r1 = LRuleContext({LNode("0")}, {LNode("0")}, {LNode("0")}, {LNode("1")}, {LNode("-"), LNode("+"), LNode("F")});
 //    LRuleContext r2 = LRuleContext({LNode("0")}, {LNode("0")}, {LNode("1")}, {LNode("0")}, {LNode("-"), LNode("+"), LNode("F")});
@@ -144,10 +132,7 @@ void lSystemExample() {
 //    LRuleBasic r9 = LRuleBasic({LNode("+")}, {LNode("-")});
 //    LRuleBasic r10 = LRuleBasic({LNode("-")}, {LNode("+")});
 
-    // Fb[+Fa]Fa[−Fa]Fa[+Fa]Fa
-//    auto obj = LObject({LNode("Fb"), LNode("["), LNode("+"), LNode("Fa"), LNode("]"), LNode("Fa"), LNode("["), LNode("-"), LNode("Fa"), LNode("]"), LNode("Fa"), LNode("["), LNode("+"), LNode("Fa"), LNode("]"), LNode("Fa"), }, {&r1});
-//    auto obj = LObject({LNode("Fa"), LNode("["), LNode("+"), LNode("Fa"), LNode("]"), LNode("Fa"), LNode("["), LNode("-"), LNode("Fa"), LNode("]"), LNode("Fa"), LNode("["), LNode("+"), LNode("Fa"), LNode("]"), LNode("Fb"), }, {&r1});
-    auto obj = LObject(LRule::genRule("F1F1F1"), {&r1, &r2, &r3, &r4, &r5, &r6, &r7, &r8, &r9, &r10});
+//    auto obj = LObject(LRule::genRule("F1F1F1"), {&r1, &r2, &r3, &r4, &r5, &r6, &r7, &r8, &r9, &r10});
 
 //    auto r1 = LRuleBasic({LNode("A")}, LRuleBasic::genRule("B-F+CFC+F-D&F^D-F+&&CFC+F+B//"));
 //    auto r2 = LRuleBasic({LNode("B")}, LRuleBasic::genRule("A&F^CFB^F^D^^-F-D^|F^B|FC^F^A//"));
@@ -162,6 +147,9 @@ void lSystemExample() {
 //    TurtleTranslator t = TurtleTranslator("+", "-", "F");
 //    TurtleTranslator t = TurtleTranslator(std::vector{"+"}, std::vector{"-"}, std::vector{"Fl", "Fr"});
 
+
+    auto r1 = LRuleParametric({"F"}, {LNode("F(0.5, 1)")}, {Condition("t", Condition::genCompFunc(">"), "0")}, 2);
+    auto obj = LObject({LNode("F(t, 42)"), LNode("B")}, {&r1}, Environment({LVar("t", 1.0)}));
 
 //    TurtleTranslator t = TurtleTranslator(
 //            std::vector{"+"},   // left

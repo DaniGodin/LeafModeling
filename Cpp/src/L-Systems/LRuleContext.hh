@@ -17,7 +17,7 @@ public:
                  const std::vector<LNode> &finish, const std::vector<LNode> &ignore);
 
 public:
-    bool accept(std::vector<LNode> &v, unsigned index, Environment &env) override;
+    int accept(std::vector<LNode> &v, unsigned index, Environment &env) override;
 
     std::vector<LNode> getResult() override;
 

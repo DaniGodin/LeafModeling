@@ -74,4 +74,4 @@ add_executable(objParser
         src/AlgoLeaf/math_stuff.cpp
         src/AlgoLeaf/math_stuff.hh
         src/AlgoLeaf/particle_object.cpp
-        src/AlgoLeaf/particle_object.hh)
+        src/AlgoLeaf/particle_object.hh src/Obj/Meshes/Linker.cpp src/Obj/Meshes/Linker.hh)

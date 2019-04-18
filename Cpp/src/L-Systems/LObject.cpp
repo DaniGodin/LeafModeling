@@ -10,18 +10,28 @@ LObject::LObject(std::vector<LNode> nodes) : nodes(std::move(nodes)){}
 
 LObject::LObject(std::vector<LNode> nodes, const std::vector<LRule*> &rules) : nodes(std::move(nodes)) ,rules(rules) {}
 
+LObject::LObject(std::vector<LNode> nodes, const std::vector<LRule *> &rules, Environment env)
+    : nodes(std::move(nodes)),
+      rules(rules),
+      env(std::move(env))
+{}
+
 void LObject::iter() {
     auto newNodes = std::vector<LNode>();
 
     bool foundRule;
 
-    for (int i = 0; i < nodes.size(); ++i) {
+    int i = 0;
+    while (i < nodes.size()) {
         foundRule = false;
         for (LRule *rule : rules) {
-            if (rule->accept(nodes, i, env)) {
+            int acceptSize = rule->accept(nodes, i, env);
+            if (acceptSize > 0) {
                 // RULE CAN BE APPLIED
                 // use rule to add to new vector
                 foundRule = true;
+
+                i += acceptSize;
 
                 for (const auto &n : rule->getResult()) {
                     newNodes.insert(newNodes.end(), std::move(n));
@@ -31,6 +41,7 @@ void LObject::iter() {
         }
         if (!foundRule) {
             // RULE CANNOT BE APPLIED
+            ++i;
             // copy current node to new vector
             newNodes.insert(newNodes.end(), nodes[i]);
         }

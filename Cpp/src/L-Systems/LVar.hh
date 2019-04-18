@@ -12,6 +12,8 @@ class LVar {
 public:
     LVar();
 
+    LVar(const std::string &name, double value);
+
     const bool operator==(const LVar &rhs) const;
     const bool operator==(const std::string &rhs) const;
 

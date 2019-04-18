@@ -12,6 +12,7 @@
 class Environment {
 public:
     Environment();
+    Environment(const std::vector<LVar> &vars);
 
     const bool exists(const std::string &name);
     const bool isZero(const std::string &name);

@@ -53,3 +53,7 @@ const double Environment::get(const std::string &name) const {
     }
     throw std::out_of_range("Element not found."); // error
 }
+
+Environment::Environment(const std::vector<LVar> &vars)
+    : vars(vars)
+{}

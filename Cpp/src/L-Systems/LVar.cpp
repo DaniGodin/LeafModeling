@@ -14,4 +14,6 @@ const bool LVar::operator==(const LVar &rhs) const {
     return (rhs.name == name);
 }
 
+LVar::LVar(const std::string &name, double value) : name(name), value(value) {}
+
 

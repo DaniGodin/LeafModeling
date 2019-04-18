@@ -16,6 +16,7 @@ public:
     explicit LObject(std::vector<LNode> nodes);
 
     LObject(std::vector<LNode> nodes, const std::vector<LRule*> &rules);
+    LObject(std::vector<LNode> nodes, const std::vector<LRule*> &rules, Environment env);
 
     const std::vector<LRule*> &getRules() const;
 

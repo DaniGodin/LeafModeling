@@ -6,21 +6,21 @@
 #include <stack>
 #include <iostream>
 
-bool LRuleContext::accept(std::vector<LNode> &v, unsigned index, Environment &env) {
+int LRuleContext::accept(std::vector<LNode> &v, unsigned index, Environment &env) {
     // check if "basic" rule apply
     std::vector<LNode>::iterator nth = v.begin() + index;
     if (!vectCmp(nth, start.begin(), start.size()))
-        return false;
+        return 0;
 
     // check the precede
     if (!acceptPrecede(v, index))
-        return false;
+        return 0;
 
     // check the follow
     if (!acceptFollow(v, index))
-        return false;
+        return 0;
 
-    return true;
+    return start.size();
 }
 
 std::vector<LNode> LRuleContext::getResult() {
