@@ -72,7 +72,10 @@ void TreeTranslator::genTreeCyl(Node *n, const std::string &name, std::vector<Ob
     // iterate through children (tree structure so each child is a new node)
     for (auto &c : n->getChildren()) {
         Vector3D direction = c->getPt() - parentCyl.getCenterUp();
-        Cylinder cyl = Cylinder(parentCyl.getCenterUp(), direction, direction.length(), c->getEnergy(), name + "_" + std::to_string(count++));
+        // Generate cylinders with SAME bottom and top radius
+//        Cylinder cyl = Cylinder(parentCyl.getCenterUp(), direction, direction.length(), c->getEnergy(), name + "_" + std::to_string(count++));
+        // Generate cylinders with DIFFERENT bottom and top radius
+        Cylinder cyl = Cylinder(parentCyl.getCenterUp(), direction, direction.length(), n->getEnergy(), c->getEnergy(), name + "_" + std::to_string(count++));
         std::cout << cyl.getName() << " "  <<c->getEnergy() << std::endl;
         objs.push_back(std::move(cyl));
         ;

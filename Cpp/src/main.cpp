@@ -38,18 +38,18 @@ void parseFileExample() {
 
 void treeExample() {
     // create nodes and links
-    Node a = Node(Point3D(), nullptr, 1.5);
+    Node a = Node(Point3D(), nullptr, 0.5);
 
-    Node b = Node(Point3D(-2.0, 3.0, 0.0), &a, 0.8);
-    Node e = Node(Point3D(0.0, 2.0, 0.0), &a, 0.8);
-    Node i = Node(Point3D(1.0, 4.0, 0.0), &a, 0.8);
+    Node b = Node(Point3D(-2.0, 3.0, 0.0), &a, 0.4);
+    Node e = Node(Point3D(0.0, 2.0, 0.0), &a, 0.35);
+    Node i = Node(Point3D(1.0, 4.0, 0.0), &a, 0.4);
 
-    Node c = Node(Point3D(-5.0, 5.0, 0.0), &b, 0.5);
-    Node f = Node(Point3D(-1.0, 4.0, 0.0), &e, 0.5);
-    Node h = Node(Point3D(2.0, 5.0, 0.0), &e, 0.5);
+    Node c = Node(Point3D(-5.0, 5.0, 0.0), &b, 0.3);
+    Node f = Node(Point3D(-1.0, 4.0, 0.0), &e, 0.23);
+    Node h = Node(Point3D(2.0, 5.0, 0.0), &e, 0.20);
 
     Node d = Node(Point3D(-3.0, 6.0, 0.0), &c, 0.2);
-    Node g = Node(Point3D(0.0, 7.0, 0.0), &f, 0.2);
+    Node g = Node(Point3D(0.0, 7.0, 0.0), &f, 0.15);
 
     a.getChildren().push_back(&b);
     a.getChildren().push_back(&e);
