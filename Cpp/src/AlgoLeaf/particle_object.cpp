@@ -4,6 +4,7 @@
 
 #include "particle_object.hh"
 #include "math_stuff.hh"
+#include "algorithm"
 
 namespace particles {
 
@@ -64,19 +65,26 @@ namespace particles {
         std::cout << "number of particles: " << particles.size() << std::endl;
         if (particles.size() < 2)
             return false;
-
-        for (auto &p : particles){
-
-            unsigned int closest = get_closest(p);
-            if (math::get_distance(p, particles[closest]) < merge_dist){
-                p.last_venation = algoLeaf::venationPoint(math::merge_pos(p, particles[closest]), {&p.last_venation, &particles[closest].last_venation});
-                particles.erase(particles.begin() + closest);
-            } else {
-                Vector3D dir_closer = math::get_unit_vector(p.position, particles[closest].position);
-                p.move(dir_closer, stepsize, weight_n, weight_t);
+        std::vector<Particle> to_erase;
+        for (auto &p : particles) {
+            if (std::find(to_erase.begin(), to_erase.end(), p) == to_erase.end()) {
+                unsigned int closest = get_closest(p);
+                if (math::get_distance(p, particles[closest]) < merge_dist) {
+                    p.last_venation = algoLeaf::venationPoint(math::merge_pos(p, particles[closest]),
+                                                              {&p.last_venation, &particles[closest].last_venation});
+                    to_erase.push_back(particles[closest]);
+                }
             }
         }
+        for (auto &p : to_erase){
+            particles.erase(std::find(particles.begin(), particles.end(), p));
+        }
 
+        for (auto &p : particles){
+            unsigned int closest = get_closest(p);
+            Vector3D dir_closer = math::get_unit_vector(p.position, particles[closest].position);
+            p.move(dir_closer, stepsize, weight_n, weight_t);
+        }
         init_vector();
         return true;
     }

@@ -64,15 +64,12 @@ namespace particles {
 
         void init_vector();
 
-
-
         unsigned int get_closest(Particle p);
 
         bool move_particles(float stepsize, float weight_n, float weight_t, float merge_dist);
 
 
         std::vector<algoLeaf::venationPoint* > get_venations();
-
 
 
     };
