@@ -19,7 +19,7 @@ namespace particles {
     public:
 
         Point3D position;
-        algoLeaf::venationPoint last_venation;
+        algoLeaf::venationPoint* last_venation;
         Vector3D dir_to_p;
 
 

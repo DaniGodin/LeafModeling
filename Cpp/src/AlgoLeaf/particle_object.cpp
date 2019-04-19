@@ -20,8 +20,8 @@ namespace particles {
 
         Vector3D direction = math::compute_dir(dir_to_p, dir_closer, weight_n, weight_t);
         position = math::get_translation(position, direction, stepsize);
-        std::vector<algoLeaf::venationPoint* > child = {&last_venation};
-        last_venation = algoLeaf::venationPoint(position, child);
+        std::vector<algoLeaf::venationPoint* > child = {last_venation};
+        last_venation = new algoLeaf::venationPoint(position, child);
 
     }
 
@@ -46,7 +46,7 @@ namespace particles {
 
         for (auto &p: particles){
 
-            p.last_venation = algoLeaf::venationPoint(p.position, {});
+            p.last_venation = new algoLeaf::venationPoint(p.position, {});
 
         }
 
@@ -70,8 +70,10 @@ namespace particles {
             if (std::find(to_erase.begin(), to_erase.end(), p) == to_erase.end()) {
                 unsigned int closest = get_closest(p);
                 if (math::get_distance(p, particles[closest]) < merge_dist) {
-                    p.last_venation = algoLeaf::venationPoint(math::merge_pos(p, particles[closest]),
-                                                              {&p.last_venation, &particles[closest].last_venation});
+                    std::cout << "We wanna merge" << std::endl;
+                    p.last_venation = new algoLeaf::venationPoint(math::merge_pos(p, particles[closest]),
+                                                              {p.last_venation, particles[closest].last_venation});
+                    std::cout << "We merged" << std::endl;
                     to_erase.push_back(particles[closest]);
                 }
             }
@@ -79,11 +81,13 @@ namespace particles {
         for (auto &p : to_erase){
             particles.erase(std::find(particles.begin(), particles.end(), p));
         }
-
-        for (auto &p : particles){
-            unsigned int closest = get_closest(p);
-            Vector3D dir_closer = math::get_unit_vector(p.position, particles[closest].position);
-            p.move(dir_closer, stepsize, weight_n, weight_t);
+        std::cout << particles.size() <<std::endl;
+        if (particles.size() != 1) {
+            for (auto &p : particles) {
+                unsigned int closest = get_closest(p);
+                Vector3D dir_closer = math::get_unit_vector(p.position, particles[closest].position);
+                p.move(dir_closer, stepsize, weight_n, weight_t);
+            }
         }
         init_vector();
         return true;
@@ -94,7 +98,7 @@ namespace particles {
 
         std::vector<algoLeaf::venationPoint* > first_venations = {};
         for (auto &p : particles){
-            first_venations.push_back(&p.last_venation);
+            first_venations.push_back(p.last_venation);
         }
 
         return first_venations;
