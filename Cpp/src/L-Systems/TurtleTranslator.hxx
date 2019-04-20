@@ -55,25 +55,25 @@ Object TurtleTranslator::transcript(LObject lobj) {
             // turn right 90°
             rotateDir(turtle.tUp, -angleR);
         } else if (compareAll(n.getId(), rup)) {
-            // turn right 90°
+            // turn up 90°
             rotateDir(turtle.tLeft, -angleR);
         } else if (compareAll(n.getId(), rdown)) {
-            // turn right 90°
+            // turn down 90°
             rotateDir(turtle.tLeft, angleR);
         } else if (compareAll(n.getId(), rrolll)) {
-            // turn right 90°
+            // roll left 90°
             rotateDir(turtle.tHeading, angleR);
         } else if (compareAll(n.getId(), rrollr)) {
-            // turn right 90°
+            // roll right 90°
             rotateDir(turtle.tHeading, -angleR);
         } else if (compareAll(n.getId(), rturnaround)) {
-            // turn right 90°
+            // turn180°
             rotateDir(turtle.tUp, DegreesToRadians(180));
         } else if (compareAll(n.getId(), puturtle)) {
-            // turn right 90°
+            // push turtle state
             pushturtle();
         } else if (compareAll(n.getId(), poturtle)) {
-            // turn right 90°
+            // pop turtle state
             popturtle();
         } else {
             // NOTHING

@@ -148,8 +148,14 @@ void lSystemExample() {
 //    TurtleTranslator t = TurtleTranslator(std::vector{"+"}, std::vector{"-"}, std::vector{"Fl", "Fr"});
 
 
-    auto r1 = LRuleParametric({"F"}, {LNode("F(0.5, 1)")}, {Condition("t", Condition::genCompFunc(">"), "0")}, 2);
-    auto obj = LObject({LNode("F(t, 42)"), LNode("B")}, {&r1}, Environment({LVar("t", 1.0)}));
+//    auto r1 = LRuleParametric({"F"}, {LNode("F(0.5, 1)")}, {Condition("t", Condition::genCompFunc(">"), "0")}, 2);
+//    auto obj = LObject({LNode("F(t, 42)"), LNode("B")}, {&r1}, Environment({LVar("t", 1.0)}));
+
+    auto r1 = LRuleBasic({LNode("A")}, LRule::genRule("[+A{.].C.}"));
+    auto r2 = LRuleBasic({LNode("B")}, LRule::genRule("[-B{.].C.}"));
+    auto r3 = LRuleBasic({LNode("C")}, LRule::genRule("FC"));
+
+    auto obj = LObject(LRule::genRule("[A][B]"), {&r1, &r2, &r3});
 
 //    TurtleTranslator t = TurtleTranslator(
 //            std::vector{"+"},   // left
@@ -161,10 +167,11 @@ void lSystemExample() {
 //            std::vector{"|"},   // turn around
 //            std::vector{"F"});  // forward
 //    TurtleTranslator t = TurtleTranslator(22.5);
-    TurtleTranslator t = TurtleTranslator({"0"}, {"1"}, {"F"}, 22.5);
+//    TurtleTranslator t = TurtleTranslator({"0"}, {"1"}, {"F"}, 22.5);
+    TurtleTranslator t = TurtleTranslator({"+"}, {"-"}, {"F"}, 20.0);
 //    TurtleTranslator t = TurtleTranslator({"0"}, {"1"}, {"F"}, 25.75);
 
-    obj.iterate(30);
+    obj.iterate(2);
     obj.print();
 
 

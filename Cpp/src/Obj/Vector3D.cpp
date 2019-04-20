@@ -29,7 +29,9 @@ bool Vector3D::operator!=(const Vector3D &rhs) const {
     return !(rhs == *this);
 }
 
-Vector3D::Vector3D() {}
+Vector3D::Vector3D()
+    : x(0.0), y(0.0), z(0.0)
+{}
 
 
 double Vector3D::scalar(const Vector3D &rhs) const {
@@ -78,4 +80,8 @@ Vector3D Vector3D::up(double intensity = 1) {
 
 Vector3D Vector3D::up() {
     return Vector3D(0, 1, 0);
+}
+
+bool Vector3D::isEmpty() {
+    return x == 0 && y == 0 && z == 0;
 }

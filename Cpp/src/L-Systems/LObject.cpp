@@ -41,9 +41,9 @@ void LObject::iter() {
         }
         if (!foundRule) {
             // RULE CANNOT BE APPLIED
-            ++i;
             // copy current node to new vector
             newNodes.insert(newNodes.end(), nodes[i]);
+            ++i;
         }
     }
     nodes = newNodes;

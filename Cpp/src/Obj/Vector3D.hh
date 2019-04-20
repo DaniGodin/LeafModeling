@@ -37,6 +37,8 @@ public:
     static Vector3D up(double intensity);
     static Vector3D up();
 
+    bool isEmpty();
+
 private:
     double x;
     double y;
