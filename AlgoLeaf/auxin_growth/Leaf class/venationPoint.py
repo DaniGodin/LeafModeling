@@ -1,0 +1,3 @@
+class VenationPoint:
+    coord = None
+
