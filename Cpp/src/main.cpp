@@ -193,7 +193,8 @@ void algoLeafExample() {
 //     /  \
 //  -3/____\3
 
-    std::vector<particles::Particle > p_list = gen_rand::gen_triangle(Point3D(-3, 0, 0), Point3D(0, 6, 0), Point3D(3, 0, 0), 10);
+    int nodeCount = 200;
+    std::vector<particles::Particle > p_list = gen_rand::gen_triangle(Point3D(-10, 0, 0), Point3D(0, 16, 0), Point3D(10, 0, 0), nodeCount);
 
     particles::Particle_set p_set = particles::Particle_set(p_list, Point3D(0,0,0));
 
@@ -205,6 +206,22 @@ void algoLeafExample() {
     }
 
     std::vector<algoLeaf::venationPoint *> tree = p_set.get_venations();
+    // merge
+    algoLeaf::venationPoint *root = new algoLeaf::venationPoint(Point3D(0, 0, 0), tree);
+
+    TreeTranslator translator = TreeTranslator();
+//    Node *nroot = translator.convertVenationToNode(root, nodeCount);
+
+
+    std::vector<Object> leafCyl = translator.generate(root, "Cyl", nodeCount, TreeTranslator::GENTYPE::cylinder);
+    // create a scene and put the object in it
+    Scene scene2 = Scene();
+    for (const auto &o : leafCyl)
+        scene2.getObjects().push_back(o);
+    // instanciate generator
+    Generator gen2 = Generator("out_algoleaf.obj");
+    // write scene to file
+    gen2.write(&scene2);
 
 
 }
@@ -212,8 +229,8 @@ void algoLeafExample() {
 int main() {
     std::srand(std::time(nullptr));
 
-    treeExample();
-//    algoLeafExample();
+//    treeExample();
+    algoLeafExample();
 //    parseFileExample();
 //    lSystemExample();
 //    cylinderExample();

@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <cmath>
 #include "TreeTranslator.hh"
 
 std::vector<Object> TreeTranslator::generate(Node *root, std::string name, GENTYPE gentype = GENTYPE::line) {
@@ -19,7 +20,7 @@ std::vector<Object> TreeTranslator::generate(Node *root, std::string name, GENTY
     if (gentype == GENTYPE::cylinder) {
 
         double trunkHeight = 3;
-        Cylinder trunk = Cylinder(root->getPt() + (Vector3D::up() * -trunkHeight), Vector3D::up(), trunkHeight, root->getEnergy(), name + "_trunk");
+        Cylinder trunk = Cylinder(root->getPt() + (Vector3D::up() * -trunkHeight), Vector3D::up(), trunkHeight, root->getEnergy(), name + "_trunk", 60);
         std::vector<Object> objs(1, trunk);
 
         // push cylinders
@@ -73,13 +74,41 @@ void TreeTranslator::genTreeCyl(Node *n, const std::string &name, std::vector<Ob
     for (auto &c : n->getChildren()) {
         Vector3D direction = c->getPt() - parentCyl.getCenterUp();
         // Generate cylinders with SAME bottom and top radius
-//        Cylinder cyl = Cylinder(parentCyl.getCenterUp(), direction, direction.length(), c->getEnergy(), name + "_" + std::to_string(count++));
+        Cylinder cyl = Cylinder(parentCyl.getCenterUp(), direction, direction.length(), c->getEnergy(), name + "_" + std::to_string(count++), 10);
         // Generate cylinders with DIFFERENT bottom and top radius
-        Cylinder cyl = Cylinder(parentCyl.getCenterUp(), direction, direction.length(), n->getEnergy(), c->getEnergy(), name + "_" + std::to_string(count++));
+//        Cylinder cyl = Cylinder(parentCyl.getCenterUp(), direction, direction.length(), n->getEnergy(), c->getEnergy(), name + "_" + std::to_string(count++));
         std::cout << cyl.getName() << " "  <<c->getEnergy() << std::endl;
         objs.push_back(std::move(cyl));
         ;
         // iterate through child
         genTreeCyl(c, name, objs, cyl);
     }
+}
+
+std::vector<Object>
+TreeTranslator::generate(algoLeaf::venationPoint *root, std::string name, int pointCount, TreeTranslator::GENTYPE genType) {
+    Node *converted = convertVenationToNode(root, pointCount);
+    auto result = generate(converted, name, genType);
+    delete converted;
+    return result;
+}
+
+Node *TreeTranslator::convertVenationToNode_rec(algoLeaf::venationPoint *venation, Node *parent, int pointCount) {
+    Node *n = new Node(venation->position, parent, static_cast<double>(venation->photoEnergy) / (static_cast<double>(pointCount) * 0.5));
+
+    for (auto *c : venation->childrens) {
+        n->getChildren().push_back(convertVenationToNode_rec(c, n, pointCount));
+    }
+
+    return n;
+}
+
+Node *TreeTranslator::convertVenationToNode(algoLeaf::venationPoint *root, int pointCount) {
+    Node *n = new Node(root->position, nullptr, static_cast<double>(root->photoEnergy) / (static_cast<double>(pointCount) * 0.5));
+
+    for (auto *c : root->childrens) {
+        n->getChildren().push_back(convertVenationToNode_rec(c, n, pointCount));
+    }
+
+    return n;
 }

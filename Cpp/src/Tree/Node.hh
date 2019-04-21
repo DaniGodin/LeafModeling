@@ -16,6 +16,8 @@ public:
     Node(const Point3D &pt, Node *parent);
     Node(const Point3D &pt, Node *parent, double energy);
 
+    ~Node();
+
     Node();
 
     Point3D &getPt();
