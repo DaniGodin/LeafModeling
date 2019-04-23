@@ -28,7 +28,15 @@ std::vector<FaceEl> &Object::getFaceEls() {
     return faceEls;
 }
 
+const std::vector<FaceEl> &Object::getFaceEls() const {
+    return faceEls;
+}
+
 std::vector<LineEl> &Object::getLineEls() {
+    return lineEls;
+}
+
+const std::vector<LineEl> &Object::getLineEls() const {
     return lineEls;
 }
 

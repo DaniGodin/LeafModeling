@@ -30,8 +30,10 @@ public:
     std::vector<Texture2D> &getVt() ;
 
     std::vector<FaceEl> &getFaceEls() ;
+    const std::vector<FaceEl> &getFaceEls() const;
 
-    std::vector<LineEl> &getLineEls() ;
+    std::vector<LineEl> &getLineEls();
+    const std::vector<LineEl> &getLineEls() const;
 
     const std::string &getName() const;
 

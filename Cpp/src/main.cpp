@@ -17,6 +17,7 @@
 #include "Tree/TreeTranslator.hh"
 #include "AlgoLeaf/particle_object.hh"
 #include "AlgoLeaf/gen_random.hh"
+#include "AlgoLeaf/Growth/leafGrowth.hh"
 
 void parseFileExample() {
     // parse blender cube file
@@ -25,6 +26,20 @@ void parseFileExample() {
     // write back into new file
     Generator gen = Generator("my2cubes1sphere.obj");
     gen.write(scene);
+
+}
+
+void leafGrowthExample() {
+    Parser parser("../Data/Feuille.obj");
+    Scene *scene = parser.parse();
+
+    for (double i = 0.0; i < 10.0; ++i) {
+        // Growth
+        leafGrowth::radialgrow(scene->getObjects()[0], 0.1 * i);
+
+        Generator gen = Generator("Feuille_Grown_" + std::to_string(i) + ".obj");
+        gen.write(scene);
+    }
 
 }
 
@@ -211,7 +226,6 @@ void algoLeafExample() {
     TreeTranslator translator = TreeTranslator();
 //    Node *nroot = translator.convertVenationToNode(root, nodeCount);
 
-
     std::vector<Object> leafCyl = translator.generate(root, "Cyl", nodeCount, TreeTranslator::GENTYPE::cylinder);
     // create a scene and put the object in it
     Scene scene2 = Scene();
@@ -223,6 +237,15 @@ void algoLeafExample() {
     // write scene to file
     gen2.write(&scene2);
 
+//    std::vector<Object> leafCyl = translator.generate(root, "Cyl", nodeCount, TreeTranslator::GENTYPE::line);
+//    // create a scene and put the object in it
+//    Scene scene2 = Scene();
+//    for (const auto &o : leafCyl)
+//        scene2.getObjects().push_back(o);
+//    // instanciate generator
+//    Generator gen2 = Generator("out_algoleaf.obj");
+//    // write scene to file
+//    gen2.write(&scene2);
 
 }
 
@@ -232,6 +255,7 @@ int main() {
 //    treeExample();
     algoLeafExample();
 //    parseFileExample();
+    leafGrowthExample();
 //    lSystemExample();
 //    cylinderExample();
     return 0;
