@@ -35,7 +35,8 @@ void leafGrowthExample() {
 
     for (double i = 0.0; i < 10.0; ++i) {
         // Growth
-        leafGrowth::radialgrow(scene->getObjects()[0], 0.3 * i);
+        auto objs = scene->getObjects();
+        leafGrowth::radialgrow(objs[0], 0.3 * i);
 
         Generator gen = Generator("Feuille_Grown_" + std::to_string(i) + ".obj");
         gen.write(scene);
@@ -253,7 +254,7 @@ int main() {
     std::srand(std::time(nullptr));
 
 //    treeExample();
-    algoLeafExample();
+//    algoLeafExample();
 //    parseFileExample();
     leafGrowthExample();
 //    lSystemExample();

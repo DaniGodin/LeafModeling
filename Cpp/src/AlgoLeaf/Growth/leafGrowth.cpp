@@ -5,9 +5,10 @@
 #include <set>
 #include <cmath>
 #include <exception>
+#include <cfloat>
 #include "leafGrowth.hh"
 
-void leafGrowth::radialgrow(Object &leaf, double rate) {
+void leafGrowth::radialgrow(Object &leaf, double rate=0.1) {
     int sides = 3; // assuming triangles
     /*
      *  .-------. <- centerV
@@ -20,7 +21,23 @@ void leafGrowth::radialgrow(Object &leaf, double rate) {
      *   v             v
      *
      */
+
+    // TODO calculate ratio
+
     int centerV = leafCenterIndex(leaf);
+
+    double shortest = DBL_MAX;
+    // calc shortest distance
+    for (FaceEl &f : leaf.getFaceEls()) {
+        for (int i = 0; i < sides; ++i) {
+            if (f.getIndex(i) == centerV)
+                continue;
+            Point3D *p = f.getPt(i);
+            double dist = (*p - *leaf.getV()[centerV]).length();
+            if (dist < shortest)
+                shortest = dist;
+        }
+    }
 
     for (FaceEl &f : leaf.getFaceEls()) {
         for (int i = 0; i < sides; ++i) {
@@ -31,11 +48,11 @@ void leafGrowth::radialgrow(Object &leaf, double rate) {
                 // get p1 or p2
                 Point3D *p = f.getPt(i);
                 // calc direction from center
-                Vector3D dir = (*p - leaf.getV()[centerV]);
+                Vector3D dir = (*p - *leaf.getV()[centerV]);
                 // calc length
                 double l = dir.length();
                 // put p1 or p2 a further from center
-                *p = *p + dir.normalized() * (l/5 * rate);
+                *p = *p + dir.normalized() * (l/shortest * rate);
             }
         }
     }

@@ -39,24 +39,24 @@ std::string Generator::write(Scene *s) {
         writeO(os, o);
         // write v
         for (auto &v : o.getV()) {
-            writeV(os, v);
+            writeV(os, *v);
             ++objectVCount;
         }
         // write vt
         for (auto &vt : o.getVt()) {
-            writeVt(os, vt);
+            writeVt(os, *vt);
             ++objectVtCount;
         }
 
         // write vn
         for (auto &vn : o.getVn()) {
-            writeVn(os, vn);
+            writeVn(os, *vn);
             ++objectVnCount;
         }
 
         // write vp
         for (auto &vp : o.getVp()) {
-            writeVp(os, vp);
+            writeVp(os, *vp);
             ++objectVpCount;
         }
 

@@ -71,8 +71,8 @@ Scene *Parser::parse() {
 
             case lineType::O:
                 if (!firstObjectEmpty)
-                    scene->push(currObj);
-//                    scene->getObjects().push_back(std::move(currObj));
+//                    scene->push(std::move(currObj));
+                    scene->getObjects().push_back(std::move(currObj));
                 currObj = parseO(s);
                 break;
 
@@ -146,9 +146,9 @@ FaceEl Parser::parseF(std::ifstream &s, Object &currObj) {
                 tuple[i] = std::stoi(num);
             } catch (const std::exception &unused) {}
         }
-        el.push(tuple[0] == INT32_MIN ? nullptr : &currObj.getV ()[tuple[0] - 1], tuple[0] - 1,
-                tuple[1] == INT32_MIN ? nullptr : &currObj.getVt()[tuple[1] - 1], tuple[1] - 1,
-                tuple[2] == INT32_MIN ? nullptr : &currObj.getVn()[tuple[2] - 1], tuple[2] - 1);
+        el.push(tuple[0] == INT32_MIN ? nullptr : currObj.getV ()[tuple[0] - 1], tuple[0] - 1,
+                tuple[1] == INT32_MIN ? nullptr : currObj.getVt()[tuple[1] - 1], tuple[1] - 1,
+                tuple[2] == INT32_MIN ? nullptr : currObj.getVn()[tuple[2] - 1], tuple[2] - 1);
 //        el.getVertices().push_back(std::make_tuple(
 //                std::make_tuple<int, Point3D*>(tuple[0] - 1, tuple[0] == INT32_MIN ? nullptr : &currObj.getV ()[tuple[0] - 1]),
 //                std::make_tuple<int, Texture2D*>(tuple[1] - 1, tuple[1] == INT32_MIN ? nullptr : &currObj.getVt()[tuple[1] - 1]),

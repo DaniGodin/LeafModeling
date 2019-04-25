@@ -52,14 +52,14 @@ void TreeTranslator::genTreeO(Node *n, Object &o, long rootIndex) {
         // create line elt from root to child
         LineEl l = LineEl();
         // root pt
-        l.push(&o.getV()[rootIndex], rootIndex);
+        l.push(o.getV()[rootIndex], rootIndex);
 //        l.getVertices().push_back(
 //                std::make_tuple(
 //                        std::make_tuple<int, Point3D *>(rootIndex, &o.getV()[rootIndex]),
 //                        std::make_tuple<int, Texture2D *>(0, nullptr))
 //        );
         // child pt
-        l.push(&o.getV()[index], index);
+        l.push(o.getV()[index], index);
 //        l.getVertices().push_back(
 //                std::make_tuple(
 //                        std::make_tuple<int, Point3D *>(index, &o.getV()[index]),
@@ -82,7 +82,7 @@ void TreeTranslator::genTreeCyl(Node *n, const std::string &name, std::vector<Ob
         Cylinder cyl = Cylinder(parentCyl.getCenterUp(), direction, direction.length(), c->getEnergy(), name + "_" + std::to_string(count++), 10);
         // Generate cylinders with DIFFERENT bottom and top radius
 //        Cylinder cyl = Cylinder(parentCyl.getCenterUp(), direction, direction.length(), n->getEnergy(), c->getEnergy(), name + "_" + std::to_string(count++));
-        std::cout << cyl.getName() << " "  <<c->getEnergy() << std::endl;
+//        std::cout << cyl.getName() << " "  <<c->getEnergy() << std::endl;
         objs.push_back(std::move(cyl));
         ;
         // iterate through child

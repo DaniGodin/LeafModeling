@@ -8,19 +8,19 @@ Object::Object(const std::string &name) : name(name) {}
 
 Object::Object() {}
 
-std::vector<Point3D> &Object::getV() {
+std::vector<Point3D*> &Object::getV() {
     return v;
 }
 
-std::vector<Point2D> &Object::getVp() {
+std::vector<Point2D*> &Object::getVp() {
     return vp;
 }
 
-std::vector<Vector3D> &Object::getVn() {
+std::vector<Vector3D*> &Object::getVn() {
     return vn;
 }
 
-std::vector<Texture2D> &Object::getVt() {
+std::vector<Texture2D*> &Object::getVt() {
     return vt;
 }
 
@@ -45,19 +45,19 @@ const std::string &Object::getName() const {
 }
 
 void Object::push(const Point3D &p) {
-    v.push_back(p);
+    v.push_back(new Point3D(p));
 }
 
 void Object::push(const Point2D &p) {
-    vp.push_back(p);
+    vp.push_back(new Point2D(p));
 }
 
 void Object::push(const Vector3D &v) {
-    vn.push_back(v);
+    vn.push_back(new Vector3D(v));
 }
 
 void Object::push(const Texture2D &t) {
-    vt.push_back(t);
+    vt.push_back(new Texture2D(t));
 }
 
 void Object::push(const FaceEl &f) {
@@ -66,4 +66,9 @@ void Object::push(const FaceEl &f) {
 
 void Object::push(const LineEl &l) {
     lineEls.push_back(l);
+}
+
+Object::~Object() {
+    // TODO free v vn vp vt
+    std::cout << "Object Destructor called" << std::endl;
 }

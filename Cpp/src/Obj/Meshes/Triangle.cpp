@@ -33,13 +33,13 @@ void Triangle::initGeom() {
 }
 
 void Triangle::genGeometry(int subdiv) {
-    v.push_back(p1);
-    v.push_back(p2);
-    v.push_back(p3);
+    push(p1);
+    push(p2);
+    push(p3);
     FaceEl f = FaceEl();
     for (int i = 0; i < 3; ++i) {
         f.getVertices().push_back(std::make_tuple(
-                std::make_tuple<int, Point3D*>(std::move(i), &v[i]),
+                std::make_tuple<int, Point3D*>(std::move(i), v[i]+ 0),
                 std::make_tuple<int, Texture2D*>(0, nullptr),
                 std::make_tuple<int, Vector3D*>(0, nullptr)
         ));

@@ -30,28 +30,28 @@ const int FaceEl::getIndex(int index) const {
 
 void FaceEl::push(Point3D *p, int indexp) {
     vertices.push_back(std::make_tuple(
-            std::make_tuple(indexp, p),
-            std::make_tuple(0, nullptr),
-            std::make_tuple(0, nullptr)));
+            std::make_tuple<int, Point3D*>(indexp + 0, std::move(p)),
+            std::make_tuple<int, Texture2D*>(0, nullptr),
+            std::make_tuple<int, Vector3D*>(0, nullptr)));
 }
 
 void FaceEl::push(Point3D *p, int indexp, Texture2D *t, int indext) {
     vertices.push_back(std::make_tuple(
-            std::make_tuple(indexp, p),
-            std::make_tuple(indext, t),
-            std::make_tuple(0, nullptr)));
+            std::make_tuple<int, Point3D*>(indexp + 0, std::move(p)),
+            std::make_tuple<int, Texture2D*>(indext + 0, std::move(t)),
+            std::make_tuple<int, Vector3D*>(0, nullptr)));
 }
 
 void FaceEl::push(Point3D *p, int indexp, Texture2D *t, int indext, Vector3D *v, int indexv) {
     vertices.push_back(std::make_tuple(
-            std::make_tuple(indexp, p),
-            std::make_tuple(indext, t),
-            std::make_tuple(indexv, v)));
+            std::make_tuple<int, Point3D*>(indexp + 0, std::move(p)),
+            std::make_tuple<int, Texture2D*>(indext + 0, std::move(t)),
+            std::make_tuple<int, Vector3D*>(indexv + 0, std::move(v))));
 }
 
 void FaceEl::push(Point3D *p, int indexp, Vector3D *v, int indexv) {
     vertices.push_back(std::make_tuple(
-            std::make_tuple(indexp, p),
-            std::make_tuple(0, nullptr),
-            std::make_tuple(indexv, v)));
+            std::make_tuple<int, Point3D*>(indexp + 0, std::move(p)),
+            std::make_tuple<int, Texture2D*>(0, nullptr),
+            std::make_tuple<int, Vector3D*>(indexv + 0, std::move(v))));
 }

@@ -20,14 +20,16 @@ public:
     explicit Object(const std::string &name);
     Object();
 
+    ~Object();
+
 public:
-    std::vector<Point3D> &getV() ;
+    std::vector<Point3D*> &getV() ;
 
-    std::vector<Point2D> &getVp() ;
+    std::vector<Point2D*> &getVp() ;
 
-    std::vector<Vector3D> &getVn() ;
+    std::vector<Vector3D*> &getVn() ;
 
-    std::vector<Texture2D> &getVt() ;
+    std::vector<Texture2D*> &getVt() ;
 
     std::vector<FaceEl> &getFaceEls() ;
     const std::vector<FaceEl> &getFaceEls() const;
@@ -48,10 +50,10 @@ public:
 protected:
     std::string name = "default";
 
-    std::vector<Point3D> v;      // geometric vertices
-    std::vector<Point2D> vp;     // parameter space vertices
-    std::vector<Vector3D> vn;    // vertex normals
-    std::vector<Texture2D> vt;   // texture vertices
+    std::vector<Point3D*> v;      // geometric vertices
+    std::vector<Point2D*> vp;     // parameter space vertices
+    std::vector<Vector3D*> vn;    // vertex normals
+    std::vector<Texture2D*> vt;   // texture vertices
 
     std::vector<FaceEl> faceEls;
     std::vector<LineEl> lineEls;

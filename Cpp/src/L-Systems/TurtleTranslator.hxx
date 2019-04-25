@@ -86,14 +86,14 @@ Object TurtleTranslator::transcript(LObject lobj) {
             turtle.oldVIndex = turtle.currVIndex;
             turtle.currVIndex = obj.getV().size() - 1;
             LineEl l = LineEl();
-            l.push(&obj.getV()[turtle.oldVIndex], turtle.oldVIndex + 0);
+            l.push(obj.getV()[turtle.oldVIndex], turtle.oldVIndex + 0);
 //            l.getVertices().push_back(
 //                    std::make_tuple(
 //                            std::make_tuple<int, Point3D*>(turtle.oldVIndex + 0, &obj.getV()[turtle.oldVIndex]),
 //                            std::make_tuple<int, Texture2D*>(0, nullptr)
 //                    )
 //            );
-            l.push(&obj.getV()[turtle.currVIndex], turtle.currVIndex + 0);
+            l.push(obj.getV()[turtle.currVIndex], turtle.currVIndex + 0);
 //            l.getVertices().push_back(
 //                    std::make_tuple(
 //                            std::make_tuple<int, Point3D*>(turtle.currVIndex + 0, &obj.getV()[turtle.currVIndex]),

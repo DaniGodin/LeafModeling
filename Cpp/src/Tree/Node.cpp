@@ -13,9 +13,9 @@ Node::Node(const Point3D &pt, Node *parent, double energy) : pt(std::move(pt)), 
 Node::Node(Node *parent) : parent(parent) {}
 
 Node::~Node() {
-    for (Node * c : children) {
-        delete c;
-    }
+//    for (Node * c : children) {
+//        delete c;
+//    }
 }
 
 Point3D &Node::getPt() {
