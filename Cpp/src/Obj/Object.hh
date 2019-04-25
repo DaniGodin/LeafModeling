@@ -21,22 +21,27 @@ public:
     Object();
 
 public:
-    std::vector<Point3D> &getV();
+    std::vector<Point3D> &getV() ;
 
-    const std::vector<Point3D> &getVConst() const;
+    std::vector<Point2D> &getVp() ;
 
-    std::vector<Point2D> &getVp();
+    std::vector<Vector3D> &getVn() ;
 
-    std::vector<Vector3D> &getVn();
+    std::vector<Texture2D> &getVt() ;
 
-    std::vector<Texture2D> &getVt();
+    std::vector<FaceEl> &getFaceEls() ;
 
-    std::vector<FaceEl> &getFaceEls();
-
-    std::vector<LineEl> &getLineEls();
+    std::vector<LineEl> &getLineEls() ;
 
     const std::string &getName() const;
 
+
+    void push(const Point3D &p);
+    void push(const Point2D &p);
+    void push(const Vector3D &v);
+    void push(const Texture2D &t);
+    void push(const FaceEl &f);
+    void push(const LineEl &l);
 
 protected:
     std::string name = "default";

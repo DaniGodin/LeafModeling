@@ -72,7 +72,8 @@ void treeExample() {
     // create a scene and put the object in it
     Scene scene = Scene();
     for (const auto &o : leaf1)
-        scene.getObjects().push_back(o);
+        scene.push(o);
+//        scene.getObjects().push_back(o);
     // instanciate generator
     Generator gen = Generator("out_line.obj");
     // write scene to file
@@ -83,7 +84,8 @@ void treeExample() {
     // create a scene and put the object in it
     Scene scene2 = Scene();
     for (const auto &o : leafCyl)
-        scene2.getObjects().push_back(o);
+        scene2.push(o);
+//        scene2.getObjects().push_back(o);
     // instanciate generator
     Generator gen2 = Generator("out_cyl.obj");
     // write scene to file
@@ -99,7 +101,8 @@ void cylinderExample() {
     Cylinder cyl(Point3D(0, 1.5, 0), Vector3D(1, 4, 0.5), 5, 0.21, 0.72, "cyl", 20);
     // create a scene and put the object in it
     Scene scene = Scene();
-    scene.getObjects().push_back(cyl);
+    scene.push(cyl);
+//    scene.getObjects().push_back(cyl);
     // write scene to file
     gen.write(&scene);
 }
@@ -182,7 +185,8 @@ void lSystemExample() {
     Generator gen = Generator("circle1.obj");
 
     Scene scene = Scene();
-    scene.getObjects().push_back(o);
+    scene.push(o);
+//    scene.getObjects().push_back(o);
     // write scene to file
     gen.write(&scene);
 }
@@ -217,7 +221,8 @@ void algoLeafExample() {
     // create a scene and put the object in it
     Scene scene2 = Scene();
     for (const auto &o : leafCyl)
-        scene2.getObjects().push_back(o);
+        scene2.push(o);
+//        scene2.getObjects().push_back(o);
     // instanciate generator
     Generator gen2 = Generator("out_algoleaf.obj");
     // write scene to file

@@ -12,7 +12,8 @@ std::vector<Object> TreeTranslator::generate(Node *root, std::string name, GENTY
         Object o = Object(name);
 
         // push the root
-        o.getV().push_back(std::move(root->getPt()));
+        o.push(root->getPt());
+//        o.getV().push_back(std::move(root->getPt()));
         genTreeO(root, o, 0);
         return std::vector<Object>{o};
     }
@@ -46,23 +47,27 @@ void TreeTranslator::genTreeO(Node *n, Object &o, long rootIndex) {
     for (auto &c : n->getChildren()) {
         // push child & get its index
         long index = o.getV().size();
-        o.getV().push_back(std::move(c->getPt()));
+        o.push(c->getPt());
+//        o.getV().push_back(std::move(c->getPt()));
         // create line elt from root to child
         LineEl l = LineEl();
         // root pt
-        l.getVertices().push_back(
-                std::make_tuple(
-                        std::make_tuple<int, Point3D *>(rootIndex, &o.getV()[rootIndex]),
-                        std::make_tuple<int, Texture2D *>(0, nullptr))
-        );
+        l.push(&o.getV()[rootIndex], rootIndex);
+//        l.getVertices().push_back(
+//                std::make_tuple(
+//                        std::make_tuple<int, Point3D *>(rootIndex, &o.getV()[rootIndex]),
+//                        std::make_tuple<int, Texture2D *>(0, nullptr))
+//        );
         // child pt
-        l.getVertices().push_back(
-                std::make_tuple(
-                        std::make_tuple<int, Point3D *>(index, &o.getV()[index]),
-                        std::make_tuple<int, Texture2D *>(0, nullptr))
-        );
+        l.push(&o.getV()[index], index);
+//        l.getVertices().push_back(
+//                std::make_tuple(
+//                        std::make_tuple<int, Point3D *>(index, &o.getV()[index]),
+//                        std::make_tuple<int, Texture2D *>(0, nullptr))
+//        );
         // push line elt
-        o.getLineEls().push_back(std::move(l));
+        o.push(l);
+//        o.getLineEls().push_back(std::move(l));
         // iterate through child
         genTreeO(c, o, index);
     }

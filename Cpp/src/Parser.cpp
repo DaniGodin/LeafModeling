@@ -71,20 +71,24 @@ Scene *Parser::parse() {
 
             case lineType::O:
                 if (!firstObjectEmpty)
-                    scene->getObjects().push_back(std::move(currObj));
+                    scene->push(currObj);
+//                    scene->getObjects().push_back(std::move(currObj));
                 currObj = parseO(s);
                 break;
 
             case lineType::V:
-                currObj.getV().push_back(parseV(s));
+                currObj.push(parseV(s));
+//                currObj.getV().push_back(parseV(s));
                 break;
 
             case lineType::VN:
-                currObj.getVn().push_back(parseVn(s));
+                currObj.push(parseVn(s));
+//                currObj.getVn().push_back(parseVn(s));
                 break;
 
             case lineType::F:
-                currObj.getFaceEls().push_back(parseF(s, currObj));
+                currObj.push(parseF(s, currObj));
+//                currObj.getFaceEls().push_back(parseF(s, currObj));
                 break;
 
             case lineType::SHARP:
@@ -99,7 +103,8 @@ Scene *Parser::parse() {
         }
         firstObjectEmpty = false;
     }
-    scene->getObjects().push_back(std::move(currObj));
+    scene->push(currObj);
+//    scene->getObjects().push_back(std::move(currObj));
     return scene;
 }
 
@@ -141,10 +146,13 @@ FaceEl Parser::parseF(std::ifstream &s, Object &currObj) {
                 tuple[i] = std::stoi(num);
             } catch (const std::exception &unused) {}
         }
-        el.getVertices().push_back(std::make_tuple(
-                std::make_tuple<int, Point3D*>(tuple[0] - 1, tuple[0] == INT32_MIN ? nullptr : &currObj.getV ()[tuple[0] - 1]),
-                std::make_tuple<int, Texture2D*>(tuple[1] - 1, tuple[1] == INT32_MIN ? nullptr : &currObj.getVt()[tuple[1] - 1]),
-                std::make_tuple<int, Vector3D*>(tuple[2] - 1, tuple[2] == INT32_MIN ? nullptr : &currObj.getVn()[tuple[2] - 1])));
+        el.push(tuple[0] == INT32_MIN ? nullptr : &currObj.getV ()[tuple[0] - 1], tuple[0] - 1,
+                tuple[1] == INT32_MIN ? nullptr : &currObj.getVt()[tuple[1] - 1], tuple[1] - 1,
+                tuple[2] == INT32_MIN ? nullptr : &currObj.getVn()[tuple[2] - 1], tuple[2] - 1);
+//        el.getVertices().push_back(std::make_tuple(
+//                std::make_tuple<int, Point3D*>(tuple[0] - 1, tuple[0] == INT32_MIN ? nullptr : &currObj.getV ()[tuple[0] - 1]),
+//                std::make_tuple<int, Texture2D*>(tuple[1] - 1, tuple[1] == INT32_MIN ? nullptr : &currObj.getVt()[tuple[1] - 1]),
+//                std::make_tuple<int, Vector3D*>(tuple[2] - 1, tuple[2] == INT32_MIN ? nullptr : &currObj.getVn()[tuple[2] - 1])));
     }
     return el;
 }

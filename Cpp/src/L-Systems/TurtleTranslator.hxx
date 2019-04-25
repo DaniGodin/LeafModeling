@@ -39,7 +39,8 @@ Object TurtleTranslator::transcript(LObject lobj) {
     unsigned index = 0;
     bool turtleMoved = false;
     double angleR = DegreesToRadians(angle);
-    obj.getV().push_back(std::move(turtle.curr));
+    obj.push(turtle.curr);
+//    obj.getV().push_back(std::move(turtle.curr));
     for (const LNode &n : lobj.getNodes()) {
         turtleMoved = false;
         // each node
@@ -80,24 +81,28 @@ Object TurtleTranslator::transcript(LObject lobj) {
 
         // create line
         if (turtleMoved) {
-            obj.getV().push_back(std::move(turtle.curr));
+            obj.push(turtle.curr);
+//            obj.getV().push_back(std::move(turtle.curr));
             turtle.oldVIndex = turtle.currVIndex;
             turtle.currVIndex = obj.getV().size() - 1;
             LineEl l = LineEl();
-            l.getVertices().push_back(
-                    std::make_tuple(
-                            std::make_tuple<int, Point3D*>(turtle.oldVIndex + 0, &obj.getV()[turtle.oldVIndex]),
-                            std::make_tuple<int, Texture2D*>(0, nullptr)
-                    )
-            );
-            l.getVertices().push_back(
-                    std::make_tuple(
-                            std::make_tuple<int, Point3D*>(turtle.currVIndex + 0, &obj.getV()[turtle.currVIndex]),
-                            std::make_tuple<int, Texture2D*>(0, nullptr)
-                    )
-            );
+            l.push(&obj.getV()[turtle.oldVIndex], turtle.oldVIndex + 0);
+//            l.getVertices().push_back(
+//                    std::make_tuple(
+//                            std::make_tuple<int, Point3D*>(turtle.oldVIndex + 0, &obj.getV()[turtle.oldVIndex]),
+//                            std::make_tuple<int, Texture2D*>(0, nullptr)
+//                    )
+//            );
+            l.push(&obj.getV()[turtle.currVIndex], turtle.currVIndex + 0);
+//            l.getVertices().push_back(
+//                    std::make_tuple(
+//                            std::make_tuple<int, Point3D*>(turtle.currVIndex + 0, &obj.getV()[turtle.currVIndex]),
+//                            std::make_tuple<int, Texture2D*>(0, nullptr)
+//                    )
+//            );
             // push to obj
-            obj.getLineEls().push_back(std::move(l));
+//            obj.getLineEls().push_back(std::move(l));
+            obj.push(l);
         }
     }
     return std::move(obj);

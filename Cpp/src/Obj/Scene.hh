@@ -17,6 +17,9 @@ public:
 
     std::vector<Material> &getMaterials();
 
+    void push(const Object &o);
+    void push(const Material &mat);
+
 private:
     std::vector<Object> objects;
     std::vector<Material> materials;

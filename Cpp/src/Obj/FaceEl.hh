@@ -22,8 +22,20 @@ class FaceEl : public Element {
 
 public:
     std::vector<std::tuple<Point3D_i, Texture2D_i, Vector3D_i>> &getVertices();
+    const std::vector<std::tuple<Point3D_i, Texture2D_i, Vector3D_i>> &getVertices() const;
 
-private:
+    void push(Point3D *p, int indexp);
+    void push(Point3D *p, int indexp, Texture2D *t, int indext);
+    void push(Point3D *p, int indexp, Texture2D *t, int indext, Vector3D *v, int indexv);
+    void push(Point3D *p, int indexp, Vector3D *v, int indexv);
+
+    Point3D *getPt(int index);
+    const Point3D *getPt(int index) const;
+
+    int getIndex(int index);
+    const int getIndex(int index) const;
+
+protected:
 // pseudo JSON representation
 //  [
 //      {

@@ -22,6 +22,10 @@ class LineEl : public Element {
 
 public:
     std::vector<std::tuple<Point3D_i, Texture2D_i>> &getVertices();
+    const std::vector<std::tuple<Point3D_i, Texture2D_i>> &getVertices() const;
+
+    void push(Point3D *p, int indexp);
+    void push(Point3D *p, int indexp, Texture2D *t, int indext);
 
 private:
 // pseudo JSON representation

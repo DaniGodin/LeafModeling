@@ -11,3 +11,11 @@ std::vector<Object> &Scene::getObjects() {
 std::vector<Material> &Scene::getMaterials() {
     return materials;
 }
+
+void Scene::push(const Object &o) {
+    objects.push_back(o);
+}
+
+void Scene::push(const Material &mat) {
+    materials.push_back(mat);
+}
