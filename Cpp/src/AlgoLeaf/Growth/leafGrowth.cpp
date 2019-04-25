@@ -3,6 +3,7 @@
 //
 
 #include <set>
+#include <cmath>
 #include <exception>
 #include "leafGrowth.hh"
 
@@ -30,9 +31,11 @@ void leafGrowth::radialgrow(Object &leaf, double rate) {
                 // get p1 or p2
                 Point3D *p = f.getPt(i);
                 // calc direction from center
-                Vector3D dir = (*p - leaf.getV()[centerV]).normalized();
+                Vector3D dir = (*p - leaf.getV()[centerV]);
+                // calc length
+                double l = dir.length();
                 // put p1 or p2 a further from center
-                *p = *p + dir * rate;
+                *p = *p + dir.normalized() * (l/5 * rate);
             }
         }
     }
