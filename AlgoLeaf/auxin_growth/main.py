@@ -1,8 +1,12 @@
 from matplotlib.patches import Polygon
 from leaf import Leaf
+from leaf_shape import first_param
 from pylab import *
 
 if __name__ == '__main__':
+
+
+
 
     leaf_shape = Polygon([(-1, 0), (0, 3), (1, 0)], closed=True)
 
@@ -12,3 +16,7 @@ if __name__ == '__main__':
 
     Bob.display(8, 15)
 
+
+
+    #Leaf = first_param(None, 2.8)
+   # Leaf.plot_shape(2.8)
