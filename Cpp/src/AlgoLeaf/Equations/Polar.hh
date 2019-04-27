@@ -19,7 +19,8 @@ public:
 
     double calculate(double args[]);
 
-    Object generateObject(double minr, double maxr, double anglestep, double density, const Point3D &center);
+    Object generateObject(double minr, double maxr, double anglestep, double minDistance, const Point3D &center);
+
 
 private:
     bool isClustering(const std::vector<Point3D*> &pts, const Point3D &p, double minDistance);
@@ -27,6 +28,20 @@ private:
 
 private:
     polarF formula;
+
+//\\//\\//\\//
+
+public: // Some Leaf Equations
+
+    static double Cannabis(double args[]) {
+        double phi = args[0];
+        return (1.0 + 0.9 * cos(8.0 * phi)) * (1.0 + 0.1 * cos(24.0 * phi)) * (0.9 + 0.05 * cos(200.0 * phi)) * (1.0 + sin(phi));
+    }
+
+    static double JapaneseMarple(double args[]) {
+        double phi = args[0];
+        return (1.0 + sin(phi)) * (1.0 + 0.3 * cos(8.0 * phi)) * (1.0 + 0.1 * cos(24.0 * phi));
+    }
 
 };
 

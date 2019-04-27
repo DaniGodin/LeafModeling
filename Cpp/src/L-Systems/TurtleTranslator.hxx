@@ -81,10 +81,11 @@ Object TurtleTranslator::transcript(LObject lobj) {
 
         // create line
         if (turtleMoved) {
-            obj.push(turtle.curr);
-//            obj.getV().push_back(std::move(turtle.curr));
             turtle.oldVIndex = turtle.currVIndex;
-            turtle.currVIndex = obj.getV().size() - 1;
+
+            turtle.currVIndex = obj.push(turtle.curr);
+//            obj.getV().push_back(std::move(turtle.curr));
+//            turtle.currVIndex = obj.getV().size() - 1;
             LineEl l = LineEl();
             l.push(obj.getV()[turtle.oldVIndex], turtle.oldVIndex + 0);
 //            l.getVertices().push_back(

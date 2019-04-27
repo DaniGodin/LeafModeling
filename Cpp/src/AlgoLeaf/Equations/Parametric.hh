@@ -21,8 +21,8 @@ public:
 
     double calculate(double args[]);
 
-    Object generateObjectOrthogonal(double xmin, double xmax, double ymin, double ymax, double step, double density, const Point3D &center);
-    Object generateObjectRadial(double radius, double step, double anglestep, double density, const Point3D &center);
+    Object generateObjectOrthogonal(double xmin, double xmax, double ymin, double ymax, double step, double minDistance, const Point3D &center);
+    Object generateObjectRadial(double radius, double step, double anglestep, double minDistance, const Point3D &center);
 
 private:
     std::vector<int> sortShape(const std::vector<Point3D> &pts);
