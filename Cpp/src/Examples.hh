@@ -14,6 +14,7 @@ namespace Examples {
     void cylinderExample();
     void algoLeafExample();
     void parametricExample();
+    void polarExample();
 
 }
 

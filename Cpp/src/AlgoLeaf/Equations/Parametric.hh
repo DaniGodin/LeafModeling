@@ -9,6 +9,10 @@
 #include "../../Obj/Object.hh"
 
 class Parametric {
+    // args are expected as follow:
+    // args[0] : x
+    // args[1] : y
+    // ...
     typedef double(*parametricF)(double args[]);
 
 
