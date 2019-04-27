@@ -85,3 +85,12 @@ Vector3D Vector3D::up() {
 bool Vector3D::isEmpty() {
     return x == 0 && y == 0 && z == 0;
 }
+
+double Vector3D::angle(const Vector3D &lhs, const Vector3D &rhs) {
+    return (
+            acos(
+                    std::fabs((lhs.scalar(rhs))
+                              /
+                              (lhs.length() * rhs.length()))
+            ) / M_PI) * 180.0;
+}

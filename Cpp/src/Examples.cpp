@@ -6,7 +6,9 @@
 
 #include <iostream>
 #include <cstdlib>
+#include <queue>
 #include <ctime>
+#include <cfloat>
 #include "Parser.hh"
 #include "Tree/Node.hh"
 #include "Generator.hh"
@@ -24,6 +26,7 @@
 #include "AlgoLeaf/particle_object.hh"
 #include "AlgoLeaf/gen_random.hh"
 #include "AlgoLeaf/Growth/leafGrowth.hh"
+#include "AlgoLeaf/Parametric/Parametric.hh"
 
 namespace Examples {
 
@@ -258,7 +261,27 @@ namespace Examples {
 
     }
 
+    double paramfun(double args[]) {
+        using namespace std;
+        double x = args[0];
+        double y = args[1];
+        double alpha = args[2];
+        return -powf((powf((alpha * x), 2.0) + powf((alpha * y - 1.0), 2.0) - 1.0), 3.0) - powf((alpha * x), 2.0) * powf((alpha * y - 1.0), 3.0);
+    };
+
     void parametricExample() {
+
+        Parametric leaff = Parametric(paramfun, 0);
+        double args[] = { 0.0, 2.0, 1.0};
+        double res = leaff.calculate(args);
+
+//        Object leafScheme = leaff.generateObjectOrthogonal(-2.1, 2.1, -2.1 ,2.1, 0.001, 0.1, Point3D(0, 0, 0));
+        Object leafScheme = leaff.generateObjectRadial(4, 0.001, 0.01, 0.5, Point3D(0, 0.1, 0));
+
+        Scene sc = Scene();
+        sc.push(leafScheme);
+        Generator gen = Generator("leafParam.obj");
+        gen.write(&sc);
 
     }
 }

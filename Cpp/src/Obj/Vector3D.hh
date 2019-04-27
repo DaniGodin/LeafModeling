@@ -37,6 +37,8 @@ public:
     static Vector3D up(double intensity);
     static Vector3D up();
 
+    static double angle(const Vector3D &lhs, const Vector3D &rhs);
+
     bool isEmpty();
 
 private:
