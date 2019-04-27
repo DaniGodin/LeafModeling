@@ -286,15 +286,9 @@ namespace Examples {
 
     }
 
-    double eq(double args[]) {
-        double phi = args[0];
-        return (1.0 + 0.9 * cos(8.0 * phi)) * (1.0 + 0.1 * cos(24.0 * phi)) * (0.9 + 0.05 * cos(200.0 * phi)) * (1.0 + sin(phi));
-//    return phi / (2 * M_PI);
-    }
-
     void polarExample() {
-        Polar p(eq);
-        Object obj = p.generateObject(-M_PI, M_PI, 0.001, 0.01, Point3D(0, 0, 0));
+        Polar p(Polar::JapaneseMarple);
+        Object obj = p.generateObject(-M_PI, M_PI, 0.001, 0.1, Point3D(0, 0, 0));
 
         Scene sc = Scene();
         sc.push(obj);

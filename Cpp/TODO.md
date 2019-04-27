@@ -2,5 +2,7 @@
 
 [ ] Parse more OBJ instructions
 [ ] Check memory leaks
-[ ] better API for OBJ classes (add a push(Point3D), push(Point3D, Texture3D) ...)
-[ ] calc parametric equation
+[x] better API for OBJ classes (add a push(Point3D), push(Point3D, Texture3D) ...)
+[x] calc parametric equation
+[x] calc centric equation
+[ ] modify push(obj, int) to only push(obj)
