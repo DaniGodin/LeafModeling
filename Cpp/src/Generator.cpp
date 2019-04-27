@@ -160,6 +160,9 @@ void Generator::writeF(std::ofstream &s, FaceEl &f, Object &o) {
         Vector3D_i &vn = std::get<2>(tuple);
         if (std::get<1>(vn) != nullptr) {
             s << std::get<0>(vn) + globalVnCount;
+        } else if (std::get<1>(f.getGlobalNormal()) != nullptr) {
+            // global normal set
+            s << std::get<0>(f.getGlobalNormal()) + globalVnCount;
         }
     }
     s << std::endl;

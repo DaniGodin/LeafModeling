@@ -40,12 +40,14 @@ public:
     const std::string &getName() const;
 
 
-    void push(const Point3D &p);
-    void push(const Point2D &p);
-    void push(const Vector3D &v);
-    void push(const Texture2D &t);
-    void push(const FaceEl &f);
-    void push(const LineEl &l);
+    int push(const Point3D &p);
+    int push(const Point2D &p);
+    int push(const Vector3D &v);
+    int push(const Texture2D &t);
+    int push(const FaceEl &f);
+    int push(const LineEl &l);
+
+    void autoGenNormal();
 
 protected:
     std::string name = "default";

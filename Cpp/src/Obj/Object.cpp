@@ -44,31 +44,50 @@ const std::string &Object::getName() const {
     return name;
 }
 
-void Object::push(const Point3D &p) {
+int Object::push(const Point3D &p) {
     v.push_back(new Point3D(p));
+    return v.size() - 1;
 }
 
-void Object::push(const Point2D &p) {
+int Object::push(const Point2D &p) {
     vp.push_back(new Point2D(p));
+    return vp.size() - 1;
 }
 
-void Object::push(const Vector3D &v) {
+int Object::push(const Vector3D &v) {
     vn.push_back(new Vector3D(v));
+    return vn.size() - 1;
+
 }
 
-void Object::push(const Texture2D &t) {
+int Object::push(const Texture2D &t) {
     vt.push_back(new Texture2D(t));
+    return vt.size() - 1;
 }
 
-void Object::push(const FaceEl &f) {
+int Object::push(const FaceEl &f) {
     faceEls.push_back(f);
+    return faceEls.size() - 1;
 }
 
-void Object::push(const LineEl &l) {
+int Object::push(const LineEl &l) {
     lineEls.push_back(l);
+    return lineEls.size() - 1;
 }
 
 Object::~Object() {
     // TODO free v vn vp vt
 //    std::cout << "Object Destructor called" << std::endl;
+}
+
+void Object::autoGenNormal() {
+    if (v.size() < 2)
+        throw std::out_of_range("Not enough vertices");
+     for (auto &f : faceEls) {
+         if (f.getVertices().size() < 3)
+             continue;
+         Vector3D norm = (*f.getPt(1) - *f.getPt(0)).crossProduct(*f.getPt(2) - *f.getPt(0)).normalized();
+         int index = push(norm);
+         f.setGlobalNormal(vn[index], index);
+     }
 }

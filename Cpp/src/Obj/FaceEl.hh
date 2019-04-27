@@ -35,6 +35,10 @@ public:
     int getIndex(int index);
     const int getIndex(int index) const;
 
+    void setGlobalNormal(Vector3D *v, int indexv);
+
+    const Vector3D_i &getGlobalNormal() const;
+
 protected:
 // pseudo JSON representation
 //  [
@@ -46,6 +50,7 @@ protected:
 //      ...
 //  ]
     std::vector<std::tuple<Point3D_i, Texture2D_i, Vector3D_i>> vertices;
+    Vector3D_i globalNormal = std::make_tuple<int, Vector3D*>(0, nullptr);
 };
 
 

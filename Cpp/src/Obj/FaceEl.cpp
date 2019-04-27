@@ -55,3 +55,11 @@ void FaceEl::push(Point3D *p, int indexp, Vector3D *v, int indexv) {
             std::make_tuple<int, Texture2D*>(0, nullptr),
             std::make_tuple<int, Vector3D*>(indexv + 0, std::move(v))));
 }
+
+void FaceEl::setGlobalNormal(Vector3D *v, int indexv) {
+    globalNormal = std::make_tuple<int, Vector3D*>(indexv + 0, std::move(v));
+}
+
+const Vector3D_i &FaceEl::getGlobalNormal() const {
+    return globalNormal;
+}
