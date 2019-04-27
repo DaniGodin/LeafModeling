@@ -2,7 +2,10 @@
 // Created by revetoon on 3/1/19.
 //
 
+#include <cmath>
 #include "Point3D.hh"
+#include "../Constants.hh"
+#include "../Utils/dblutils.hh"
 
 Point3D::Point3D(double x, double y, double z, double w) : x(x), y(y), z(z), w(w) {}
 
@@ -62,10 +65,10 @@ std::ostream& operator<<(std::ostream &out, const Point3D &p) {
 
 
 std::size_t Point3D::hash::operator () (const Point3D &p) const {
-    auto h1 = std::hash<double>{}(p.x);
-    auto h2 = std::hash<double>{}(p.y);
-    auto h3 = std::hash<double>{}(p.z);
-    auto h4 = std::hash<double>{}(p.w);
+    auto h1 = std::hash<double>{}(dblutils::trunc(p.x, constants::OBJ_DBL_PRECISION));
+    auto h2 = std::hash<double>{}(dblutils::trunc(p.y, constants::OBJ_DBL_PRECISION));
+    auto h3 = std::hash<double>{}(dblutils::trunc(p.z, constants::OBJ_DBL_PRECISION));
+    auto h4 = std::hash<double>{}(dblutils::trunc(p.w, constants::OBJ_DBL_PRECISION));
 
     return h1 ^ h2 ^ h3 ^ h4;
 }

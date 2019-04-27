@@ -3,6 +3,8 @@
 //
 
 #include "Vector3D.hh"
+#include "../Utils/dblutils.hh"
+#include "../Constants.hh"
 #include <cmath>
 #include <functional>
 
@@ -97,9 +99,9 @@ double Vector3D::angle(const Vector3D &lhs, const Vector3D &rhs) {
 }
 
 std::size_t Vector3D::hash::operator()(const Vector3D &p) const {
-    auto h1 = std::hash<double>{}(p.x);
-    auto h2 = std::hash<double>{}(p.y);
-    auto h3 = std::hash<double>{}(p.z);
+    auto h1 = std::hash<double>{}(dblutils::trunc(p.x, constants::OBJ_DBL_PRECISION));
+    auto h2 = std::hash<double>{}(dblutils::trunc(p.y, constants::OBJ_DBL_PRECISION));
+    auto h3 = std::hash<double>{}(dblutils::trunc(p.z, constants::OBJ_DBL_PRECISION));
 
     return h1 ^ h2 ^ h3;
 }

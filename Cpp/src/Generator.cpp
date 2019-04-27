@@ -4,6 +4,7 @@
 
 #include <iomanip>
 #include "Generator.hh"
+#include "Constants.hh"
 
 Generator::Generator(const std::string &filename) : filename(filename) {
 
@@ -12,7 +13,7 @@ Generator::Generator(const std::string &filename) : filename(filename) {
 
 std::string Generator::write(Scene *s) {
     std::ofstream os = std::ofstream(filename);
-    os << std::fixed << std::setprecision(8);
+    os << std::fixed << std::setprecision(constants::OBJ_DBL_PRECISION);
 
     // line write order
     // 1) object
