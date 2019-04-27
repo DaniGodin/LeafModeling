@@ -35,6 +35,9 @@ public:
 
     const Vector3D operator-(const Point3D &rhs) const;
 
+    struct hash {
+        std::size_t operator () (const Point3D &p) const;
+    };
 
 private:
     double x;

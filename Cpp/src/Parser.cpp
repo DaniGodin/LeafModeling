@@ -71,8 +71,8 @@ Scene *Parser::parse() {
 
             case lineType::O:
                 if (!firstObjectEmpty)
-//                    scene->push(std::move(currObj));
-                    scene->getObjects().push_back(std::move(currObj));
+                    scene->push(std::move(currObj));
+//                    scene->getObjects().push_back(std::move(currObj));
                 currObj = parseO(s);
                 break;
 

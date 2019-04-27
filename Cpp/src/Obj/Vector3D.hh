@@ -6,6 +6,8 @@
 #define OBJPARSER_VECTOR3D_HH
 
 
+#include <cstddef>
+
 class Vector3D {
 public:
     Vector3D();
@@ -40,6 +42,10 @@ public:
     static double angle(const Vector3D &lhs, const Vector3D &rhs);
 
     bool isEmpty();
+
+    struct hash {
+        std::size_t operator () (const Vector3D &p) const;
+    };
 
 private:
     double x;

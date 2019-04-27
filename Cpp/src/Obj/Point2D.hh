@@ -6,6 +6,8 @@
 #define OBJPARSER_POINT2D_HH
 
 
+#include <cstddef>
+
 class Point2D {
 public:
     double getU() const;
@@ -17,6 +19,10 @@ public:
     bool operator==(const Point2D &rhs) const;
 
     bool operator!=(const Point2D &rhs) const;
+
+    struct hash {
+        std::size_t operator () (const Point2D &p) const;
+    };
 
 private:
     double u;

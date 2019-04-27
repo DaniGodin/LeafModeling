@@ -59,3 +59,13 @@ std::ostream& operator<<(std::ostream &out, const Point3D &p) {
     out << "Z: " << p.getZ() << std::endl;
     return out;
 }
+
+
+std::size_t Point3D::hash::operator () (const Point3D &p) const {
+    auto h1 = std::hash<double>{}(p.x);
+    auto h2 = std::hash<double>{}(p.y);
+    auto h3 = std::hash<double>{}(p.z);
+    auto h4 = std::hash<double>{}(p.w);
+
+    return h1 ^ h2 ^ h3 ^ h4;
+}

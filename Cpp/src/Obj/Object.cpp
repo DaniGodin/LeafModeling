@@ -8,19 +8,19 @@ Object::Object(const std::string &name) : name(name) {}
 
 Object::Object() {}
 
-std::vector<Point3D*> &Object::getV() {
+const std::vector<Point3D*> &Object::getV() const {
     return v;
 }
 
-std::vector<Point2D*> &Object::getVp() {
+const std::vector<Point2D*> &Object::getVp() const {
     return vp;
 }
 
-std::vector<Vector3D*> &Object::getVn() {
+const std::vector<Vector3D*> &Object::getVn() const {
     return vn;
 }
 
-std::vector<Texture2D*> &Object::getVt() {
+const std::vector<Texture2D*> &Object::getVt() const {
     return vt;
 }
 
@@ -45,23 +45,39 @@ const std::string &Object::getName() const {
 }
 
 int Object::push(const Point3D &p) {
-    v.push_back(new Point3D(p));
+    auto a = new Point3D(p);
+    auto[it, b] = v_map.insert(std::pair(*a, static_cast<int>(v.size())));
+    if (!b)
+        return (*it).second;
+    v.push_back(a);
     return v.size() - 1;
 }
 
 int Object::push(const Point2D &p) {
-    vp.push_back(new Point2D(p));
+    auto a = new Point2D(p);
+    auto[it, b] = vp_map.insert(std::pair(*a, vp.size()));
+    if (!b)
+        return (*it).second;
+    vp.push_back(a);
     return vp.size() - 1;
 }
 
 int Object::push(const Vector3D &v) {
-    vn.push_back(new Vector3D(v));
+    auto a = new Vector3D(v);
+    auto[it, b] = vn_map.insert(std::pair(*a, vn.size()));
+    if (!b)
+        return (*it).second;
+    vn.push_back(a);
     return vn.size() - 1;
 
 }
 
 int Object::push(const Texture2D &t) {
-    vt.push_back(new Texture2D(t));
+    auto a = new Texture2D(t);
+    auto[it, b] = vt_map.insert(std::pair(*a, vt.size()));
+    if (!b)
+        return (*it).second;
+    vt.push_back(a);
     return vt.size() - 1;
 }
 

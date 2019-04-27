@@ -4,6 +4,7 @@
 
 #include "Vector3D.hh"
 #include <cmath>
+#include <functional>
 
 Vector3D::Vector3D(double x, double y, double z) : x(x), y(y), z(z) {}
 
@@ -93,4 +94,12 @@ double Vector3D::angle(const Vector3D &lhs, const Vector3D &rhs) {
                               /
                               (lhs.length() * rhs.length()))
             ) / M_PI) * 180.0;
+}
+
+std::size_t Vector3D::hash::operator()(const Vector3D &p) const {
+    auto h1 = std::hash<double>{}(p.x);
+    auto h2 = std::hash<double>{}(p.y);
+    auto h3 = std::hash<double>{}(p.z);
+
+    return h1 ^ h2 ^ h3;
 }

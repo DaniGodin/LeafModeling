@@ -7,6 +7,7 @@
 
 
 #include <vector>
+#include <unordered_map>
 #include "Point2D.hh"
 #include "Point3D.hh"
 #include "Vector3D.hh"
@@ -23,13 +24,13 @@ public:
     ~Object();
 
 public:
-    std::vector<Point3D*> &getV() ;
+    const std::vector<Point3D*> &getV() const;
 
-    std::vector<Point2D*> &getVp() ;
+    const std::vector<Point2D*> &getVp() const;
 
-    std::vector<Vector3D*> &getVn() ;
+    const std::vector<Vector3D*> &getVn() const;
 
-    std::vector<Texture2D*> &getVt() ;
+    const std::vector<Texture2D*> &getVt() const;
 
     std::vector<FaceEl> &getFaceEls() ;
     const std::vector<FaceEl> &getFaceEls() const;
@@ -59,6 +60,12 @@ protected:
 
     std::vector<FaceEl> faceEls;
     std::vector<LineEl> lineEls;
+
+    // duplicate Checking
+    std::unordered_map<Point3D, int, Point3D::hash> v_map = std::unordered_map<Point3D, int, Point3D::hash>();
+    std::unordered_map<Point2D, int, Point2D::hash> vp_map = std::unordered_map<Point2D, int, Point2D::hash>();
+    std::unordered_map<Vector3D, int, Vector3D::hash> vn_map = std::unordered_map<Vector3D, int, Vector3D::hash>();
+    std::unordered_map<Texture2D, int, Texture2D::hash> vt_map = std::unordered_map<Texture2D, int, Texture2D::hash>();
 };
 
 

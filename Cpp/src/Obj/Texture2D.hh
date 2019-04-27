@@ -6,6 +6,8 @@
 #define OBJPARSER_TEXTURE2D_HH
 
 
+#include <cstddef>
+
 class Texture2D {
 public:
     double getU() const;
@@ -17,6 +19,10 @@ public:
     bool operator==(const Texture2D &rhs) const;
 
     bool operator!=(const Texture2D &rhs) const;
+
+    struct hash {
+        std::size_t operator () (const Texture2D &p) const;
+    };
 
 private:
     double u;       // horizontal
