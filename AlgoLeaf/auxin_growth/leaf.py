@@ -113,7 +113,6 @@ class Leaf:
             r1 = random.random()
             r2 = random.random()
 
-
             #general growth
 
             x_rand = (1 - r1 ** 0.5) * Vertices[0][0] + (r1 ** 0.5) * (1 - r2) * Vertices[1][0] + Vertices[2][
@@ -157,22 +156,3 @@ class Leaf:
             v[0] += step * sign(v[0])
             v[1] += step * sign(v[1])
         vertices[1][1] += step * sign(vertices[1][1])
-
-
-
-
-
-
-    """
-    def venation_iteration:
-        #Create the new venations associated with good auxins
-
-    def auxin_iteration:
-        #remove auxin in the kill distance
-        #add new auxins
-        #remove the auxins in kill distance
-
-    def grow_leaf:
-        print("growing")
-        #WTF OMG
-    """
