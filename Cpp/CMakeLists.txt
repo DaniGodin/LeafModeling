@@ -80,4 +80,4 @@ add_executable(objParser
         src/Obj/Meshes/Triangle.cpp
         src/Obj/Meshes/Triangle.hh
         src/AlgoLeaf/Growth/leafGrowth.cpp
-        src/AlgoLeaf/Growth/leafGrowth.hh src/AlgoLeaf/Parametric/Parametric.cpp src/AlgoLeaf/Parametric/Parametric.hh src/Examples.cpp src/Examples.hh )
+        src/AlgoLeaf/Growth/leafGrowth.hh src/AlgoLeaf/Parametric/Parametric.cpp src/AlgoLeaf/Parametric/Parametric.hh src/Examples.cpp src/Examples.hh src/Chronometer.cpp src/Chronometer.hh)

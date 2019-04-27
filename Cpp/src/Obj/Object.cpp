@@ -70,5 +70,5 @@ void Object::push(const LineEl &l) {
 
 Object::~Object() {
     // TODO free v vn vp vt
-    std::cout << "Object Destructor called" << std::endl;
+//    std::cout << "Object Destructor called" << std::endl;
 }
