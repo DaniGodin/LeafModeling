@@ -50,6 +50,12 @@ public:
 
     void autoGenNormal();
 
+//protected:
+//    int find(const Point3D &p);
+//    int find(const Point2D &p);
+//    int find(const Vector3D &v);
+//    int find(const Texture2D &t);
+
 protected:
     std::string name = "default";
 

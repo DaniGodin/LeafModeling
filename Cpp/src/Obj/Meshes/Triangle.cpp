@@ -36,7 +36,7 @@ void Triangle::genGeometry(int subdiv) {
     push(p1);
     push(p2);
     push(p3);
-    FaceEl f = FaceEl();
+    FaceEl f = FaceEl(this);
     for (int i = 0; i < 3; ++i) {
         f.getVertices().push_back(std::make_tuple(
                 std::make_tuple<int, Point3D*>(std::move(i), v[i]+ 0),

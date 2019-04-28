@@ -18,6 +18,8 @@ class PointEl : public Element {
     */
 
 public:
+    PointEl(Object *parent);
+
     std::vector<Point3D_i> &getVertices();
 
 private:

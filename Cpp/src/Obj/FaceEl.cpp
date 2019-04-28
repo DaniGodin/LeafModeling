@@ -4,6 +4,9 @@
 
 #include "FaceEl.hh"
 
+FaceEl::FaceEl(Object *parent) : Element(parent) {}
+
+
 std::vector<std::tuple<Point3D_i, Texture2D_i, Vector3D_i>> &FaceEl::getVertices() {
     return vertices;
 }
@@ -63,3 +66,4 @@ void FaceEl::setGlobalNormal(Vector3D *v, int indexv) {
 const Vector3D_i &FaceEl::getGlobalNormal() const {
     return globalNormal;
 }
+

@@ -38,8 +38,8 @@ private:
     lineType parseType(std::ifstream &s);
     Point3D parseV(std::ifstream &s);
     Vector3D parseVn(std::ifstream &s);
-    FaceEl parseF(std::ifstream &s, Object &currObj);
-    Object parseO(std::ifstream &s);
+    FaceEl parseF(std::ifstream &s, Object *currObj);
+    Object *parseO(std::ifstream &s);
 
 private:
     std::string filename;

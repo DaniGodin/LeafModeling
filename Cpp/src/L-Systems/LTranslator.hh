@@ -14,7 +14,7 @@
 
 class LTranslator {
 public:
-    virtual Object transcript(LObject lobj) = 0;
+    virtual Object *transcript(LObject lobj) = 0;
 
 };
 

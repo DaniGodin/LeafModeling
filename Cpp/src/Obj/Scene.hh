@@ -13,16 +13,20 @@
 
 class Scene {
 public:
-    std::vector<Object> &getObjects();
+    Scene();
 
-    std::vector<Material> &getMaterials();
+    virtual ~Scene();
 
-    void push(const Object &o);
-    void push(const Material &mat);
+    std::vector<Object *> &getObjects();
+
+    std::vector<Material *> &getMaterials();
+
+    void push(Object *o);
+    void push(Material *mat);
 
 private:
-    std::vector<Object> objects;
-    std::vector<Material> materials;
+    std::vector<Object *> objects;
+    std::vector<Material *> materials;
 };
 
 

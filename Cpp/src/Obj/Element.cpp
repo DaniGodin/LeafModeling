@@ -3,3 +3,5 @@
 //
 
 #include "Element.hh"
+
+Element::Element(Object *parent) : parent(parent) {}

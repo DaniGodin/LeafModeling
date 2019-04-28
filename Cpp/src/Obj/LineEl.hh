@@ -21,6 +21,8 @@ class LineEl : public Element {
     */
 
 public:
+    LineEl(Object *parent);
+
     std::vector<std::tuple<Point3D_i, Texture2D_i>> &getVertices();
     const std::vector<std::tuple<Point3D_i, Texture2D_i>> &getVertices() const;
 

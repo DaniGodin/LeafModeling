@@ -4,6 +4,9 @@
 
 #include "LineEl.hh"
 
+LineEl::LineEl(Object *parent) : Element(parent) {}
+
+
 std::vector<std::tuple<Point3D_i, Texture2D_i>> &LineEl::getVertices() {
     return vertices;
 }
@@ -25,3 +28,4 @@ void LineEl::push(Point3D *p, int indexp, Texture2D *t, int indext) {
             std::make_tuple(0, nullptr)
             ));
 }
+

@@ -44,7 +44,7 @@ std::vector<int> Parametric::sortShape(const std::vector<Point3D> &pts) {
     return indexes_order;
 }
 
-Object
+Object *
 Parametric::generateObjectOrthogonal(double xmin=-2, double xmax=2, double ymin=-2, double ymax=2, double step=0.001, double minDistance=0.1, const Point3D &center=Point3D(0, 0, 0)) {
     std::vector<Point3D> pts = std::vector<Point3D>();
     pts.push_back(center);
@@ -75,26 +75,26 @@ Parametric::generateObjectOrthogonal(double xmin=-2, double xmax=2, double ymin=
     std::vector<int> order = Parametric::sortShape(pts);
 
     // create the object and append all the triangles
-    Object leafScheme = Object("LeafParametric");
+    Object *leafScheme = new Object("LeafParametric");
 
-    leafScheme.push(pts[order[0]]);
-    leafScheme.push(pts[order[1]]);
+    leafScheme->push(pts[order[0]]);
+    leafScheme->push(pts[order[1]]);
     for (int i = 2; i < order.size(); ++i) {
-        leafScheme.push(pts[order[i]]);
-        FaceEl f = FaceEl();
+        leafScheme->push(pts[order[i]]);
+        FaceEl f = FaceEl(leafScheme);
 //        LineEl l = LineEl();
 //        l.push(leafScheme.getV()[i-1], i-1);
 //        l.push(leafScheme.getV()[i], i);
-        f.push(leafScheme.getV()[0], 0);
-        f.push(leafScheme.getV()[i-1], i-1);
-        f.push(leafScheme.getV()[i], i);
-        leafScheme.push(f);
+        f.push(leafScheme->getV()[0], 0);
+        f.push(leafScheme->getV()[i-1], i-1);
+        f.push(leafScheme->getV()[i], i);
+        leafScheme->push(f);
 //        leafScheme.push(l);
     }
     return leafScheme;
 }
 
-Object
+Object *
 Parametric::generateObjectRadial(double radius=2.1, double step=0.01, double angleStep = 0.001, double minDistance=0.1, const Point3D &center=Point3D(0, 0, 0)) {
     std::vector<Point3D> pts = std::vector<Point3D>();
     pts.push_back(center);
@@ -130,23 +130,23 @@ Parametric::generateObjectRadial(double radius=2.1, double step=0.01, double ang
 
     // points are already "radially" sorted in the shape
     // generate the object
-    Object leafScheme = Object("LeafParametric");
+    Object *leafScheme = new Object("LeafParametric");
 
-    leafScheme.push(pts[0]);
-    leafScheme.push(pts[1]);
+    leafScheme->push(pts[0]);
+    leafScheme->push(pts[1]);
     for (int i = 2; i < pts.size(); ++i) {
-        leafScheme.push(pts[i]);
-        FaceEl f = FaceEl();
-        f.push(leafScheme.getV()[0], 0);
-        f.push(leafScheme.getV()[i-1], i-1);
-        f.push(leafScheme.getV()[i], i);
-        leafScheme.push(f);
+        leafScheme->push(pts[i]);
+        FaceEl f = FaceEl(leafScheme);
+        f.push(leafScheme->getV()[0], 0);
+        f.push(leafScheme->getV()[i-1], i-1);
+        f.push(leafScheme->getV()[i], i);
+        leafScheme->push(f);
     }
-    FaceEl f = FaceEl();
-    f.push(leafScheme.getV()[0], 0);
-    f.push(leafScheme.getV()[pts.size() - 1], pts.size() - 1);
-    f.push(leafScheme.getV()[1], 1);
-    leafScheme.push(f);
+    FaceEl f = FaceEl(leafScheme);
+    f.push(leafScheme->getV()[0], 0);
+    f.push(leafScheme->getV()[pts.size() - 1], pts.size() - 1);
+    f.push(leafScheme->getV()[1], 1);
+    leafScheme->push(f);
 
     return leafScheme;
 }

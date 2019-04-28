@@ -21,6 +21,8 @@ class FaceEl : public Element {
     */
 
 public:
+    explicit FaceEl(Object *parent);
+
     std::vector<std::tuple<Point3D_i, Texture2D_i, Vector3D_i>> &getVertices();
     const std::vector<std::tuple<Point3D_i, Texture2D_i, Vector3D_i>> &getVertices() const;
 

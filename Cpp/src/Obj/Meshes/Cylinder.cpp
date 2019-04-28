@@ -104,7 +104,7 @@ void Cylinder::genGeometry(int subdiv) {
 
 
     for (int i = 0; i < subdiv * 2; i+= 2) {
-        FaceEl face = FaceEl();
+        FaceEl face = FaceEl(this);
 
         // vertex bottom 1
         face.push(v[i], i);
@@ -138,7 +138,7 @@ void Cylinder::genGeometry(int subdiv) {
     }
 
     // bottom circle
-    FaceEl bot = FaceEl();
+    FaceEl bot = FaceEl(this);
     for (int i = 0; i < subdiv * 2; i+= 2) {
         bot.push(v[i], i);
 //        bot.getVertices().push_back(std::make_tuple(
@@ -148,7 +148,7 @@ void Cylinder::genGeometry(int subdiv) {
     }
     faceEls.push_back(bot);
     // top circle
-    FaceEl top = FaceEl();
+    FaceEl top = FaceEl(this);
     for (int i = 1; i < subdiv * 2; i+= 2) {
         top.push(v[i], i);
 //        top.getVertices().push_back(std::make_tuple(

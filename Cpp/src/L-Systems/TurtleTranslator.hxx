@@ -34,12 +34,12 @@ TurtleTranslator::TurtleTranslator(const std::vector<std::string> &rleft, const 
                                                                                             angle(angle) {}
 
 
-Object TurtleTranslator::transcript(LObject lobj) {
+Object *TurtleTranslator::transcript(LObject lobj) {
 
     unsigned index = 0;
     bool turtleMoved = false;
     double angleR = DegreesToRadians(angle);
-    obj.push(turtle.curr);
+    obj->push(turtle.curr);
 //    obj.getV().push_back(std::move(turtle.curr));
     for (const LNode &n : lobj.getNodes()) {
         turtleMoved = false;
@@ -83,18 +83,18 @@ Object TurtleTranslator::transcript(LObject lobj) {
         if (turtleMoved) {
             turtle.oldVIndex = turtle.currVIndex;
 
-            turtle.currVIndex = obj.push(turtle.curr);
+            turtle.currVIndex = obj->push(turtle.curr);
 //            obj.getV().push_back(std::move(turtle.curr));
 //            turtle.currVIndex = obj.getV().size() - 1;
-            LineEl l = LineEl();
-            l.push(obj.getV()[turtle.oldVIndex], turtle.oldVIndex + 0);
+            LineEl l = LineEl(obj);
+            l.push(obj->getV()[turtle.oldVIndex], turtle.oldVIndex + 0);
 //            l.getVertices().push_back(
 //                    std::make_tuple(
 //                            std::make_tuple<int, Point3D*>(turtle.oldVIndex + 0, &obj.getV()[turtle.oldVIndex]),
 //                            std::make_tuple<int, Texture2D*>(0, nullptr)
 //                    )
 //            );
-            l.push(obj.getV()[turtle.currVIndex], turtle.currVIndex + 0);
+            l.push(obj->getV()[turtle.currVIndex], turtle.currVIndex + 0);
 //            l.getVertices().push_back(
 //                    std::make_tuple(
 //                            std::make_tuple<int, Point3D*>(turtle.currVIndex + 0, &obj.getV()[turtle.currVIndex]),
@@ -103,7 +103,7 @@ Object TurtleTranslator::transcript(LObject lobj) {
 //            );
             // push to obj
 //            obj.getLineEls().push_back(std::move(l));
-            obj.push(l);
+            obj->push(l);
         }
     }
     return std::move(obj);

@@ -6,6 +6,7 @@
 #define OBJPARSER_ELEMENT_HH
 
 #include <tuple>
+//#include "Object.hh"
 #include "Point3D.hh"
 #include "Texture2D.hh"
 #include "Point2D.hh"
@@ -16,7 +17,16 @@ typedef std::tuple<int, Texture2D*> Texture2D_i;
 typedef std::tuple<int, Point2D*> Point2D_i;
 typedef std::tuple<int, Vector3D*> Vector3D_i;
 
+// FORWARD DECLARATION
+class Object;
+
 class Element {
+
+public:
+    explicit Element(Object *parent);
+
+protected:
+    Object *parent;
 };
 
 

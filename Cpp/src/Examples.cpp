@@ -48,7 +48,7 @@ namespace Examples {
         for (double i = 0.0; i < 10.0; ++i) {
             // Growth
             auto objs = scene->getObjects();
-            leafGrowth::radialgrow(objs[0], 0.3 * i);
+            leafGrowth::radialgrow(*objs[0], 0.3 * i);
 
             Generator gen = Generator("Feuille_Grown_" + std::to_string(i) + ".obj");
             gen.write(scene);
@@ -97,7 +97,7 @@ namespace Examples {
 
         //\\// LINE GENERATION
         // gen a leaf object based on the tree
-        std::vector<Object> leaf1 = translator.generate(&a, "leaf1", TreeTranslator::GENTYPE::line);
+        std::vector<Object*> leaf1 = translator.generate(&a, "leaf1", TreeTranslator::GENTYPE::line);
         // create a scene and put the object in it
         Scene scene = Scene();
         for (const auto &o : leaf1)
@@ -109,7 +109,7 @@ namespace Examples {
         gen.write(&scene);
 
         //\\// CYLINDER GENERATION
-        std::vector<Object> leafCyl = translator.generate(&a, "Cyl", TreeTranslator::GENTYPE::cylinder);
+        std::vector<Object*> leafCyl = translator.generate(&a, "Cyl", TreeTranslator::GENTYPE::cylinder);
         // create a scene and put the object in it
         Scene scene2 = Scene();
         for (const auto &o : leafCyl)
@@ -127,7 +127,7 @@ namespace Examples {
         Generator gen = Generator("cylinder.obj");
 
 //    Cylinder cyl(Point3D(0, 1.5, 0), Vector3D(1, 4, 0.5), 5, 0.21, "cyl", 20);
-        Cylinder cyl(Point3D(0, 1.5, 0), Vector3D(1, 4, 0.5), 5, 0.21, 0.72, "cyl", 20);
+        Cylinder *cyl = new Cylinder(Point3D(0, 1.5, 0), Vector3D(1, 4, 0.5), 5, 0.21, 0.72, "cyl", 20);
         // create a scene and put the object in it
         Scene scene = Scene();
         scene.push(cyl);
@@ -203,7 +203,7 @@ namespace Examples {
         obj.print();
 
 
-        Object o = t.transcript(obj);
+        Object *o = t.transcript(obj);
 
         Generator gen = Generator("circle1.obj");
 
@@ -239,7 +239,7 @@ namespace Examples {
         TreeTranslator translator = TreeTranslator();
 //    Node *nroot = translator.convertVenationToNode(root, nodeCount);
 
-        std::vector<Object> leafCyl = translator.generate(root, "Cyl", nodeCount, TreeTranslator::GENTYPE::cylinder);
+        std::vector<Object*> leafCyl = translator.generate(root, "Cyl", nodeCount, TreeTranslator::GENTYPE::cylinder);
         // create a scene and put the object in it
         Scene scene2 = Scene();
         for (const auto &o : leafCyl)
@@ -277,7 +277,7 @@ namespace Examples {
         double res = leaff.calculate(args);
 
 //        Object leafScheme = leaff.generateObjectOrthogonal(-2.1, 2.1, -2.1 ,2.1, 0.001, 0.1, Point3D(0, 0, 0));
-        Object leafScheme = leaff.generateObjectRadial(4, 0.001, 0.01, 0.5, Point3D(0, 0.1, 0));
+        Object *leafScheme = leaff.generateObjectRadial(4, 0.001, 0.01, 0.5, Point3D(0, 0.1, 0));
 
         Scene sc = Scene();
         sc.push(leafScheme);
@@ -288,7 +288,7 @@ namespace Examples {
 
     void polarExample() {
         Polar p(Polar::JapaneseMarple);
-        Object obj = p.generateObject(-M_PI, M_PI, 0.001, 0.1, Point3D(0, 0, 0));
+        Object *obj = p.generateObject(-M_PI, M_PI, 0.001, 0.1, Point3D(0, 0, 0));
 
         Scene sc = Scene();
         sc.push(obj);

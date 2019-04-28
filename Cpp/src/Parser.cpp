@@ -40,7 +40,7 @@ Parser::lineType Parser::parseType(std::ifstream &s) {
 
 Scene *Parser::parse() {
     std::ifstream s = std::ifstream(filename);
-    Object currObj = Object();
+    Object *currObj = new Object();
     bool firstObjectEmpty = true;
     Scene *scene = new Scene();
 
@@ -71,23 +71,23 @@ Scene *Parser::parse() {
 
             case lineType::O:
                 if (!firstObjectEmpty)
-                    scene->push(std::move(currObj));
+                    scene->push(currObj);
 //                    scene->getObjects().push_back(std::move(currObj));
                 currObj = parseO(s);
                 break;
 
             case lineType::V:
-                currObj.push(parseV(s));
+                currObj->push(parseV(s));
 //                currObj.getV().push_back(parseV(s));
                 break;
 
             case lineType::VN:
-                currObj.push(parseVn(s));
+                currObj->push(parseVn(s));
 //                currObj.getVn().push_back(parseVn(s));
                 break;
 
             case lineType::F:
-                currObj.push(parseF(s, currObj));
+                currObj->push(parseF(s, currObj));
 //                currObj.getFaceEls().push_back(parseF(s, currObj));
                 break;
 
@@ -128,12 +128,12 @@ Vector3D Parser::parseVn(std::ifstream &s) {
     return Vector3D(x, y, z);
 }
 
-FaceEl Parser::parseF(std::ifstream &s, Object &currObj) {
+FaceEl Parser::parseF(std::ifstream &s, Object *currObj) {
     std::string line;
     getline(s, line);
     line = Strutils::trim(line);
     std::istringstream is(line);
-    FaceEl el = FaceEl();
+    FaceEl el = FaceEl(currObj);
     std::string word;
     std::string num;
     auto tuple = std::vector<int>(3, INT32_MIN);
@@ -146,9 +146,9 @@ FaceEl Parser::parseF(std::ifstream &s, Object &currObj) {
                 tuple[i] = std::stoi(num);
             } catch (const std::exception &unused) {}
         }
-        el.push(tuple[0] == INT32_MIN ? nullptr : currObj.getV ()[tuple[0] - 1], tuple[0] - 1,
-                tuple[1] == INT32_MIN ? nullptr : currObj.getVt()[tuple[1] - 1], tuple[1] - 1,
-                tuple[2] == INT32_MIN ? nullptr : currObj.getVn()[tuple[2] - 1], tuple[2] - 1);
+        el.push(tuple[0] == INT32_MIN ? nullptr : currObj->getV ()[tuple[0] - 1], tuple[0] - 1,
+                tuple[1] == INT32_MIN ? nullptr : currObj->getVt()[tuple[1] - 1], tuple[1] - 1,
+                tuple[2] == INT32_MIN ? nullptr : currObj->getVn()[tuple[2] - 1], tuple[2] - 1);
 //        el.getVertices().push_back(std::make_tuple(
 //                std::make_tuple<int, Point3D*>(tuple[0] - 1, tuple[0] == INT32_MIN ? nullptr : &currObj.getV ()[tuple[0] - 1]),
 //                std::make_tuple<int, Texture2D*>(tuple[1] - 1, tuple[1] == INT32_MIN ? nullptr : &currObj.getVt()[tuple[1] - 1]),
@@ -157,9 +157,9 @@ FaceEl Parser::parseF(std::ifstream &s, Object &currObj) {
     return el;
 }
 
-Object Parser::parseO(std::ifstream &s) {
+Object *Parser::parseO(std::ifstream &s) {
     std::string line;
     getline(s, line);
     line = Strutils::trim(line);
-    return Object(line);
+    return new Object(line);;
 }

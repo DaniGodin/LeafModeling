@@ -6,3 +6,5 @@
 [x] calc parametric equation
 [x] calc centric equation
 [ ] modify push(obj, int) to only push(obj)
+[ ] use auto[] syntax for tuples in generator.cpp
+[ ] better constructors for OBJ/*

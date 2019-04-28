@@ -30,7 +30,7 @@ public:
                      const std::vector<std::string> &forward, double angle);
 
 
-    Object transcript(LObject lobj) override;
+    Object *transcript(LObject lobj) override;
 
 private:
     double DegreesToRadians(double degrees);
@@ -56,7 +56,7 @@ private:
     std::vector<std::string> forward            = {"F"};
     std::vector<std::string> puturtle           = {"["};
     std::vector<std::string> poturtle           = {"]"};
-    Object obj;
+    Object *obj = new Object();
     Turtle turtle;
     std::stack<Turtle> turtles;
     double angle = 90.0; // degree

@@ -93,7 +93,7 @@ int Object::push(const LineEl &l) {
 
 Object::~Object() {
     // TODO free v vn vp vt
-//    std::cout << "Object Destructor called" << std::endl;
+    std::cout << "Object Destructor called" << std::endl;
 }
 
 void Object::autoGenNormal() {
@@ -107,3 +107,19 @@ void Object::autoGenNormal() {
          f.setGlobalNormal(vn[index], index);
      }
 }
+
+//int Object::find(const Point3D &p) {
+//    return (*v_map.find(p)).second;
+//}
+//
+//int Object::find(const Point2D &p) {
+//    return 0;
+//}
+//
+//int Object::find(const Vector3D &v) {
+//    return 0;
+//}
+//
+//int Object::find(const Texture2D &t) {
+//    return 0;
+//}

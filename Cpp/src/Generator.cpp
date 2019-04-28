@@ -37,26 +37,26 @@ std::string Generator::write(Scene *s) {
 
 
         // write o
-        writeO(os, o);
+        writeO(os, *o);
         // write v
-        for (auto &v : o.getV()) {
+        for (auto &v : o->getV()) {
             writeV(os, *v);
             ++objectVCount;
         }
         // write vt
-        for (auto &vt : o.getVt()) {
+        for (auto &vt : o->getVt()) {
             writeVt(os, *vt);
             ++objectVtCount;
         }
 
         // write vn
-        for (auto &vn : o.getVn()) {
+        for (auto &vn : o->getVn()) {
             writeVn(os, *vn);
             ++objectVnCount;
         }
 
         // write vp
-        for (auto &vp : o.getVp()) {
+        for (auto &vp : o->getVp()) {
             writeVp(os, *vp);
             ++objectVpCount;
         }
@@ -71,13 +71,13 @@ std::string Generator::write(Scene *s) {
         // TODO for (auto &p : o.getPoints()) {}
 
         // write l
-        for (auto &l : o.getLineEls()) {
-            writeL(os, l, o);
+        for (auto &l : o->getLineEls()) {
+            writeL(os, l, *o);
         }
 
         // write f
-        for (auto &f : o.getFaceEls()) {
-            writeF(os, f, o);
+        for (auto &f : o->getFaceEls()) {
+            writeF(os, f, *o);
         }
 
         // update global v, vn, vt, vp count with current object count

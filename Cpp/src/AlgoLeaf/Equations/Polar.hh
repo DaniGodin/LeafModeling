@@ -19,7 +19,7 @@ public:
 
     double calculate(double args[]);
 
-    Object generateObject(double minr, double maxr, double anglestep, double minDistance, const Point3D &center);
+    Object *generateObject(double minr, double maxr, double anglestep, double minDistance, const Point3D &center);
 
 
 private:
