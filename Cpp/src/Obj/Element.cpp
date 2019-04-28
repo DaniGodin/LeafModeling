@@ -4,4 +4,6 @@
 
 #include "Element.hh"
 
-Element::Element(Object *parent) : parent(parent) {}
+Element::Element(Object *parent)
+    : parent(parent)
+{}

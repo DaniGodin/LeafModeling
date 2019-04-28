@@ -108,18 +108,30 @@ void Object::autoGenNormal() {
      }
 }
 
-//int Object::find(const Point3D &p) {
-//    return (*v_map.find(p)).second;
-//}
-//
-//int Object::find(const Point2D &p) {
-//    return 0;
-//}
-//
-//int Object::find(const Vector3D &v) {
-//    return 0;
-//}
-//
-//int Object::find(const Texture2D &t) {
-//    return 0;
-//}
+int Object::find(const Point3D *p) {
+    if (p == nullptr)
+        return -1;
+    auto r = v_map.find(*p);
+    return r == v_map.end() ? -1 : (*r).second;
+}
+
+int Object::find(const Point2D *p) {
+    if (p == nullptr)
+        return -1;
+    auto r = vp_map.find(*p);
+    return r == vp_map.end() ? -1 : (*r).second;
+}
+
+int Object::find(const Vector3D *v) {
+    if (v == nullptr)
+        return -1;
+    auto r = vn_map.find(*v);
+    return r == vn_map.end() ? -1 : (*r).second;
+}
+
+int Object::find(const Texture2D *t) {
+    if (t == nullptr)
+        return -1;
+    auto r = vt_map.find(*t);
+    return r == vt_map.end() ? -1 : (*r).second;
+}

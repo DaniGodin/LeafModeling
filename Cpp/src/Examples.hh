@@ -11,6 +11,7 @@ namespace Examples {
     void parseFileExample();
     void leafGrowthExample();
     void treeExample();
+    void lSystemExample();
     void cylinderExample();
     void algoLeafExample();
     void parametricExample();

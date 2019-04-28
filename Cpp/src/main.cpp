@@ -11,14 +11,14 @@ int main() {
     {
         // start a chronometer
         Chronometer c = Chronometer();
-//        Examples::parametricExample();
+        Examples::parametricExample();
         Examples::polarExample();
-//        Examples::treeExample();
-//        Examples::algoLeafExample();
-//        Examples::parseFileExample();
-//        Examples::leafGrowthExample();
-//        Examples::lSystemExample();
-//        Examples::cylinderExample();
+        Examples::treeExample();
+        Examples::algoLeafExample();
+        Examples::parseFileExample();
+        Examples::leafGrowthExample();
+        Examples::lSystemExample();
+        Examples::cylinderExample();
     }
     return 0;
 }

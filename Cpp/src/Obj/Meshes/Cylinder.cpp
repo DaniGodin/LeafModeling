@@ -121,14 +121,14 @@ void Cylinder::genGeometry(int subdiv) {
 //                std::make_tuple<int, Vector3D*>(0, nullptr)));
 
         // vertex top 2
-        face.push(v[i + 3], (i + 3) % (subdiv * 2));
+        face.push(v[(i + 3) % (subdiv * 2)], (i + 3) % (subdiv * 2));
 //        face.getVertices().push_back(std::make_tuple(
 //                std::make_tuple<int, Point3D*>(std::move((i + 3) % (subdiv * 2)), &v[i + 3]),
 //                std::make_tuple<int, Texture2D*>(0, nullptr),
 //                std::make_tuple<int, Vector3D*>(0, nullptr)));
 
         // vertex bottom 2
-        face.push(v[i + 2], (i + 2) % (subdiv * 2));
+        face.push(v[(i + 2) % (subdiv * 2)], (i + 2) % (subdiv * 2));
 //        face.getVertices().push_back(std::make_tuple(
 //                std::make_tuple<int, Point3D*>(std::move((i + 2) % (subdiv * 2)), &v[i + 2]),
 //                std::make_tuple<int, Texture2D*>(0, nullptr),

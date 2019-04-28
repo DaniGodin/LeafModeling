@@ -2,6 +2,7 @@
 // Created by revetoon on 3/1/19.
 //
 
+#include <cassert>
 #include "FaceEl.hh"
 
 FaceEl::FaceEl(Object *parent) : Element(parent) {}
@@ -32,6 +33,8 @@ const int FaceEl::getIndex(int index) const {
 }
 
 void FaceEl::push(Point3D *p, int indexp) {
+    auto r = parent->find(p);
+    assert(r == indexp && "indexp & find result not equal");
     vertices.push_back(std::make_tuple(
             std::make_tuple<int, Point3D*>(indexp + 0, std::move(p)),
             std::make_tuple<int, Texture2D*>(0, nullptr),
@@ -39,6 +42,10 @@ void FaceEl::push(Point3D *p, int indexp) {
 }
 
 void FaceEl::push(Point3D *p, int indexp, Texture2D *t, int indext) {
+    auto r = parent->find(p);
+    assert(r == -1 || r == indexp && "index & find result not equal");
+    auto r2 = parent->find(t);
+    assert(r2 == -1 || r2 == indext && "index & find result not equal");
     vertices.push_back(std::make_tuple(
             std::make_tuple<int, Point3D*>(indexp + 0, std::move(p)),
             std::make_tuple<int, Texture2D*>(indext + 0, std::move(t)),
@@ -46,6 +53,12 @@ void FaceEl::push(Point3D *p, int indexp, Texture2D *t, int indext) {
 }
 
 void FaceEl::push(Point3D *p, int indexp, Texture2D *t, int indext, Vector3D *v, int indexv) {
+    auto r = parent->find(p);
+    assert(r == -1 || r == indexp && "index & find result not equal");
+    auto r2 = parent->find(t);
+    assert(r2 == -1 || r2 == indext && "index & find result not equal");
+    auto r3 = parent->find(v);
+    assert(r3 == -1 || r3 == indexv && "index & find result not equal");
     vertices.push_back(std::make_tuple(
             std::make_tuple<int, Point3D*>(indexp + 0, std::move(p)),
             std::make_tuple<int, Texture2D*>(indext + 0, std::move(t)),
@@ -53,6 +66,10 @@ void FaceEl::push(Point3D *p, int indexp, Texture2D *t, int indext, Vector3D *v,
 }
 
 void FaceEl::push(Point3D *p, int indexp, Vector3D *v, int indexv) {
+    auto r = parent->find(p);
+    assert(r == -1 || r == indexp && "index & find result not equal");
+    auto r2 = parent->find(v);
+    assert(r2 == -1 || r2 == indexv && "index & find result not equal");
     vertices.push_back(std::make_tuple(
             std::make_tuple<int, Point3D*>(indexp + 0, std::move(p)),
             std::make_tuple<int, Texture2D*>(0, nullptr),

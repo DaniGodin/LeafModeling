@@ -13,10 +13,15 @@
 #include "Vector3D.hh"
 #include "Texture2D.hh"
 #include "Element.hh"
-#include "FaceEl.hh"
-#include "LineEl.hh"
+
+class FaceEl;
+class LineEl;
 
 class Object {
+    friend class Element;
+    friend class FaceEl;
+    friend class LineEl;
+
 public:
     explicit Object(const std::string &name);
     Object();
@@ -50,11 +55,11 @@ public:
 
     void autoGenNormal();
 
-//protected:
-//    int find(const Point3D &p);
-//    int find(const Point2D &p);
-//    int find(const Vector3D &v);
-//    int find(const Texture2D &t);
+protected:
+    int find(const Point3D *p);
+    int find(const Point2D *p);
+    int find(const Vector3D *v);
+    int find(const Texture2D *t);
 
 protected:
     std::string name = "default";
@@ -74,5 +79,7 @@ protected:
     std::unordered_map<Texture2D, int, Texture2D::hash> vt_map = std::unordered_map<Texture2D, int, Texture2D::hash>();
 };
 
+#include "FaceEl.hh"
+#include "LineEl.hh"
 
 #endif //OBJPARSER_OBJECT_HH

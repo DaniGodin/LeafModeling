@@ -30,10 +30,10 @@ std::string Generator::write(Scene *s) {
     for (auto &o : s->getObjects()) {
 
         // v, vn, vt, vp count per object
-        unsigned objectVCount = 0;
-        unsigned objectVnCount = 0;
-        unsigned objectVtCount = 0;
-        unsigned objectVpCount = 0;
+            unsigned objectVCount = 0;
+            unsigned objectVnCount = 0;
+            unsigned objectVtCount = 0;
+            unsigned objectVpCount = 0;
 
 
         // write o

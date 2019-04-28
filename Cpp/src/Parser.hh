@@ -43,6 +43,12 @@ private:
 
 private:
     std::string filename;
+
+
+    unsigned globalVCount = 1;
+    unsigned globalVnCount = 1;
+    unsigned globalVtCount = 1;
+    unsigned globalVpCount = 1;
 };
 
 

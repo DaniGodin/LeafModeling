@@ -47,6 +47,11 @@ Scene *Parser::parse() {
     // buffer line for SHARP
     std::string line;
 
+    unsigned objectVCount = 0;
+    unsigned objectVnCount = 0;
+    unsigned objectVtCount = 0;
+    unsigned objectVpCount = 0;
+
 
     while (!s.eof()) {
         // line start
@@ -74,14 +79,27 @@ Scene *Parser::parse() {
                     scene->push(currObj);
 //                    scene->getObjects().push_back(std::move(currObj));
                 currObj = parseO(s);
+
+                // update global v, vn, vt, vp count with current object count
+                globalVCount += objectVCount;
+                globalVnCount += objectVnCount;
+                globalVtCount += objectVtCount;
+                globalVpCount += objectVpCount;
+                // reset local count
+                objectVCount = 0;
+                objectVnCount = 0;
+                objectVtCount = 0;
+                objectVpCount = 0;
                 break;
 
             case lineType::V:
+                ++objectVCount;
                 currObj->push(parseV(s));
 //                currObj.getV().push_back(parseV(s));
                 break;
 
             case lineType::VN:
+                ++objectVnCount;
                 currObj->push(parseVn(s));
 //                currObj.getVn().push_back(parseVn(s));
                 break;
@@ -95,10 +113,16 @@ Scene *Parser::parse() {
                 // shouldnt happen
                 break;
 
-            case lineType::VT:break;
-            case lineType::VP:break;
-            case lineType::L:break;
-            case lineType::P:break;
+            case lineType::VT:      // TODO
+                ++objectVtCount;
+                break;
+            case lineType::VP:      // TODO
+                ++objectVpCount;
+                break;
+            case lineType::L:       // TODO
+                break;
+            case lineType::P:       // TODO
+                break;
             case lineType::ERROR:break;
         }
         firstObjectEmpty = false;
@@ -146,9 +170,9 @@ FaceEl Parser::parseF(std::ifstream &s, Object *currObj) {
                 tuple[i] = std::stoi(num);
             } catch (const std::exception &unused) {}
         }
-        el.push(tuple[0] == INT32_MIN ? nullptr : currObj->getV ()[tuple[0] - 1], tuple[0] - 1,
-                tuple[1] == INT32_MIN ? nullptr : currObj->getVt()[tuple[1] - 1], tuple[1] - 1,
-                tuple[2] == INT32_MIN ? nullptr : currObj->getVn()[tuple[2] - 1], tuple[2] - 1);
+        el.push(tuple[0] == INT32_MIN ? nullptr : currObj->getV ()[tuple[0] - globalVCount], tuple[0] - globalVCount,
+                tuple[1] == INT32_MIN ? nullptr : currObj->getVt()[tuple[1] - globalVtCount], tuple[1] - globalVtCount,
+                tuple[2] == INT32_MIN ? nullptr : currObj->getVn()[tuple[2] - globalVnCount], tuple[2] - globalVnCount);
 //        el.getVertices().push_back(std::make_tuple(
 //                std::make_tuple<int, Point3D*>(tuple[0] - 1, tuple[0] == INT32_MIN ? nullptr : &currObj.getV ()[tuple[0] - 1]),
 //                std::make_tuple<int, Texture2D*>(tuple[1] - 1, tuple[1] == INT32_MIN ? nullptr : &currObj.getVt()[tuple[1] - 1]),
