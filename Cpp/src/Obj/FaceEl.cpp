@@ -2,7 +2,7 @@
 // Created by revetoon on 3/1/19.
 //
 
-#include <cassert>
+#include <stdexcept>
 #include "FaceEl.hh"
 
 FaceEl::FaceEl(Object *parent) : Element(parent) {}
@@ -32,44 +32,52 @@ const int FaceEl::getIndex(int index) const {
     return std::get<0>(std::get<0>(vertices[index]));
 }
 
-void FaceEl::push(Point3D *p, int indexp) {
-    auto r = parent->find(p);
-    assert(r == indexp && "indexp & find result not equal");
+void FaceEl::push(Point3D *p) {
+    auto indexp = parent->find(p);
+    if (p != nullptr && indexp == -1)
+        throw std::invalid_argument("Couldn't find p in object.");
     vertices.push_back(std::make_tuple(
             std::make_tuple<int, Point3D*>(indexp + 0, std::move(p)),
             std::make_tuple<int, Texture2D*>(0, nullptr),
             std::make_tuple<int, Vector3D*>(0, nullptr)));
 }
 
-void FaceEl::push(Point3D *p, int indexp, Texture2D *t, int indext) {
-    auto r = parent->find(p);
-    assert(r == -1 || r == indexp && "index & find result not equal");
-    auto r2 = parent->find(t);
-    assert(r2 == -1 || r2 == indext && "index & find result not equal");
+void FaceEl::push(Point3D *p, Texture2D *t) {
+    auto indexp = parent->find(p);
+    if (p != nullptr && indexp == -1)
+        throw std::invalid_argument("Couldn't find p in object.");
+    auto indext = parent->find(t);
+    if (t != nullptr && indext == -1)
+        throw std::invalid_argument("Couldn't find t in object.");
     vertices.push_back(std::make_tuple(
             std::make_tuple<int, Point3D*>(indexp + 0, std::move(p)),
             std::make_tuple<int, Texture2D*>(indext + 0, std::move(t)),
             std::make_tuple<int, Vector3D*>(0, nullptr)));
 }
 
-void FaceEl::push(Point3D *p, int indexp, Texture2D *t, int indext, Vector3D *v, int indexv) {
-    auto r = parent->find(p);
-    assert(r == -1 || r == indexp && "index & find result not equal");
-    auto r2 = parent->find(t);
-    assert(r2 == -1 || r2 == indext && "index & find result not equal");
-    auto r3 = parent->find(v);
-    assert(r3 == -1 || r3 == indexv && "index & find result not equal");
+void FaceEl::push(Point3D *p, Texture2D *t, Vector3D *v) {
+    auto indexp = parent->find(p);
+    if (p != nullptr && indexp == -1)
+        throw std::invalid_argument("Couldn't find p in object.");
+    auto indext = parent->find(t);
+    if (t != nullptr && indext == -1)
+        throw std::invalid_argument("Couldn't find t in object.");
+    auto indexv = parent->find(v);
+    if (v != nullptr && indexv == -1)
+        throw std::invalid_argument("Couldn't find v in object.");
     vertices.push_back(std::make_tuple(
             std::make_tuple<int, Point3D*>(indexp + 0, std::move(p)),
             std::make_tuple<int, Texture2D*>(indext + 0, std::move(t)),
             std::make_tuple<int, Vector3D*>(indexv + 0, std::move(v))));
 }
 
-void FaceEl::push(Point3D *p, int indexp, Vector3D *v, int indexv) {
-    auto r = parent->find(p);
-    assert(r == -1 || r == indexp && "index & find result not equal");
-    auto r2 = parent->find(v);
-    assert(r2 == -1 || r2 == indexv && "index & find result not equal");
+void FaceEl::push(Point3D *p, Vector3D *v) {
+    auto indexp = parent->find(p);
+    if (p != nullptr && indexp == -1)
+        throw std::invalid_argument("Couldn't find p in object.");
+    auto indexv = parent->find(v);
+    if (v != nullptr && indexv == -1)
+        throw std::invalid_argument("Couldn't find v in object.");
     vertices.push_back(std::make_tuple(
             std::make_tuple<int, Point3D*>(indexp + 0, std::move(p)),
             std::make_tuple<int, Texture2D*>(0, nullptr),

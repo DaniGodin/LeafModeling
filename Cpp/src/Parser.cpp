@@ -170,9 +170,9 @@ FaceEl Parser::parseF(std::ifstream &s, Object *currObj) {
                 tuple[i] = std::stoi(num);
             } catch (const std::exception &unused) {}
         }
-        el.push(tuple[0] == INT32_MIN ? nullptr : currObj->getV ()[tuple[0] - globalVCount], tuple[0] - globalVCount,
-                tuple[1] == INT32_MIN ? nullptr : currObj->getVt()[tuple[1] - globalVtCount], tuple[1] - globalVtCount,
-                tuple[2] == INT32_MIN ? nullptr : currObj->getVn()[tuple[2] - globalVnCount], tuple[2] - globalVnCount);
+        el.push(tuple[0] == INT32_MIN ? nullptr : currObj->getV ()[tuple[0] - globalVCount],
+                tuple[1] == INT32_MIN ? nullptr : currObj->getVt()[tuple[1] - globalVtCount],
+                tuple[2] == INT32_MIN ? nullptr : currObj->getVn()[tuple[2] - globalVnCount]);
 //        el.getVertices().push_back(std::make_tuple(
 //                std::make_tuple<int, Point3D*>(tuple[0] - 1, tuple[0] == INT32_MIN ? nullptr : &currObj.getV ()[tuple[0] - 1]),
 //                std::make_tuple<int, Texture2D*>(tuple[1] - 1, tuple[1] == INT32_MIN ? nullptr : &currObj.getVt()[tuple[1] - 1]),

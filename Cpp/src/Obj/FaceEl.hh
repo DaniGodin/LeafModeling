@@ -26,10 +26,10 @@ public:
     std::vector<std::tuple<Point3D_i, Texture2D_i, Vector3D_i>> &getVertices();
     const std::vector<std::tuple<Point3D_i, Texture2D_i, Vector3D_i>> &getVertices() const;
 
-    void push(Point3D *p, int indexp);
-    void push(Point3D *p, int indexp, Texture2D *t, int indext);
-    void push(Point3D *p, int indexp, Texture2D *t, int indext, Vector3D *v, int indexv);
-    void push(Point3D *p, int indexp, Vector3D *v, int indexv);
+    void push(Point3D *p);
+    void push(Point3D *p, Texture2D *t);
+    void push(Point3D *p, Texture2D *t, Vector3D *v);
+    void push(Point3D *p, Vector3D *v);
 
     Point3D *getPt(int index);
     const Point3D *getPt(int index) const;

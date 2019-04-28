@@ -85,9 +85,9 @@ Parametric::generateObjectOrthogonal(double xmin=-2, double xmax=2, double ymin=
 //        LineEl l = LineEl();
 //        l.push(leafScheme.getV()[i-1], i-1);
 //        l.push(leafScheme.getV()[i], i);
-        f.push(leafScheme->getV()[0], 0);
-        f.push(leafScheme->getV()[i-1], i-1);
-        f.push(leafScheme->getV()[i], i);
+        f.push(leafScheme->getV()[0]);
+        f.push(leafScheme->getV()[i-1]);
+        f.push(leafScheme->getV()[i]);
         leafScheme->push(f);
 //        leafScheme.push(l);
     }
@@ -137,15 +137,15 @@ Parametric::generateObjectRadial(double radius=2.1, double step=0.01, double ang
     for (int i = 2; i < pts.size(); ++i) {
         leafScheme->push(pts[i]);
         FaceEl f = FaceEl(leafScheme);
-        f.push(leafScheme->getV()[0], 0);
-        f.push(leafScheme->getV()[i-1], i-1);
-        f.push(leafScheme->getV()[i], i);
+        f.push(leafScheme->getV()[0]);
+        f.push(leafScheme->getV()[i-1]);
+        f.push(leafScheme->getV()[i]);
         leafScheme->push(f);
     }
     FaceEl f = FaceEl(leafScheme);
-    f.push(leafScheme->getV()[0], 0);
-    f.push(leafScheme->getV()[pts.size() - 1], pts.size() - 1);
-    f.push(leafScheme->getV()[1], 1);
+    f.push(leafScheme->getV()[0]);
+    f.push(leafScheme->getV()[pts.size() - 1]);
+    f.push(leafScheme->getV()[1]);
     leafScheme->push(f);
 
     return leafScheme;

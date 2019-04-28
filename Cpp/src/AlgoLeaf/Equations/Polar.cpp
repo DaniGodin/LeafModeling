@@ -32,16 +32,16 @@ Object *Polar::generateObject(double minr=-M_PI, double maxr=M_PI, double angles
         int ptIndex = leaf->push(pt);
         // create triangle
         FaceEl f = FaceEl(leaf);
-        f.push(leaf->getV()[0], 0);
-        f.push(leaf->getV()[ptIndex - 1], ptIndex - 1);
-        f.push(leaf->getV()[ptIndex], ptIndex);
+        f.push(leaf->getV()[0]);
+        f.push(leaf->getV()[ptIndex - 1]);
+        f.push(leaf->getV()[ptIndex]);
         leaf->push(f);
     }
     // generate last triangle
     FaceEl f = FaceEl(leaf);
-    f.push(leaf->getV()[0], 0);
-    f.push(leaf->getV()[leaf->getV().size() - 1], leaf->getV().size() - 1);
-    f.push(leaf->getV()[1], 1);
+    f.push(leaf->getV()[0]);
+    f.push(leaf->getV()[leaf->getV().size() - 1]);
+    f.push(leaf->getV()[1]);
     leaf->push(f);
 
     leaf->autoGenNormal();
