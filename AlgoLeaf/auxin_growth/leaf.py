@@ -31,17 +31,12 @@ class Leaf:
         self.gen_auxin(_initial)
         self.growth_step = _growth
 
-    def display(self, x, y):
-        fig, ax = plt.subplots()
-        self.shape.set_alpha(0.1)
-        self.shape.set_facecolor("Green")
-        ax.add_artist(self.shape)
+    def display(self, x, y, ax):
+        self.shape.plot_shape(ax)
         self.display_auxins()
         #self.display_venNodes()
         Root = self.get_ventree()
         Root.display_ven(ax)
-        ylim(0, y)
-        xlim(-x, x)
         show()
 
 
@@ -78,7 +73,7 @@ class Leaf:
 
 
         for i in range(nb_iterations):
-            self.gen_nodes(0.06)
+            self.gen_nodes(0.0006)
             self.kill_auxins()
             self.gen_auxin(self.dart_step)
             self.grow_shape(self.growth_step)
@@ -108,8 +103,8 @@ class Leaf:
 
 
     def gen_auxin(self, nb_auxin):
-        Vertices = self.shape.get_xy()
         for i in range(nb_auxin):
+            """
             r1 = random.random()
             r2 = random.random()
 
@@ -122,9 +117,8 @@ class Leaf:
 
 
             #marginal growth
-
-
-
+            """
+            x_rand, y_rand = self.shape.gen_point()
 
             A = AuxinNode([x_rand, y_rand])
 
@@ -150,9 +144,12 @@ class Leaf:
             self.AuxinsList.remove(aux)
 
     def grow_shape(self, step):
+        """
         vertices = self.shape.get_xy()
         sign = lambda a: 1 if a > 0 else -1 if a < 0 else 0
         for v in vertices:
             v[0] += step * sign(v[0])
             v[1] += step * sign(v[1])
         vertices[1][1] += step * sign(vertices[1][1])
+        """
+        self.shape.growth_size -= step

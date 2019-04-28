@@ -18,29 +18,29 @@ class first_param:
         self.equation = equation
         self.growth_size = _growth
         self.rectangle = rectangle
-        fig, self.ax = plt.subplots()
 
 
-    def plot_shape(self):
+    def plot_shape(self, ax):
         x = np.linspace(-1.0, 1.0, 1000)
         y = np.linspace(-0.5, 1.0, 1000)
         X, Y = np.meshgrid(x, y)
         F = -((self.growth_size * X) ** 2 + (self.growth_size * Y - 1) ** 2 - 1) ** 3 - \
             ((self.growth_size * X) ** 2) * ((self.growth_size * Y - 1) ** 3)
-        self.ax.contour(X, Y, F, [0])
+        ax.contour(X, Y, F, [0])
         x = self.rectangle[0][0]
         y = self.rectangle[0][1]
         x_lim = x + self.rectangle[1]
         y_lim = y + self.rectangle[2]
 
         rect = patches.Rectangle((x, y), x_lim, y_lim, linewidth=1, edgecolor='r', facecolor='none')
-        self.ax.add_patch(rect)
-        show()
+        ax.add_patch(rect)
+
 
 
 
     def plot_points(self, coord):
         plot(coord[0], coord[1], 'bo')
+
 
     def gen_point(self):
         coord = None
