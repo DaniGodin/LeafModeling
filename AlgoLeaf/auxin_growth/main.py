@@ -17,11 +17,12 @@ if __name__ == '__main__':
     Bob.display(8, 15)
     """
 
+    fig, ax = plt.subplots()
 
+    leaf_shape = first_param(None, 6, ([-0.7, -0.2], 2, 1.4))
+    Bob = Leaf(0.05, 0.06, leaf_shape,75, 4, 0.004)
 
-    Leaf = first_param(None, 6, ([-0.7, -0.2], 2, 1.4))
-    point = Leaf.gen_point()
-    Leaf.plot_points(point)
-    Leaf.plot_shape()
+    Bob.run_creation(1000)
 
+    Bob.display(8, 15, ax)
 
