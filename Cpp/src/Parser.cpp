@@ -7,10 +7,18 @@
 #include "Parser.hh"
 #include "Utils/Strutils.hh"
 
-Parser::Parser(std::string filename) : filename(filename) {}
+Parser::Parser(const std::string &filename)
+        : filepath(filename)
+{
+    mtlfilepath = Strutils::rmExtension(filename) + ".mtl";
+}
+
+Parser::Parser(const std::string &filename, const std::string &mtlfilename)
+        : filepath(filename), mtlfilepath(mtlfilename)
+{}
 
 Parser::lineType Parser::parseType(std::ifstream &s) {
-    const int kwSize = 9;
+    const int kwSize = 11;
     const std::tuple<std::string, lineType> keywords[kwSize] = {
             std::make_tuple("v", lineType::V),
             std::make_tuple("vt", lineType::VT),
@@ -20,7 +28,9 @@ Parser::lineType Parser::parseType(std::ifstream &s) {
             std::make_tuple("l", lineType::L),
             std::make_tuple("p", lineType::P),
             std::make_tuple("o", lineType::O),
-            std::make_tuple("#", lineType::SHARP)
+            std::make_tuple("#", lineType::SHARP),
+            std::make_tuple("mtllib", lineType::MTLLIB),
+            std::make_tuple("usemtl", lineType::USEMTL),
     };
 
 
@@ -39,13 +49,26 @@ Parser::lineType Parser::parseType(std::ifstream &s) {
 }
 
 Scene *Parser::parse() {
-    std::ifstream s = std::ifstream(filename);
+
+    auto objs = parseObj();
+    auto mtls = parseMtl();
+    Scene *scene = new Scene(objs, mtls);
+
+    scene->setMtllib(mtlfilename);
+
+    return scene;
+}
+
+std::vector<Object *> Parser::parseObj() {
+    std::ifstream s = std::ifstream(filepath);
     Object *currObj = new Object();
-    bool firstObjectEmpty = true;
-    Scene *scene = new Scene();
+    // count mtl requested in the obj file
+    int mtlCount = 0;
+    auto objs = std::vector<Object *>();
 
     // buffer line for SHARP
     std::string line;
+    Material *currMat = nullptr;
 
     unsigned objectVCount = 0;
     unsigned objectVnCount = 0;
@@ -75,9 +98,9 @@ Scene *Parser::parse() {
         switch (type) {
 
             case lineType::O:
-                if (!firstObjectEmpty)
-                    scene->push(currObj);
-//                    scene->getObjects().push_back(std::move(currObj));
+                if (!currObj->isEmpty())
+                    objs.push_back(currObj);
+
                 currObj = parseO(s);
 
                 // update global v, vn, vt, vp count with current object count
@@ -105,12 +128,8 @@ Scene *Parser::parse() {
                 break;
 
             case lineType::F:
-                currObj->push(parseF(s, currObj));
+                currObj->push(parseF(s, currObj, currMat));
 //                currObj.getFaceEls().push_back(parseF(s, currObj));
-                break;
-
-            case lineType::SHARP:
-                // shouldnt happen
                 break;
 
             case lineType::VT:      // TODO
@@ -123,14 +142,23 @@ Scene *Parser::parse() {
                 break;
             case lineType::P:       // TODO
                 break;
-            case lineType::ERROR:break;
+
+            case lineType::MTLLIB:
+                parseMtllib(s);
+                break;
+            case lineType::USEMTL:
+                currMat = parseUseMtl(s);
+                break;
         }
-        firstObjectEmpty = false;
     }
-    scene->push(currObj);
-//    scene->getObjects().push_back(std::move(currObj));
-    return scene;
+    objs.push_back(currObj);
+
+    s.close();
+
+    return objs;
 }
+
+
 
 Point3D Parser::parseV(std::ifstream &s) {
     std::string line;
@@ -152,7 +180,7 @@ Vector3D Parser::parseVn(std::ifstream &s) {
     return Vector3D(x, y, z);
 }
 
-FaceEl Parser::parseF(std::ifstream &s, Object *currObj) {
+FaceEl Parser::parseF(std::ifstream &s, Object *currObj, Material *currMat) {
     std::string line;
     getline(s, line);
     line = Strutils::trim(line);
@@ -178,6 +206,7 @@ FaceEl Parser::parseF(std::ifstream &s, Object *currObj) {
 //                std::make_tuple<int, Texture2D*>(tuple[1] - 1, tuple[1] == INT32_MIN ? nullptr : &currObj.getVt()[tuple[1] - 1]),
 //                std::make_tuple<int, Vector3D*>(tuple[2] - 1, tuple[2] == INT32_MIN ? nullptr : &currObj.getVn()[tuple[2] - 1])));
     }
+    el.setMat(currMat);
     return el;
 }
 
@@ -187,3 +216,173 @@ Object *Parser::parseO(std::ifstream &s) {
     line = Strutils::trim(line);
     return new Object(line);;
 }
+
+void Parser::parseMtllib(std::ifstream &s) {
+    std::string line;
+    getline(s, line);
+    std::istringstream is(line);
+    std::string name;
+    is >> name;
+    mtlfilepath = Strutils::getPath(filepath) + name;
+    mtlfilename = name;
+}
+
+Material *Parser::parseUseMtl(std::ifstream &s) {
+    std::string line;
+    getline(s, line);
+    std::istringstream is(line);
+    std::string name;
+    is >> name;
+    Material *m = findMtl(name);
+    if (m == nullptr) {
+        m = new Material();
+        m->name = name;
+        materials.push_back(m);
+    }
+    return m;
+}
+
+
+Parser::mtlLineType Parser::mtlParseType(std::ifstream &s) {
+    const int kwSize = 10;
+    const std::tuple<std::string, mtlLineType> keywords[kwSize] = {
+            std::make_tuple("Ns", mtlLineType::NS),
+            std::make_tuple("Ka", mtlLineType::KA),
+            std::make_tuple("Kd", mtlLineType::KD),
+            std::make_tuple("Ks", mtlLineType::KS),
+            std::make_tuple("Ke", mtlLineType::KE),
+            std::make_tuple("Ni", mtlLineType::NI),
+            std::make_tuple("d", mtlLineType::D),
+            std::make_tuple("illum", mtlLineType::ILLUM),
+            std::make_tuple("newmtl", mtlLineType::NEWMTL),
+            std::make_tuple("#", mtlLineType::SHARP)
+    };
+
+
+    std::string word;
+    s >> word;
+
+    for (int i = 0; i < kwSize; ++i) {
+        if (word.compare(std::get<0>(keywords[i])) == 0) {
+            return std::get<1>(keywords[i]);
+        }
+
+    }
+
+
+    return mtlLineType::ERROR;
+}
+
+std::vector<Material *> Parser::parseMtl() {
+
+    std::ifstream s = std::ifstream(mtlfilepath);
+    if (!s) {
+        // no texture file found
+        std::cerr << "No associated MTL file found." << std::endl;
+        return materials;
+    }
+    std::string line;
+    Material *currMat = nullptr;
+
+    while (!s.eof()) {
+
+        mtlLineType type = mtlParseType(s);
+
+        // exclude SHARP lines
+        if (type == mtlLineType::SHARP) {
+            // ignore line
+            getline(s, line);
+            continue;
+        }
+
+        // Could not parse line -> "ERROR"
+        if (type == mtlLineType::ERROR) {
+            // ignore line
+            getline(s, line);
+            std::cerr << "couldn't parse line: ... " << line << std::endl;
+            continue;
+        }
+
+        switch (type) {
+
+            case mtlLineType::NEWMTL:
+                currMat = parseMtl(s);
+                break;
+
+            case mtlLineType::NS:
+                currMat->ns = parseDbl(s);
+                break;
+
+            case mtlLineType::KA:
+                currMat->ka = parseColor(s);
+                break;
+
+            case mtlLineType::KD:
+                currMat->kd = parseColor(s);
+                break;
+
+            case mtlLineType::KS:
+                currMat->ks = parseColor(s);
+                break;
+
+            case mtlLineType::KE:
+                currMat->ke = parseColor(s);
+                break;
+
+            case mtlLineType::NI:
+                currMat->ni = parseDbl(s);
+                break;
+
+            case mtlLineType::D:
+                currMat->d = parseDbl(s);
+                break;
+            case mtlLineType::ILLUM:break;
+        }
+
+    }
+
+    s.close();
+    return materials;
+}
+
+Material *Parser::parseMtl(std::ifstream &s) {
+    std::string line;
+    getline(s, line);
+    std::istringstream is(line);
+    std::string name;
+    is >> name;
+    Material *m = findMtl(name);
+    if (m == nullptr) {
+        m = new Material();
+        m->name = name;
+        materials.push_back(m);
+    }
+    return m;
+}
+
+Color Parser::parseColor(std::ifstream &s) {
+    std::string line;
+    getline(s, line);
+    std::istringstream is(line);
+    double r = 0.0, g = 0.0, b = 0.0;
+    is >> r >> g >> b;
+    return Color(r, g, b);
+}
+
+double Parser::parseDbl(std::ifstream &s) {
+    std::string line;
+    getline(s, line);
+    std::istringstream is(line);
+    double n = 0.0;
+    is >> n;
+    return n;
+}
+
+Material *Parser::findMtl(const std::string &name) {
+    for (Material *mtl : materials) {
+        if (mtl->name == name)
+            return mtl;
+    }
+    return nullptr;
+}
+

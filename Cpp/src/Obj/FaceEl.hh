@@ -41,6 +41,8 @@ public:
 
     const Vector3D_i &getGlobalNormal() const;
 
+    void genUniformVT();
+
 protected:
 // pseudo JSON representation
 //  [

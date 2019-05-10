@@ -33,10 +33,10 @@ namespace Examples {
 
     void parseFileExample() {
         // parse blender cube file
-        Parser parser("../Data/2cubes1sphere.obj");
+        Parser parser("../Data/FeuilleTextured.obj");
         Scene *scene = parser.parse();
         // write back into new file
-        Generator gen = Generator("my2cubes1sphere.obj");
+        Generator gen = Generator("FeuilleTextured.obj");
         gen.write(scene);
 
     }
@@ -290,9 +290,12 @@ namespace Examples {
         Polar p(Polar::JapaneseMarple);
         Object *obj = p.generateObject(-M_PI, M_PI, 0.001, 0.1, Point3D(0, 0, 0));
 
+        Material *green = new Material("green", Color::white(), Color::greenLeaf(), Color::darkGreenLeaf());
+        obj->setUniformMaterial(green);
         Scene sc = Scene();
         sc.push(obj);
-        Generator gen = Generator("polar.obj");
+        sc.push(green);
+        Generator gen = Generator("polar_color.obj");
         gen.write(&sc);
 
     }

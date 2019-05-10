@@ -5,13 +5,28 @@
 #include <iomanip>
 #include "Generator.hh"
 #include "Constants.hh"
+#include "Utils/Strutils.hh"
 
-Generator::Generator(const std::string &filename) : filename(filename) {
+Generator::Generator(const std::string &filename)
+        : filename(filename)
+{}
 
+Generator::Generator(const std::string &filename, const std::string &mtlfilename)
+        : filename(filename), mtlfilename(mtlfilename)
+{}
+
+void Generator::write(Scene *s) {
+    if (mtlfilename.empty())
+        if (s->getMtllib().empty())
+            mtlfilename = Strutils::rmExtension(filename) + ".mtl";
+        else
+            mtlfilename = s->getMtllib();
+
+    writeObj(s->getObjects());
+    writeMtl(s->getMaterials());
 }
 
-
-std::string Generator::write(Scene *s) {
+std::string Generator::writeObj(std::vector<Object *> objs) {
     std::ofstream os = std::ofstream(filename);
     os << std::fixed << std::setprecision(constants::OBJ_DBL_PRECISION);
 
@@ -27,13 +42,19 @@ std::string Generator::write(Scene *s) {
     // 5) l
     // 5) f
 
-    for (auto &o : s->getObjects()) {
+    // write mtllib
+    writeMtllib(os, mtlfilename);
+
+    for (auto *o : objs) {
 
         // v, vn, vt, vp count per object
-            unsigned objectVCount = 0;
-            unsigned objectVnCount = 0;
-            unsigned objectVtCount = 0;
-            unsigned objectVpCount = 0;
+        unsigned objectVCount = 0;
+        unsigned objectVnCount = 0;
+        unsigned objectVtCount = 0;
+        unsigned objectVpCount = 0;
+
+        // get classified elements
+        auto classifiedFaces = classifyByMaterial(o);
 
 
         // write o
@@ -61,8 +82,6 @@ std::string Generator::write(Scene *s) {
             ++objectVpCount;
         }
 
-        // write usemtl
-        // TODO
 
         // write s
         // TODO
@@ -76,8 +95,16 @@ std::string Generator::write(Scene *s) {
         }
 
         // write f
-        for (auto &f : o->getFaceEls()) {
-            writeF(os, f, *o);
+//        for (auto &f : o->getFaceEls()) {
+//            writeF(os, f, *o);
+//        }
+        // write f & usemtl
+        for (auto&[mat, list] : classifiedFaces) {
+            if (mat != nullptr)
+                writeUsemtl(os, *mat);
+            for (FaceEl *f : list) {
+                writeF(os, *f, *o);
+            }
         }
 
         // update global v, vn, vt, vp count with current object count
@@ -88,6 +115,36 @@ std::string Generator::write(Scene *s) {
     }
 
     return filename;
+}
+
+std::string Generator::writeMtl(std::vector<Material *> mtls) {
+    std::ofstream os = std::ofstream(mtlfilename);
+    os << std::fixed << std::setprecision(constants::OBJ_DBL_PRECISION);
+
+    for (auto *m : mtls) {
+
+        // write newmtl
+        writenewMtl(os, m->name);
+        // write Ns
+        writeDbl(os, "Ns", m->ns);
+        // write Ka
+        writeColor(os, "Ka", m->ka);
+        // write Kd
+        writeColor(os, "Kd", m->kd);
+        // write Ks
+        writeColor(os, "Ks", m->ks);
+        // write Ke
+        writeColor(os, "Ke", m->ke);
+        // write Ni
+        writeDbl(os, "Ni", m->ni);
+        // write d
+        writeDbl(os, "d", m->d);
+        // write illum
+        writeInt(os, "illum", m->illum);
+        os << std::endl;
+    }
+    os.close();
+    return mtlfilename;
 }
 
 void Generator::writeO(std::ofstream &s, Object &o) {
@@ -168,5 +225,41 @@ void Generator::writeF(std::ofstream &s, FaceEl &f, Object &o) {
     }
     s << std::endl;
 }
+
+std::unordered_map<Material *, std::vector<FaceEl *>> Generator::classifyByMaterial(Object *o) {
+    auto elems = std::unordered_map<Material *, std::vector<FaceEl *>>();
+
+    for (FaceEl &f : o->getFaceEls()) {
+        elems.insert(std::make_pair(f.getMat(), std::vector<FaceEl *>()));
+        elems[f.getMat()].push_back(&f);
+    }
+
+    return elems;
+}
+
+void Generator::writeMtllib(std::ofstream &s, const std::string &mtllib) {
+    s << "mtllib " << mtllib << std::endl;
+}
+
+void Generator::writeUsemtl(std::ofstream &s, Material &m) {
+    s << "usemtl " << m.name << std::endl;
+}
+
+void Generator::writenewMtl(std::ofstream &s, const std::string &name) {
+    s << "newmtl " << name << std::endl;
+}
+
+void Generator::writeDbl(std::ofstream &s, const std::string &name, double dbl) {
+    s << name << " " << dbl << std::endl;
+}
+
+void Generator::writeInt(std::ofstream &s, const std::string &name, int i) {
+    s << name << " " << i << std::endl;
+}
+
+void Generator::writeColor(std::ofstream &s, const std::string &name, Color &c) {
+    s << name << " " << c.getR() << " " << c.getG() << " " << c.getB() << std::endl;
+}
+
 
 

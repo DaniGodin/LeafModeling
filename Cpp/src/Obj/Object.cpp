@@ -135,3 +135,19 @@ int Object::find(const Texture2D *t) {
     auto r = vt_map.find(*t);
     return r == vt_map.end() ? -1 : (*r).second;
 }
+
+bool Object::isEmpty() {
+    return v.empty() && vn.empty() && vp.empty() && vt.empty();
+}
+
+void Object::setUniformMaterial(Material *mat) {
+    for (FaceEl &f : faceEls) {
+        f.setMat(mat);
+    }
+}
+
+void Object::genUniformVTs() {
+    for (FaceEl &f : faceEls) {
+        f.genUniformVT();
+    }
+}

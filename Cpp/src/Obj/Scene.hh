@@ -15,11 +15,17 @@ class Scene {
 public:
     Scene();
 
+    Scene(const std::vector<Object *> &objects, const std::vector<Material *> &materials);
+
     virtual ~Scene();
 
     std::vector<Object *> &getObjects();
 
     std::vector<Material *> &getMaterials();
+
+    const std::string &getMtllib() const;
+
+    void setMtllib(const std::string &mtllib);
 
     void push(Object *o);
     void push(Material *mat);
@@ -27,6 +33,7 @@ public:
 private:
     std::vector<Object *> objects;
     std::vector<Material *> materials;
+    std::string mtllib = "";
 };
 
 

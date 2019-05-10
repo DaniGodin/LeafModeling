@@ -25,3 +25,14 @@ Scene::Scene() {}
 Scene::~Scene() {
     // TODO clean delete
 }
+
+Scene::Scene(const std::vector<Object *> &objects, const std::vector<Material *> &materials) : objects(objects),
+                                                                                               materials(materials) {}
+
+const std::string &Scene::getMtllib() const {
+    return mtllib;
+}
+
+void Scene::setMtllib(const std::string &mtllib) {
+    Scene::mtllib = mtllib;
+}

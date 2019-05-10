@@ -29,6 +29,12 @@ bool Texture2D::operator!=(const Texture2D &rhs) const {
     return !(rhs == *this);
 }
 
+Texture2D::Texture2D(double u, double v) : u(u), v(v) {}
+
+Texture2D::Texture2D(double u) : u(u) {}
+
+Texture2D::Texture2D(double u, double v, double w) : u(u), v(v), w(w) {}
+
 std::size_t Texture2D::hash::operator()(const Texture2D &p) const {
     auto h1 = std::hash<double>{}(dblutils::trunc(p.u, constants::OBJ_DBL_PRECISION));
     auto h2 = std::hash<double>{}(dblutils::trunc(p.v, constants::OBJ_DBL_PRECISION));

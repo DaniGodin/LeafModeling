@@ -12,6 +12,9 @@ class Strutils {
 public:
     static std::string trim(const std::string& str);
 
+    static std::string rmExtension(const std::string &str);
+
+    static std::string getPath(const std::string &fullpath);
 };
 
 

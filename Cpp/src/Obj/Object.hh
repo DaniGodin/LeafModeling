@@ -18,19 +18,15 @@ class FaceEl;
 class LineEl;
 
 class Object {
-    friend class Element;
-    friend class FaceEl;
-    friend class LineEl;
-
 public:
+
     explicit Object(const std::string &name);
     Object();
-
     ~Object();
 
 public:
-    const std::vector<Point3D*> &getV() const;
 
+    const std::vector<Point3D*> &getV() const;
     const std::vector<Point2D*> &getVp() const;
 
     const std::vector<Vector3D*> &getVn() const;
@@ -38,24 +34,33 @@ public:
     const std::vector<Texture2D*> &getVt() const;
 
     std::vector<FaceEl> &getFaceEls() ;
+
     const std::vector<FaceEl> &getFaceEls() const;
-
     std::vector<LineEl> &getLineEls();
-    const std::vector<LineEl> &getLineEls() const;
 
+    const std::vector<LineEl> &getLineEls() const;
     const std::string &getName() const;
 
-
     int push(const Point3D &p);
+
+
     int push(const Point2D &p);
     int push(const Vector3D &v);
     int push(const Texture2D &t);
     int push(const FaceEl &f);
     int push(const LineEl &l);
-
     void autoGenNormal();
 
+    bool isEmpty();
+
+    void setUniformMaterial(Material *mat);
+    void genUniformVTs();
+
 protected:
+    friend class Element;
+    friend class FaceEl;
+    friend class LineEl;
+
     int find(const Point3D *p);
     int find(const Point2D *p);
     int find(const Vector3D *v);

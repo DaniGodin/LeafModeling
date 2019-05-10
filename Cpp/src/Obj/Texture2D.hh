@@ -10,6 +10,12 @@
 
 class Texture2D {
 public:
+    Texture2D(double u, double v);
+
+    Texture2D(double u, double v, double w);
+
+    Texture2D(double u);
+
     double getU() const;
 
     double getV() const;

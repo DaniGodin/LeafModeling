@@ -10,6 +10,7 @@
 #include "Texture2D.hh"
 #include "Point2D.hh"
 #include "Vector3D.hh"
+#include "Material.hh"
 
 typedef std::tuple<int, Point3D*> Point3D_i;
 typedef std::tuple<int, Texture2D*> Texture2D_i;
@@ -22,11 +23,18 @@ class Object;
 class Element {
 //    friend class Object;
 
-public:
+protected:
     explicit Element(Object *parent);
+    explicit Element(Object *parent, Material *mat);
+
+public:
+    Material *getMat() const;
+
+    void setMat(Material *mat);
 
 protected:
     Object *parent;
+    Material *mat = nullptr;
 };
 
 #include "Object.hh"
