@@ -141,6 +141,8 @@ std::string Generator::writeMtl(std::vector<Material *> mtls) {
         writeDbl(os, "d", m->d);
         // write illum
         writeInt(os, "illum", m->illum);
+        // write map_Kd
+        writeString(os, "map_Kd", m->map_Kd);
         os << std::endl;
     }
     os.close();
@@ -256,6 +258,10 @@ void Generator::writeInt(std::ofstream &s, const std::string &name, int i) {
 
 void Generator::writeColor(std::ofstream &s, const std::string &name, Color &c) {
     s << name << " " << c.getR() << " " << c.getG() << " " << c.getB() << std::endl;
+}
+
+void Generator::writeString(std::ofstream &s, const std::string &name, const std::string &value) {
+    s << name << " " << value << std::endl;
 }
 
 

@@ -41,6 +41,7 @@ private:
     void writeDbl(std::ofstream &s, const std::string &name, double dbl);
     void writeInt(std::ofstream &s, const std::string &name, int i);
     void writeColor(std::ofstream &s, const std::string &name, Color &c);
+    void writeString(std::ofstream &s, const std::string &name, const std::string &value);
 
     std::unordered_map<Material *, std::vector<FaceEl *>> classifyByMaterial(Object *s);
 
