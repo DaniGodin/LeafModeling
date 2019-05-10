@@ -99,7 +99,7 @@ void FaceEl::genUniformVT() {
 
         int indx = parent->push(Texture2D(std::get<1>(pti)->getX(),std::get<1>(pti)->getY()));
 
-        push(std::get<1>(pti), parent->getVt()[indx], std::get<1>(vti);
+        push(std::get<1>(pti), parent->getVt()[indx], std::get<1>(vti));
     }
     //remove old vertices
     vertices.erase(vertices.begin(), vertices.begin() + sz);

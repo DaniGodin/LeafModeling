@@ -159,12 +159,9 @@ void Generator::writeV(std::ofstream &s, Point3D &v) {
 }
 
 void Generator::writeVt(std::ofstream &s, Texture2D &vt) {
-    s << "vt " << vt.getU();
-    if(vt.getV() != 0 || vt.getW() != 0) {
-        s << " " << vt.getV();
-        if (vt.getW() != 0)
-            s << " " << vt.getW();
-    }
+    s << "vt " << vt.getU() << " " << vt.getV();
+    if (vt.getW() != 0)
+        s << " " << vt.getW();
     s << std::endl;
 }
 

@@ -19,11 +19,3 @@ void Element::setMat(Material *mat) {
 Material *Element::getMat() const {
     return mat;
 }
-
-void Element::setTexturedMat(Material *mat) {
-    Element::mat = mat;
-//    if (parent == nullptr)
-//        throw std::runtime_error("Element has no parent.");
-    // TODO do something to add texture vertices but only
-
-}

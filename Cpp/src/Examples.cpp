@@ -290,11 +290,18 @@ namespace Examples {
         Polar p(Polar::JapaneseMarple);
         Object *obj = p.generateObject(-M_PI, M_PI, 0.001, 0.1, Point3D(0, 0, 0));
 
-        Material *green = new Material("green", Color::white(), Color::greenLeaf(), Color::darkGreenLeaf());
-        obj->setUniformMaterial(green);
+//        Gen uniform green material
+//        Material *green = new Material("green", Color::white(), Color::greenLeaf(), Color::darkGreenLeaf());
+//        obj->setUniformMaterial(green);
+//        Gen uniform texture material
+
+        Material *greenTextured = new Material("green", Color::white(), Color::greenLeaf(), Color::darkGreenLeaf(), "leafTexture.jpg");
+        obj->setUniformMaterial(greenTextured);
+        obj->genUniformVTs();
+
         Scene sc = Scene();
         sc.push(obj);
-        sc.push(green);
+        sc.push(greenTextured);
         Generator gen = Generator("polar_color.obj");
         gen.write(&sc);
 
