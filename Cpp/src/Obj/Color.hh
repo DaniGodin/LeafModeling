@@ -28,6 +28,10 @@ public:
         return Color(0.013967, 0.437500, 0.006639);
     }
 
+    static Color magenta() {
+        return Color(1, 0 , 1);
+    }
+
     static Color from255(int r, int g, int b) {
         return Color(static_cast<double>(r) / 255.0, static_cast<double>(g) / 255.0, static_cast<double>(b) / 255.0);
     }

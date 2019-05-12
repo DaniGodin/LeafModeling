@@ -29,6 +29,8 @@
 #include "AlgoLeaf/Equations/Parametric.hh"
 #include "AlgoLeaf/Equations/Polar.hh"
 #include "../include/jpge.h"
+#include "Texturing/Texture.hh"
+#include "Texturing/TextureGenerator.hh"
 
 namespace Examples {
 
@@ -323,6 +325,12 @@ namespace Examples {
         }
 
         jpge::compress_image_to_jpeg_file("out.jpg", w, h, 3, vals);
+
+        Texture tex = Texture(710, 746);
+        tex.fillPxls(TextureGenerator::gaussianMatrix(710, 746, 366, 624, 150),
+                     Color::darkGreenLeaf(),
+                     Color::greenLeaf());
+        tex.writeToFile("outTexLeafGaussian.jpg");
     }
 
 }
