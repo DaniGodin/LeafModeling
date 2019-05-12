@@ -13,8 +13,9 @@ int main() {
         Chronometer c = Chronometer();
 
 //        Examples::parametricExample();
-        Examples::polarExample();
+//        Examples::polarExample();
 //        Examples::treeExample();
+        Examples::genJpeg();
 //        Examples::algoLeafExample();
 //        Examples::parseFileExample();
 //        Examples::leafGrowthExample();

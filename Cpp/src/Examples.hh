@@ -16,6 +16,7 @@ namespace Examples {
     void algoLeafExample();
     void parametricExample();
     void polarExample();
+    void genJpeg();
 
 }
 

@@ -28,6 +28,7 @@
 #include "AlgoLeaf/Growth/leafGrowth.hh"
 #include "AlgoLeaf/Equations/Parametric.hh"
 #include "AlgoLeaf/Equations/Polar.hh"
+#include "../include/jpge.h"
 
 namespace Examples {
 
@@ -287,8 +288,8 @@ namespace Examples {
     }
 
     void polarExample() {
-        Polar p(Polar::JapaneseMarple);
-        Object *obj = p.generateObject(-M_PI, M_PI, 0.001, 0.1, Point3D(0, 0, 0));
+        Polar p(Polar::Cannabis);
+        Object *obj = p.generateObject(-M_PI, M_PI, 0.001, 0.01, Point3D(0, 0, 0));
 
 //        Gen uniform green material
 //        Material *green = new Material("green", Color::white(), Color::greenLeaf(), Color::darkGreenLeaf());
@@ -296,8 +297,8 @@ namespace Examples {
 //        Gen uniform texture material
 
         Material *greenTextured = new Material("green", Color::white(), Color::greenLeaf(), Color::darkGreenLeaf(), "leafTexture.jpg");
-        obj->setUniformMaterial(greenTextured);
-        obj->genUniformVTs();
+//        obj->setUniformMaterial(greenTextured);
+//        obj->genUniformVTs();
 
         Scene sc = Scene();
         sc.push(obj);
@@ -305,6 +306,23 @@ namespace Examples {
         Generator gen = Generator("polar_color.obj");
         gen.write(&sc);
 
+    }
+
+    void genJpeg() {
+        int w = 20;
+        int h = 40;
+        int cols = 3;
+        int buffSize = h * w * cols;
+        uint8_t *vals = new uint8_t[buffSize];
+        bool inv = true;
+        for (int i = 0; i < buffSize; i += 3) {
+            vals[i]     = inv ? 255 : 0;
+            vals[i + 1] = inv ? 255 : 0;
+            vals[i + 2] = inv ? 255 : 0;
+            inv = !inv;
+        }
+
+        jpge::compress_image_to_jpeg_file("out.jpg", w, h, 3, vals);
     }
 
 }

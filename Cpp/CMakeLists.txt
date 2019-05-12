@@ -4,6 +4,9 @@ project(objParser)
 set(CMAKE_CXX_STANDARD 17)
 
 add_executable(objParser
+        include/fast_marching_method.hpp
+        include/jpge.cpp
+        include/jpge.h
         src/main.cpp
         src/Parser.cpp
         src/Parser.hh
