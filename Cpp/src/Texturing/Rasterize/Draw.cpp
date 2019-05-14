@@ -5,9 +5,8 @@
 #include "Draw.hh"
 #include "Span.hh"
 
-uint8_t *Draw::drawTriangle(double x1, double y1, double x2, double y2, double x3, double y3, int width, int height) {
+uint8_t *Draw::drawTriangle(uint8_t *pxls, double x1, double y1, double x2, double y2, double x3, double y3, int width, int height, int colorCount, double ratio) {
 
-    uint8_t *pxls = new uint8_t[width * height]();
 
     // 1. create edges
     // 2. sort edges
@@ -15,9 +14,9 @@ uint8_t *Draw::drawTriangle(double x1, double y1, double x2, double y2, double x
     // 4. draw spans
 
     std::vector<Edge> edges = std::vector<Edge>{
-            Edge(x1, y1, x2, y2),
-            Edge(x2, y2, x3, y3),
-            Edge(x3, y3, x1, y1),
+            Edge(x1 * ratio, y1 * ratio, x2 * ratio, y2 * ratio),
+            Edge(x2 * ratio, y2 * ratio, x3 * ratio, y3 * ratio),
+            Edge(x3 * ratio, y3 * ratio, x1 * ratio, y1 * ratio),
     };
 
     double longestSize = 0;
@@ -34,13 +33,13 @@ uint8_t *Draw::drawTriangle(double x1, double y1, double x2, double y2, double x
     int edIdx2 = (longestIdx + 1) % edges.size();
     int edIdx3 = (longestIdx + 2) % edges.size();
 
-    drawSpan(edges[longestIdx], edges[edIdx2], pxls, width);
-    drawSpan(edges[longestIdx], edges[edIdx3], pxls, height);
+    drawSpan(edges[longestIdx], edges[edIdx2], pxls, width, colorCount);
+    drawSpan(edges[longestIdx], edges[edIdx3], pxls, height, colorCount);
 
     return pxls;
 }
 
-void Draw::drawSpan(const Edge &e1, const Edge &e2, uint8_t *img, int w) {
+void Draw::drawSpan(const Edge &e1, const Edge &e2, uint8_t *img, int w, int colorCount) {
 
     // calc Y size of e1
     double e1ySize = (e1.y2 - e1.y1);
@@ -67,13 +66,17 @@ void Draw::drawSpan(const Edge &e1, const Edge &e2, uint8_t *img, int w) {
                 e2.x1 + (e2xSize * factore2)
             );
         // TODO draw span on img
-        sp.draw(y, img, w);
+        sp.draw(y, img, w, colorCount);
         factore1 += stepe1;
         factore2 += stepe2;
     }
 }
 
+uint8_t *Draw::drawTriangle(Texture &tex, double x1, double y1, double x2, double y2, double x3, double y3) {
+    return drawTriangle(tex.getUnderlyingPixels(), x1, y1, x2, y2, x3, y3, tex.getWidth(), tex.getHeight(), tex.getColorCount());
+}
+
 uint8_t *
-Draw::drawTriangle(double x1, double y1, double x2, double y2, double x3, double y3, int width, int height, double ratio) {
-    return drawTriangle(x1 * ratio, y1 * ratio, x2 * ratio, y2 * ratio, x3 * ratio, y3 * ratio, width, height);
+Draw::drawTriangle(Texture &tex, double x1, double y1, double x2, double y2, double x3, double y3, double ratio) {
+    return drawTriangle(tex.getUnderlyingPixels(), x1 * ratio, y1 * ratio, x2 * ratio, y2 * ratio, x3 * ratio, y3 * ratio, tex.getWidth(), tex.getHeight(), tex.getColorCount());
 }

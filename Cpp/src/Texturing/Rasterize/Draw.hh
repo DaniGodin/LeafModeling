@@ -8,23 +8,32 @@
 #include <cstdint>
 #include <vector>
 #include "Edge.hh"
+#include "../Texture.hh"
 
 class Draw {
 
 public:
-    static uint8_t *drawTriangle(double x1, double y1,
+    static uint8_t *drawTriangle(uint8_t *pxls,
+                                 double x1, double y1,
                                  double x2, double y2,
                                  double x3, double y3,
-                                 int width, int height);
+                                 int width, int height, int colorCount = 1, double ratio = 1);
 
-    static uint8_t *drawTriangle(double x1, double y1,
+    static uint8_t *drawTriangle(Texture &tex,
+                                 double x1, double y1,
+                                 double x2, double y2,
+                                 double x3, double y3);
+
+    static uint8_t *drawTriangle(Texture &tex,
+                                 double x1, double y1,
                                  double x2, double y2,
                                  double x3, double y3,
-                                 int width, int height, double ratio);
+                                 double ratio);
 
 private:
+
     // TODO add img in params
-    static void drawSpan(const Edge &e1, const Edge &e2, uint8_t *img, int w);
+    static void drawSpan(const Edge &e1, const Edge &e2, uint8_t *img, int w, int colorCount);
 };
 
 

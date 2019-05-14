@@ -15,11 +15,13 @@ Span::Span(double x1_, double x2_)
     }
 }
 
-void Span::draw(int y, uint8_t *img, int w) {
+void Span::draw(int y, uint8_t *img, int w, int colorCount) {
     double xSize = x2 - x1;
     if (xSize == 0)
         return;
     for (int x = x1; x < x2; ++x) {
-        img[y * w + x] = 255;
+        img[(y * w + x) * colorCount] = 255;
+        img[(y * w + x) * colorCount + 1] = 255;
+        img[(y * w + x) * colorCount + 2] = 255;
     }
 }
