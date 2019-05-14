@@ -31,6 +31,7 @@
 #include "../include/jpge.h"
 #include "Texturing/Texture.hh"
 #include "Texturing/TextureGenerator.hh"
+#include "Texturing/Rasterize/Draw.hh"
 
 namespace Examples {
 
@@ -331,6 +332,13 @@ namespace Examples {
                      Color::darkGreenLeaf(),
                      Color::greenLeaf());
         tex.writeToFile("outTexLeafGaussian.jpg");
+    }
+
+    void rasterizeExample() {
+        // w 30 h 30
+        uint8_t *res = Draw::drawTriangle(10, 5, 5, 25, 25, 20, 3000, 3000, 3000.0 / 30.0);
+        Texture tex = Texture(3000, 3000, 1, res);
+        tex.writeToFile("rasterizedTriangle.jpg");
     }
 
 }

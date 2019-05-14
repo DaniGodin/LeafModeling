@@ -15,7 +15,8 @@ int main() {
 //        Examples::parametricExample();
 //        Examples::polarExample();
 //        Examples::treeExample();
-        Examples::genJpeg();
+//        Examples::genJpeg();
+        Examples::rasterizeExample();
 //        Examples::algoLeafExample();
 //        Examples::parseFileExample();
 //        Examples::leafGrowthExample();

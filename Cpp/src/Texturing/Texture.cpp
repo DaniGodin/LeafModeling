@@ -9,6 +9,10 @@ Texture::Texture(int width, int height)
         : width(width), height(height), pxls(new uint8_t[width * height * colorCount])
 {}
 
+Texture::Texture(int width, int height, int colorCount, uint8_t *pxls)
+        : width(width), height(height), colorCount(colorCount), pxls(pxls)
+{}
+
 void Texture::fillPxls(const std::vector<double> &vals, const Color &background, const Color &foreground) {
 
     for (int i, ii = 0; i < width * height * colorCount; i+=3, ++ii) {
@@ -26,3 +30,4 @@ std::string Texture::writeToFile(const std::string &filename) {
 Texture::~Texture() {
     delete pxls;
 }
+

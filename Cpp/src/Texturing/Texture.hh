@@ -16,6 +16,8 @@ class Texture {
 public:
     Texture(int width, int height);
 
+    Texture(int width, int height, int colorCount, uint8_t *pxls);
+
     virtual ~Texture();
 
 //    Create an RGB image using a matrix of coefficients of size (W * H), a foreground color and a background color

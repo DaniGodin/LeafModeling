@@ -17,6 +17,7 @@ namespace Examples {
     void parametricExample();
     void polarExample();
     void genJpeg();
+    void rasterizeExample();
 
 }
 
