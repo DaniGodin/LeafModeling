@@ -8,16 +8,19 @@
 
 #include <cstdint>
 #include <vector>
+#include "../../Utils/Color.hh"
 
 class Span {
 
 public:
     Span(double x1, double x2);
+    Span(double x1, double x2, const Color &col1, const Color &col2);
 
     void draw(int y, uint8_t *img, int w, int colorCount);
 
 public:
     double x1, x2;
+    Color col1, col2;
 };
 
 

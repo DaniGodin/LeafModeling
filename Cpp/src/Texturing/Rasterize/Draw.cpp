@@ -5,7 +5,15 @@
 #include "Draw.hh"
 #include "Span.hh"
 
-uint8_t *Draw::drawTriangle(uint8_t *pxls, double x1, double y1, double x2, double y2, double x3, double y3, int width, int height, int colorCount, double ratio) {
+uint8_t *Draw::drawTriangle(uint8_t *pxls,
+                            double x1, double y1,
+                            const Color &col1,
+                            double x2, double y2,
+                            const Color &col2,
+                            double x3, double y3,
+                            const Color &col3,
+                            int width, int height,
+                            int colorCount, double ratio) {
 
 
     // 1. create edges
@@ -14,9 +22,9 @@ uint8_t *Draw::drawTriangle(uint8_t *pxls, double x1, double y1, double x2, doub
     // 4. draw spans
 
     std::vector<Edge> edges = std::vector<Edge>{
-            Edge(x1 * ratio, y1 * ratio, x2 * ratio, y2 * ratio),
-            Edge(x2 * ratio, y2 * ratio, x3 * ratio, y3 * ratio),
-            Edge(x3 * ratio, y3 * ratio, x1 * ratio, y1 * ratio),
+            Edge(x1 * ratio, y1 * ratio, x2 * ratio, y2 * ratio, col1, col2),
+            Edge(x2 * ratio, y2 * ratio, x3 * ratio, y3 * ratio, col2, col3),
+            Edge(x3 * ratio, y3 * ratio, x1 * ratio, y1 * ratio, col3, col1),
     };
 
     double longestSize = 0;
@@ -53,6 +61,9 @@ void Draw::drawSpan(const Edge &e1, const Edge &e2, uint8_t *img, int w, int col
 
     double e1xSize = (e1.x2 - e1.x1);
     double e2xSize = (e2.x2 - e2.x1);
+    Color e1coldiff = (e1.col2 - e1.col1);
+    Color e2coldiff = (e2.col2 - e2.col1);
+
 
     double factore1 = (e2.y1 - e1.y1) / e1ySize;
     double stepe1 = 1.0 / e1ySize;
@@ -63,7 +74,9 @@ void Draw::drawSpan(const Edge &e1, const Edge &e2, uint8_t *img, int w, int col
         // create and draw a span
         Span sp = Span(
                 e1.x1 + (e1xSize * factore1),
-                e2.x1 + (e2xSize * factore2)
+                e2.x1 + (e2xSize * factore2),
+                e1.col1 + (e1coldiff * factore1),
+                e2.col1 + (e2coldiff * factore2)
             );
         // TODO draw span on img
         sp.draw(y, img, w, colorCount);
@@ -72,11 +85,19 @@ void Draw::drawSpan(const Edge &e1, const Edge &e2, uint8_t *img, int w, int col
     }
 }
 
-uint8_t *Draw::drawTriangle(Texture &tex, double x1, double y1, double x2, double y2, double x3, double y3) {
-    return drawTriangle(tex.getUnderlyingPixels(), x1, y1, x2, y2, x3, y3, tex.getWidth(), tex.getHeight(), tex.getColorCount());
-}
-
 uint8_t *
 Draw::drawTriangle(Texture &tex, double x1, double y1, double x2, double y2, double x3, double y3, double ratio) {
-    return drawTriangle(tex.getUnderlyingPixels(), x1 * ratio, y1 * ratio, x2 * ratio, y2 * ratio, x3 * ratio, y3 * ratio, tex.getWidth(), tex.getHeight(), tex.getColorCount());
+    return drawTriangle(tex.getUnderlyingPixels(),
+                        x1 * ratio, y1 * ratio, Color::white(),
+                        x2 * ratio, y2 * ratio, Color::white(),
+                        x3 * ratio, y3 * ratio, Color::white(),
+                        tex.getWidth(), tex.getHeight(), tex.getColorCount());
+}
+
+uint8_t *Draw::drawTriangle(Texture &tex, const Point2D &p1, const Point2D &p2, const Point2D &p3, double ratio) {
+    return drawTriangle(tex.getUnderlyingPixels(),
+                        p1.x * ratio, p1.y * ratio, p1.col,
+                        p2.x * ratio, p2.y * ratio, p2.col,
+                        p3.x * ratio, p3.y * ratio, p3.col,
+                        tex.getWidth(), tex.getHeight(), tex.getColorCount());
 }

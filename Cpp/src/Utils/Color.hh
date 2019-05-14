@@ -11,6 +11,7 @@ class Color {
 public:
     Color(double r, double g, double b);
     Color(double rgb);
+    Color() = default;
 
 
     static Color black() {
@@ -29,7 +30,19 @@ public:
     }
 
     static Color magenta() {
-        return Color(1, 0 , 1);
+        return Color(1, 0, 1);
+    }
+
+    static Color red() {
+        return Color(1, 0, 0);
+    }
+
+    static Color green() {
+        return Color(0, 1, 0);
+    }
+
+    static Color blue() {
+        return Color(0, 0, 1);
     }
 
     static Color from255(int r, int g, int b) {
@@ -42,10 +55,23 @@ public:
 
     double getB() const;
 
+    double get255R() const;
+
+    double get255G() const;
+
+    double get255B() const;
+
+    Color operator-(const Color &rhs) const;
+    Color operator+(const Color &rhs) const;
+    Color operator+(double factor) const;
+    Color operator*(double factor) const;
+    Color operator/(double factor) const;
+
+
 private:
-    double r;
-    double g;
-    double b;
+    double r = 1;
+    double g = 1;
+    double b = 1;
 };
 
 

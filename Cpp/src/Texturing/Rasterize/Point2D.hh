@@ -10,8 +10,9 @@
 
 class Point2D {
 public:
+    Point2D(int x, int y, const Color &col);
 
-private:
+public:
     int x;
     int y;
     Color col;

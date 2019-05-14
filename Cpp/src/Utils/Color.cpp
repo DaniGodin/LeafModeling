@@ -21,3 +21,35 @@ double Color::getG() const {
 double Color::getB() const {
     return b;
 }
+
+double Color::get255R() const {
+    return r * 255;
+}
+
+double Color::get255G() const {
+    return g * 255;
+}
+
+double Color::get255B() const {
+    return b * 255;
+}
+
+Color Color::operator-(const Color &rhs) const {
+    return Color(r - rhs.r, g - rhs.g, b - rhs.b);
+}
+
+Color Color::operator+(const Color &rhs) const {
+    return Color(r + rhs.r, g + rhs.g, b + rhs.b);
+}
+
+Color Color::operator+(double factor) const {
+    return Color(r + factor, g + factor, b + factor);
+}
+
+Color Color::operator*(double factor) const {
+    return Color(r * factor, g * factor, b * factor);
+}
+
+Color Color::operator/(double factor) const {
+    return Color(r / factor, g / factor, b / factor);
+}

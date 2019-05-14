@@ -7,7 +7,6 @@
 
 int main() {
     std::srand(std::time(nullptr));
-
     {
         // start a chronometer
         Chronometer c = Chronometer();
@@ -23,5 +22,6 @@ int main() {
 //        Examples::lSystemExample();
 //        Examples::cylinderExample();
     }
+
     return 0;
 }
