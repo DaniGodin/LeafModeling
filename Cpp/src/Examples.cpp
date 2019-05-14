@@ -9,9 +9,9 @@
 #include <queue>
 #include <ctime>
 #include <cfloat>
-#include "Parser.hh"
+#include "Obj/Parser.hh"
 #include "Tree/Node.hh"
-#include "Generator.hh"
+#include "Obj/Generator.hh"
 #include "L-Systems/LRuleStoch.hh"
 #include "L-Systems/LRuleBasic.hh"
 #include "L-Systems/LRule.hh"
@@ -291,7 +291,7 @@ namespace Examples {
     }
 
     void polarExample() {
-        Polar p(Polar::Cannabis);
+        Polar p(Polar::JapaneseMarple);
         Object *obj = p.generateObject(-M_PI, M_PI, 0.001, 0.01, Point3D(0, 0, 0));
 
 //        Gen uniform green material
@@ -335,9 +335,9 @@ namespace Examples {
     }
 
     void rasterizeExample() {
-        // w 30 h 30
-        uint8_t *res = Draw::drawTriangle(10, 5, 5, 25, 25, 20, 3000, 3000, 3000.0 / 30.0);
-        Texture tex = Texture(3000, 3000, 1, res);
+        Texture tex = Texture(3000, 3000, 3);
+        Draw::drawTriangle(tex, 10, 5, 5, 25, 25, 20, 3000.0 / 30.0);
+        Draw::drawTriangle(tex.getUnderlyingPixels(), 5, 7, 25, 15, 15, 25, 3000, 3000, 3, 3000.0/30.0);
         tex.writeToFile("rasterizedTriangle.jpg");
     }
 

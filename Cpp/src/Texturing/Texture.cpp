@@ -9,6 +9,10 @@ Texture::Texture(int width, int height)
         : width(width), height(height), pxls(new uint8_t[width * height * colorCount])
 {}
 
+Texture::Texture(int width, int height, int colorCount)
+        : width(width), height(height), colorCount(colorCount), pxls(new uint8_t[width * height * colorCount])
+{}
+
 Texture::Texture(int width, int height, int colorCount, uint8_t *pxls)
         : width(width), height(height), colorCount(colorCount), pxls(pxls)
 {}
@@ -29,5 +33,21 @@ std::string Texture::writeToFile(const std::string &filename) {
 
 Texture::~Texture() {
     delete pxls;
+}
+
+uint8_t *Texture::getUnderlyingPixels() {
+    return pxls;
+}
+
+int Texture::getWidth() const {
+    return width;
+}
+
+int Texture::getHeight() const {
+    return height;
+}
+
+int Texture::getColorCount() const {
+    return colorCount;
 }
 

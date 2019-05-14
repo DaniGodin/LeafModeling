@@ -9,12 +9,14 @@
 #include <cstdint>
 #include <vector>
 #include <string>
-#include "../Obj/Color.hh"
+#include "../Utils/Color.hh"
 
 class Texture {
 
 public:
     Texture(int width, int height);
+
+    Texture(int width, int height, int colorCount);
 
     Texture(int width, int height, int colorCount, uint8_t *pxls);
 
@@ -24,6 +26,15 @@ public:
     void fillPxls(const std::vector<double> &vals, const Color &background, const Color &foreground);
 
     std::string writeToFile(const std::string &filename);
+
+    uint8_t *getUnderlyingPixels();
+
+    int getWidth() const;
+
+    int getHeight() const;
+
+    int getColorCount() const;
+
 private:
     int width;
     int height;

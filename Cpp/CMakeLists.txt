@@ -8,8 +8,8 @@ add_executable(objParser
         include/jpge.cpp
         include/jpge.h
         src/main.cpp
-        src/Parser.cpp
-        src/Parser.hh
+        src/Obj/Parser.cpp
+        src/Obj/Parser.hh
         src/Obj/Object.cpp
         src/Obj/Object.hh
         src/Obj/Point3D.cpp
@@ -36,8 +36,8 @@ add_executable(objParser
         src/Utils/Strutils.hh
         src/Tree/Node.cpp
         src/Tree/Node.hh
-        src/Generator.cpp
-        src/Generator.hh
+        src/Obj/Generator.cpp
+        src/Obj/Generator.hh
         src/L-Systems/LNode.cpp
         src/L-Systems/LNode.hh
         src/L-Systems/LObject.cpp
@@ -83,4 +83,4 @@ add_executable(objParser
         src/Obj/Meshes/Triangle.cpp
         src/Obj/Meshes/Triangle.hh
         src/AlgoLeaf/Growth/leafGrowth.cpp
-        src/AlgoLeaf/Growth/leafGrowth.hh src/AlgoLeaf/Equations/Parametric.cpp src/AlgoLeaf/Equations/Parametric.hh src/Examples.cpp src/Examples.hh src/Chronometer.cpp src/Chronometer.hh src/AlgoLeaf/Equations/Polar.cpp src/AlgoLeaf/Equations/Polar.hh src/Constants.hh src/Utils/dblutils.cpp src/Utils/dblutils.hh src/Obj/Color.cpp src/Obj/Color.hh src/Texturing/TextureGenerator.cpp src/Texturing/TextureGenerator.hh src/Texturing/Texture.cpp src/Texturing/Texture.hh src/Texturing/Rasterize/Draw.cpp src/Texturing/Rasterize/Draw.hh src/Texturing/Rasterize/Edge.cpp src/Texturing/Rasterize/Edge.hh src/Texturing/Rasterize/Span.cpp src/Texturing/Rasterize/Span.hh)
+        src/AlgoLeaf/Growth/leafGrowth.hh src/AlgoLeaf/Equations/Parametric.cpp src/AlgoLeaf/Equations/Parametric.hh src/Examples.cpp src/Examples.hh src/Utils/Chronometer.cpp src/Utils/Chronometer.hh src/AlgoLeaf/Equations/Polar.cpp src/AlgoLeaf/Equations/Polar.hh src/Constants.hh src/Utils/dblutils.cpp src/Utils/dblutils.hh src/Utils/Color.cpp src/Utils/Color.hh src/Texturing/TextureGenerator.cpp src/Texturing/TextureGenerator.hh src/Texturing/Texture.cpp src/Texturing/Texture.hh src/Texturing/Rasterize/Draw.cpp src/Texturing/Rasterize/Draw.hh src/Texturing/Rasterize/Edge.cpp src/Texturing/Rasterize/Edge.hh src/Texturing/Rasterize/Span.cpp src/Texturing/Rasterize/Span.hh src/Texturing/Rasterize/Point2D.cpp src/Texturing/Rasterize/Point2D.hh)

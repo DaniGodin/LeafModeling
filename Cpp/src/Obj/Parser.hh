@@ -8,9 +8,9 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include "Obj/Scene.hh"
-#include "Obj/FaceEl.hh"
-#include "Obj/Object.hh"
+#include "Scene.hh"
+#include "FaceEl.hh"
+#include "Object.hh"
 
 class Parser {
 public:

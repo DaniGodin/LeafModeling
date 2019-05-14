@@ -11,9 +11,9 @@
 #include <iostream>
 #include <fstream>
 #include <algorithm>
-#include "Tree/Node.hh"
-#include "Obj/Object.hh"
-#include "Obj/Scene.hh"
+#include "../Tree/Node.hh"
+#include "Object.hh"
+#include "Scene.hh"
 
 class Generator {
 public:

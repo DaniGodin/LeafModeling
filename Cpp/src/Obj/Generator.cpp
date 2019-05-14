@@ -4,8 +4,8 @@
 
 #include <iomanip>
 #include "Generator.hh"
-#include "Constants.hh"
-#include "Utils/Strutils.hh"
+#include "../Constants.hh"
+#include "../Utils/Strutils.hh"
 
 Generator::Generator(const std::string &filename)
         : filename(filename)

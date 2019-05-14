@@ -3,7 +3,7 @@
 #include <ctime>
 #include <iostream>
 #include "Examples.hh"
-#include "Chronometer.hh"
+#include "Utils/Chronometer.hh"
 
 int main() {
     std::srand(std::time(nullptr));

@@ -7,7 +7,7 @@
 
 
 #include <string>
-#include "Color.hh"
+#include "../Utils/Color.hh"
 
 class Material {
 
