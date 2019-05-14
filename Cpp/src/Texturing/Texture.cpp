@@ -4,6 +4,7 @@
 
 #include "Texture.hh"
 #include "../../include/jpge.h"
+#include <stdexcept>
 
 Texture::Texture(int width, int height)
         : width(width), height(height), pxls(new uint8_t[width * height * colorCount])
@@ -12,6 +13,28 @@ Texture::Texture(int width, int height)
 Texture::Texture(int width, int height, int colorCount)
         : width(width), height(height), colorCount(colorCount), pxls(new uint8_t[width * height * colorCount])
 {}
+
+Texture::Texture(int width, int height, const Color &bg)
+        : width(width), height(height), pxls(new uint8_t[width * height * colorCount])
+{
+    for (int i = 0; i < width * height * colorCount; i += colorCount) {
+        pxls[i] = bg.get255R();
+        pxls[i + 1] = bg.get255G();
+        pxls[i + 2] = bg.get255B();
+    }
+}
+
+Texture::Texture(int width, int height, int colorCount, const Color &bg)
+        : width(width), height(height), colorCount(colorCount), pxls(new uint8_t[width * height * colorCount])
+{
+    if (colorCount != 3)
+        throw std::domain_error("Cannot fill the background when color count != 3.");
+    for (int i = 0; i < width * height * colorCount; i += colorCount) {
+        pxls[i] = bg.get255R();
+        pxls[i + 1] = bg.get255G();
+        pxls[i + 2] = bg.get255B();
+    }
+}
 
 Texture::Texture(int width, int height, int colorCount, uint8_t *pxls)
         : width(width), height(height), colorCount(colorCount), pxls(pxls)

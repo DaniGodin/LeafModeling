@@ -18,6 +18,10 @@ public:
 
     Texture(int width, int height, int colorCount);
 
+    Texture(int width, int height, const Color &bg);
+
+    Texture(int width, int height, int colorCount, const Color &bg);
+
     Texture(int width, int height, int colorCount, uint8_t *pxls);
 
     virtual ~Texture();

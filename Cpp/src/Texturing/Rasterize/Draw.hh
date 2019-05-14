@@ -9,7 +9,7 @@
 #include <vector>
 #include "Edge.hh"
 #include "../Texture.hh"
-#include "Point2D.hh"
+#include "RasterPoint.hh"
 
 class Draw {
 
@@ -31,9 +31,9 @@ public:
                                  double ratio = 1);
 
     static uint8_t *drawTriangle(Texture &tex,
-                                 const Point2D &p1,
-                                 const Point2D &p2,
-                                 const Point2D &p3,
+                                 const RasterPoint &p1,
+                                 const RasterPoint &p2,
+                                 const RasterPoint &p3,
                                  double ratio = 1);
 
 private:

@@ -309,6 +309,8 @@ namespace Examples {
         Generator gen = Generator("polar_color.obj");
         gen.write(&sc);
 
+        auto tex = TextureGenerator::fromObject(1200, 1200, *obj, 40);
+        tex.writeToFile("leaf.jpg");
     }
 
     void genJpeg() {
@@ -336,17 +338,12 @@ namespace Examples {
 
     void rasterizeExample() {
         Texture tex = Texture(3000, 3000, 3);
-//        Draw::drawTriangle(tex, 10, 5, 5, 25, 25, 20, 3000.0 / 30.0);
-        Draw::drawTriangle(tex.getUnderlyingPixels(),
-                           5, 7, Color::red(),
-                           25, 15, Color::green(),
-                           15, 25, Color::blue(),
-                           3000, 3000, 3, 3000.0/30.0);
-//        Draw::drawTriangle(tex.getUnderlyingPixels(),
-//                           10, 5, Color::white(),
-//                           5, 25, Color::red(),
-//                           25, 20, Color::white(),
-//                           3000, 3000, 3, 3000.0/30.0);
+        Draw::drawTriangle(tex, 10, 5, 5, 25, 25, 20, 3000.0 / 30.0);
+        Draw::drawTriangle(tex,
+                           RasterPoint(5, 7, Color::red()),
+                           RasterPoint(25, 15, Color::green()),
+                           RasterPoint(15, 25, Color::blue()),
+                           3000.0/30.0);
         tex.writeToFile("rasterizedTriangle.jpg");
     }
 

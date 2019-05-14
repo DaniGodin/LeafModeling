@@ -94,7 +94,7 @@ Draw::drawTriangle(Texture &tex, double x1, double y1, double x2, double y2, dou
                         tex.getWidth(), tex.getHeight(), tex.getColorCount());
 }
 
-uint8_t *Draw::drawTriangle(Texture &tex, const Point2D &p1, const Point2D &p2, const Point2D &p3, double ratio) {
+uint8_t *Draw::drawTriangle(Texture &tex, const RasterPoint &p1, const RasterPoint &p2, const RasterPoint &p3, double ratio) {
     return drawTriangle(tex.getUnderlyingPixels(),
                         p1.x * ratio, p1.y * ratio, p1.col,
                         p2.x * ratio, p2.y * ratio, p2.col,
