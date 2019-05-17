@@ -42,7 +42,7 @@ uint8_t *Draw::drawTriangle(uint8_t *pxls,
     int edIdx3 = (longestIdx + 2) % edges.size();
 
     drawSpan(edges[longestIdx], edges[edIdx2], pxls, width, colorCount);
-    drawSpan(edges[longestIdx], edges[edIdx3], pxls, height, colorCount);
+    drawSpan(edges[longestIdx], edges[edIdx3], pxls, width, colorCount);
 
     return pxls;
 }

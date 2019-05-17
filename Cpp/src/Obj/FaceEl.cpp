@@ -92,12 +92,14 @@ const Vector3D_i &FaceEl::getGlobalNormal() const {
     return globalNormal;
 }
 
-void FaceEl::genUniformVT() {
+void FaceEl::genUniformVT(double offsetX, double offsetY, double ratio) {
     int sz = vertices.size();
     for (int i = 0; i < sz; ++i) {
         auto&[pti, txi, vti] = vertices[i];
 
-        int indx = parent->push(Texture2D(std::get<1>(pti)->getX(),std::get<1>(pti)->getY()));
+        int indx = parent->push(Texture2D(
+                (std::get<1>(pti)->getX() - offsetX) * ratio,
+                (std::get<1>(pti)->getY() - offsetY) * ratio));
 
         push(std::get<1>(pti), parent->getVt()[indx], std::get<1>(vti));
     }

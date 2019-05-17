@@ -42,7 +42,7 @@ void TextureGenerator::normalize(std::vector<double> &mat, int size) {
 Texture TextureGenerator::fromObject(int w, int h,
                                      const Object &obj,
                                      int textureMargin,
-                                     TextureGenerator::TextureAxis) {
+                                     TextureGenerator::TextureAxis axis) {
     Texture tex(w, h, 3, Color::darkGreenLeaf());
 
     // calc bounds

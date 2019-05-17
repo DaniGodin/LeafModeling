@@ -54,7 +54,7 @@ public:
     bool isEmpty();
 
     void setUniformMaterial(Material *mat);
-    void genUniformVTs();
+    void genUniformVTs(int w = 0, int h = 0, int margin = 0);
 
 protected:
     friend class Element;

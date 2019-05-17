@@ -41,7 +41,7 @@ public:
 
     const Vector3D_i &getGlobalNormal() const;
 
-    void genUniformVT();
+    void genUniformVT(double offsetX = 0, double offsetY = 0, double ratio = 1);
 
 protected:
 // pseudo JSON representation

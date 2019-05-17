@@ -2,6 +2,7 @@
 // Created by revetoon on 3/1/19.
 //
 
+#include <cfloat>
 #include "Object.hh"
 
 Object::Object(const std::string &name) : name(name) {}
@@ -146,8 +147,37 @@ void Object::setUniformMaterial(Material *mat) {
     }
 }
 
-void Object::genUniformVTs() {
+void Object::genUniformVTs(int w, int h, int margin) {
+
+    if (w == 0 || h == 0) {
+        for (FaceEl &f : faceEls) {
+            f.genUniformVT();
+        }
+        return;
+    }
+
+    // calc bounds
+    double minx = DBL_MAX;
+    double maxx = DBL_MIN;
+    double miny = DBL_MAX;
+    double maxy = DBL_MIN;
+
+    for (const Point3D *p: getV()) {
+        if (p->getX() < minx)
+            minx = p->getX();
+        if (p->getX() > maxx)
+            maxx = p->getX();
+        if (p->getY() < miny)
+            miny = p->getY();
+        if (p->getY() > maxy)
+            maxy = p->getY();
+    }
+
+    double ratiox = ((w - 2 * margin) / (maxx - minx)) / w;
+    double ratioy = ((h - 2 * margin) / (maxy - miny)) / h;
+    double ratio = std::min(ratiox, ratioy);
+
     for (FaceEl &f : faceEls) {
-        f.genUniformVT();
+        f.genUniformVT(minx + margin, miny + margin, ratio);
     }
 }
