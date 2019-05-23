@@ -295,7 +295,7 @@ namespace Examples {
         Object *obj = p.generateObject(-M_PI, M_PI, 0.001, 0.01, Point3D(0, 0, 0));
 
         // gen texture image & save to file
-        auto tex = TextureGenerator::fromObject(1000, 1000, *obj, 0);
+        auto tex = TextureGenerator::fromObject(1000, 1000, *obj, Color::red(), Color::black());
         auto textFile = tex.writeToFile("leaf.jpg");
 
 //        Gen uniform green material

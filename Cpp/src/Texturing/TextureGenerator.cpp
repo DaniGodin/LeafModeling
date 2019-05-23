@@ -41,9 +41,10 @@ void TextureGenerator::normalize(std::vector<double> &mat, int size) {
 
 Texture TextureGenerator::fromObject(int w, int h,
                                      const Object &obj,
-                                     int textureMargin,
-                                     TextureGenerator::TextureAxis axis) {
-    Texture tex(w, h, 3, Color::darkGreenLeaf());
+                                     const Color &fg,
+                                     const Color &bg,
+                                     int textureMargin) {
+    Texture tex(w, h, 3, bg);
 
     // calc bounds
     double minx = DBL_MAX;
@@ -69,9 +70,9 @@ Texture TextureGenerator::fromObject(int w, int h,
 
     for (const FaceEl &f: obj.getFaceEls()) {
         Draw::drawTriangle(tex,
-                           RasterPoint((f.getPt(0)->getX() - minx) * ratio + margin, h - ((f.getPt(0)->getY() - miny) * ratio + margin), Color::greenLeaf()),
-                           RasterPoint((f.getPt(1)->getX() - minx) * ratio + margin, h - ((f.getPt(1)->getY() - miny) * ratio + margin), Color::darkGreenLeaf()),
-                           RasterPoint((f.getPt(2)->getX() - minx) * ratio + margin, h - ((f.getPt(2)->getY() - miny) * ratio + margin), Color::darkGreenLeaf()));
+                           RasterPoint((f.getPt(0)->getX() - minx) * ratio + margin, h - ((f.getPt(0)->getY() - miny) * ratio + margin), fg),
+                           RasterPoint((f.getPt(1)->getX() - minx) * ratio + margin, h - ((f.getPt(1)->getY() - miny) * ratio + margin), bg),
+                           RasterPoint((f.getPt(2)->getX() - minx) * ratio + margin, h - ((f.getPt(2)->getY() - miny) * ratio + margin), bg));
     }
 
     return tex;
