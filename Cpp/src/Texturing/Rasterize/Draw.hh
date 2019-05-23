@@ -22,24 +22,28 @@ public:
                                  double x3, double y3,
                                  const Color &col3,
                                  int width, int height,
-                                 int colorCount = 1, double ratio = 1);
+                                 int colorCount = 1,
+                                 int noise = 0,
+                                 double ratio = 1);
 
     static uint8_t *drawTriangle(Texture &tex,
                                  double x1, double y1,
                                  double x2, double y2,
                                  double x3, double y3,
+                                 int noise = 0,
                                  double ratio = 1);
 
     static uint8_t *drawTriangle(Texture &tex,
                                  const RasterPoint &p1,
                                  const RasterPoint &p2,
                                  const RasterPoint &p3,
+                                 int noise = 0,
                                  double ratio = 1);
 
 private:
 
     // TODO add img in params
-    static void drawSpan(const Edge &e1, const Edge &e2, uint8_t *img, int w, int colorCount);
+    static void drawSpan(const Edge &e1, const Edge &e2, uint8_t *img, int w, int colorCount, int noise = 0);
 };
 
 

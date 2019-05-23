@@ -23,7 +23,7 @@ public:
     static std::vector<double> gaussianMatrix(int w, int h, int centerX, int centerY, int std);
 
     // TODO fromObject
-    static Texture fromObject(int w, int h, const Object &obj, const Color &fg, const Color &bg, int textureMargin = 0);
+    static Texture fromObject(int w, int h, const Object &obj, const Color &hlcol, const Color &col, const Color &bg, int noise = 0, int textureMargin = 0);
 
 private:
     static double gaussian(int x, int y, int std);

@@ -24,6 +24,17 @@ Texture::Texture(int width, int height, const Color &bg)
     }
 }
 
+Texture::Texture(int width, int height, const Color &bg, int noise)
+        : width(width), height(height), pxls(new uint8_t[width * height * colorCount])
+{
+    for (int i = 0; i < width * height * colorCount; i += colorCount) {
+        Color curr = Color::distord(bg, noise);
+        pxls[i] = curr.get255R();
+        pxls[i + 1] = curr.get255G();
+        pxls[i + 2] = curr.get255B();
+    }
+}
+
 Texture::Texture(int width, int height, int colorCount, const Color &bg)
         : width(width), height(height), colorCount(colorCount), pxls(new uint8_t[width * height * colorCount])
 {
@@ -55,7 +66,7 @@ std::string Texture::writeToFile(const std::string &filename) {
 }
 
 Texture::~Texture() {
-    delete pxls;
+//    delete pxls;
 }
 
 uint8_t *Texture::getUnderlyingPixels() {
@@ -72,5 +83,26 @@ int Texture::getHeight() const {
 
 int Texture::getColorCount() const {
     return colorCount;
+}
+
+uint8_t Texture::getPixel(int x, int y) {
+    if (colorCount != 1)
+        throw std::domain_error("Cannot use getPixel when image is not 1 channel.");
+    return pxls[(y * width + x)];
+}
+
+bool Texture::setPixel(int x, int y, uint8_t val) {
+    if (colorCount != 1)
+        throw std::domain_error("Cannot use getPixel when image is not 1 channel.");
+    pxls[(y * width + x)] = val;
+    return true;
+}
+
+Texture Texture::monoChannel(const Texture &t, Channel selectedChannel) {
+    Texture res = Texture(t.width, t.height, 1);
+    for (int j = 0, i = static_cast<int>(selectedChannel); i < t.width * t.height * t.colorCount; i += 3, ++j) {
+        res.pxls[j] = t.pxls[i];
+    }
+    return res;
 }
 

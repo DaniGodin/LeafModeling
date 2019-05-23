@@ -21,6 +21,7 @@ int main() {
 //        Examples::leafGrowthExample();
 //        Examples::lSystemExample();
 //        Examples::cylinderExample();
+        Examples::morphologyExample();
     }
 
     return 0;

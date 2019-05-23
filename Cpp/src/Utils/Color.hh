@@ -25,8 +25,13 @@ public:
     static Color greenLeaf() {
         return Color(0.490196, 0.733333, 0.074510);
     }
+
     static Color darkGreenLeaf() {
         return Color(0.013967, 0.437500, 0.006639);
+    }
+
+    static Color darkRed() {
+        return Color::from255(165, 14, 70);
     }
 
     static Color magenta() {
@@ -67,6 +72,7 @@ public:
     Color operator*(double factor) const;
     Color operator/(double factor) const;
 
+    static Color distord(const Color &c, int coef);
 
 private:
     double r = 1;

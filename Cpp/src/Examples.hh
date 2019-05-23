@@ -18,6 +18,7 @@ namespace Examples {
     void polarExample();
     void genJpeg();
     void rasterizeExample();
+    void morphologyExample();
 
 }
 

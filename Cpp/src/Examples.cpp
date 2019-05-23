@@ -32,6 +32,7 @@
 #include "Texturing/Texture.hh"
 #include "Texturing/TextureGenerator.hh"
 #include "Texturing/Rasterize/Draw.hh"
+#include "Texturing/Morphology/Morphology.hh"
 
 namespace Examples {
 
@@ -291,19 +292,23 @@ namespace Examples {
     }
 
     void polarExample() {
-        Polar p(Polar::Cannabis);
+        Polar p(Polar::JapaneseMarple);
         Object *obj = p.generateObject(-M_PI, M_PI, 0.001, 0.01, Point3D(0, 0, 0));
 
         // gen texture image & save to file
-        auto tex = TextureGenerator::fromObject(1000, 1000, *obj, Color::red(), Color::black());
+        auto tex = TextureGenerator::fromObject(1000, 1000, *obj, Color::greenLeaf(), Color::darkGreenLeaf(), Color::darkRed(), 10);
         auto textFile = tex.writeToFile("leaf.jpg");
+
+        auto texMono = TextureGenerator::fromObject(1000, 1000, *obj, Color::red(), Color::red(), Color::black(), 0, 50);
+        Texture::monoChannel(texMono, Texture::Channel::R).writeToFile("LeafBin.jpg");
+
 
 //        Gen uniform green material
 //        Material *green = new Material("green", Color::white(), Color::greenLeaf(), Color::darkGreenLeaf());
 //        obj->setUniformMaterial(green);
 //        Gen uniform texture material
 
-        Material *greenTextured = new Material("green", Color::white(), Color::greenLeaf(), Color::darkGreenLeaf(), textFile);
+        Material *greenTextured = new Material("green", Color::white(), Color::white(), Color::white(), textFile);
         obj->setUniformMaterial(greenTextured);
         obj->genUniformVTs(1000, 1000, 0);
 
@@ -339,14 +344,27 @@ namespace Examples {
     }
 
     void rasterizeExample() {
+//        Color randomed = Color::distord(Color::greenLeaf(), 20);
         Texture tex = Texture(3000, 3000, 3);
         Draw::drawTriangle(tex, 10, 5, 5, 25, 25, 20, 3000.0 / 30.0);
         Draw::drawTriangle(tex,
                            RasterPoint(5, 7, Color::red()),
                            RasterPoint(25, 15, Color::green()),
                            RasterPoint(15, 25, Color::blue()),
+                           0,
                            3000.0/30.0);
         tex.writeToFile("rasterizedTriangle.jpg");
+    }
+
+    void morphologyExample() {
+        Polar p(Polar::JapaneseMarple);
+        Object *obj = p.generateObject(-M_PI, M_PI, 0.001, 0.01, Point3D(0, 0, 0));
+
+        auto tex = TextureGenerator::fromObject(1000, 1000, *obj, Color::red(), Color::red(), Color::black(), 0, 50);
+        auto texMono = Texture::monoChannel(tex, Texture::Channel::R);
+        auto dilated = Morphology::erode(texMono, Morphology::kerCircle(10), 5);
+
+        dilated.writeToFile("LeafDilated.jpg");
     }
 
 }

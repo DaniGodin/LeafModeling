@@ -13,7 +13,7 @@ uint8_t *Draw::drawTriangle(uint8_t *pxls,
                             double x3, double y3,
                             const Color &col3,
                             int width, int height,
-                            int colorCount, double ratio) {
+                            int colorCount, int noise, double ratio) {
 
 
     // 1. create edges
@@ -41,13 +41,13 @@ uint8_t *Draw::drawTriangle(uint8_t *pxls,
     int edIdx2 = (longestIdx + 1) % edges.size();
     int edIdx3 = (longestIdx + 2) % edges.size();
 
-    drawSpan(edges[longestIdx], edges[edIdx2], pxls, width, colorCount);
-    drawSpan(edges[longestIdx], edges[edIdx3], pxls, width, colorCount);
+    drawSpan(edges[longestIdx], edges[edIdx2], pxls, width, colorCount, noise);
+    drawSpan(edges[longestIdx], edges[edIdx3], pxls, width, colorCount, noise);
 
     return pxls;
 }
 
-void Draw::drawSpan(const Edge &e1, const Edge &e2, uint8_t *img, int w, int colorCount) {
+void Draw::drawSpan(const Edge &e1, const Edge &e2, uint8_t *img, int w, int colorCount, int noise) {
 
     // calc Y size of e1
     double e1ySize = (e1.y2 - e1.y1);
@@ -77,7 +77,7 @@ void Draw::drawSpan(const Edge &e1, const Edge &e2, uint8_t *img, int w, int col
                 e2.x1 + (e2xSize * factore2),
                 e1.col1 + (e1coldiff * factore1),
                 e2.col1 + (e2coldiff * factore2)
-            );
+            , noise);
         // TODO draw span on img
         sp.draw(y, img, w, colorCount);
         factore1 += stepe1;
@@ -86,18 +86,18 @@ void Draw::drawSpan(const Edge &e1, const Edge &e2, uint8_t *img, int w, int col
 }
 
 uint8_t *
-Draw::drawTriangle(Texture &tex, double x1, double y1, double x2, double y2, double x3, double y3, double ratio) {
+Draw::drawTriangle(Texture &tex, double x1, double y1, double x2, double y2, double x3, double y3, int noise, double ratio) {
     return drawTriangle(tex.getUnderlyingPixels(),
                         x1 * ratio, y1 * ratio, Color::white(),
                         x2 * ratio, y2 * ratio, Color::white(),
                         x3 * ratio, y3 * ratio, Color::white(),
-                        tex.getWidth(), tex.getHeight(), tex.getColorCount());
+                        tex.getWidth(), tex.getHeight(), tex.getColorCount(), noise);
 }
 
-uint8_t *Draw::drawTriangle(Texture &tex, const RasterPoint &p1, const RasterPoint &p2, const RasterPoint &p3, double ratio) {
+uint8_t *Draw::drawTriangle(Texture &tex, const RasterPoint &p1, const RasterPoint &p2, const RasterPoint &p3, int noise, double ratio) {
     return drawTriangle(tex.getUnderlyingPixels(),
                         p1.x * ratio, p1.y * ratio, p1.col,
                         p2.x * ratio, p2.y * ratio, p2.col,
                         p3.x * ratio, p3.y * ratio, p3.col,
-                        tex.getWidth(), tex.getHeight(), tex.getColorCount());
+                        tex.getWidth(), tex.getHeight(), tex.getColorCount(), noise);
 }
