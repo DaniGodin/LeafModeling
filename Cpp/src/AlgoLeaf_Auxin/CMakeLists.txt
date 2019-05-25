@@ -3,4 +3,4 @@ project(AlgoLeaf_Auxin)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(AlgoLeaf_Auxin main.cpp Leaf.cpp Leaf.hh venationPoint.cpp venationPoint.hh Auxin.cpp Auxin.hh Leafshape.cpp Leafshape.hh mathStuff.cpp mathStuff.hh)
+add_executable(AlgoLeaf_Auxin main.cpp Leaf.cpp Leaf.hh Nodes.cpp Nodes.hh Leafshape.cpp Leafshape.hh mathStuff.cpp mathStuff.hh)
