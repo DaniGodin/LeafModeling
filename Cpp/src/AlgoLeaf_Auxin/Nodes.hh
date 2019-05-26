@@ -12,19 +12,6 @@
 
 namespace Nodes {
 
-    class Auxin {
-
-    public:
-
-        Point3D pos;
-
-
-    public:
-
-        Auxin(Point3D position) : pos(position) {};
-
-    };
-
 
     class VenationPoint {
 

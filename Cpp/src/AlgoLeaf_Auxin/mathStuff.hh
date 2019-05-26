@@ -6,9 +6,17 @@
 #define ALGOLEAF_AUXIN_MATHSTUFF_HH
 
 
-class mathStuff {
+#include "Nodes.hh"
 
-};
+namespace Math {
 
+    double get_distance(Nodes::VenationPoint v1, Nodes::VenationPoint v2);
+
+    Nodes::VenationPoint get_newNode(Nodes::VenationPoint parent_node, std::vector<Nodes::VenationPoint> auxin_list,
+                                     double step);
+
+
+
+}
 
 #endif //ALGOLEAF_AUXIN_MATHSTUFF_HH
