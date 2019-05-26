@@ -25,7 +25,7 @@ VenNodePlot::VenNodePlot(std::vector<Nodes::VenNodePlot> child_list, Point3D pos
     else {
 
         radius = 1;
-        
+
     }
 
 
