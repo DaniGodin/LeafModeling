@@ -12,17 +12,15 @@ VenNodePlot::VenNodePlot(std::vector<Nodes::VenNodePlot> child_list, Point3D pos
 
     pos = position;
     childrens = child_list;
-    if (!childrens.empty()){
+    if (!childrens.empty()) {
         double sum;
-        for (auto &v: childrens){
+        for (auto &v: childrens) {
             sum += pow(v.radius, 2);
 
         }
 
         radius = pow(sum, 0.5);
-    }
-
-    else {
+    } else {
 
         radius = 1;
 
@@ -30,19 +28,6 @@ VenNodePlot::VenNodePlot(std::vector<Nodes::VenNodePlot> child_list, Point3D pos
 
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }
