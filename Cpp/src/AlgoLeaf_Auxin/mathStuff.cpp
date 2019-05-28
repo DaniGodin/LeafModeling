@@ -39,9 +39,4 @@ namespace Math {
     }
 
 
-
-
-
-
-
 }

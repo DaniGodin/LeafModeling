@@ -28,6 +28,21 @@ namespace Nodes {
     };
 
 
+    class AuxinPoint {
+
+    public:
+
+        Point3D pos;
+        VenationPoint closest;
+
+    public:
+
+        AuxinPoint(Point3D position) : pos(position), closest(VenationPoint(Point3D(0, 0, 0))){};
+
+
+    };
+
+
     class VenNodePlot{
 
     public:
