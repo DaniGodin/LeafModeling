@@ -34,6 +34,7 @@ namespace  Shape {
 
     public:
 
+        Leafshape(){};
         Leafshape(double _growth, std::function<double(Point3D, double)> _equ, rectangle _r) : growth_size(_growth),
                                                                                                r(_r),
                                                                                                equation(_equ) {};

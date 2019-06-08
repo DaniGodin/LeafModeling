@@ -31,7 +31,7 @@ namespace Leaf {
 
     public:
 
-        Creation(double _birth, double kd_venation, Shape::Leafshape _shape, unsigned int _dart_step, Nodes::VenationPoint _initial,
+        Creation(double _birth, double kd_venation, Shape::Leafshape _shape, unsigned int _dart_step, unsigned int _initial,
                  double _growth);
 
 
@@ -41,7 +41,7 @@ namespace Leaf {
 
         void gen_nodes(double step);
 
-        void gen_auxin();
+        void gen_auxin(unsigned int nb_auxins);
 
         void kill_auxins();
 

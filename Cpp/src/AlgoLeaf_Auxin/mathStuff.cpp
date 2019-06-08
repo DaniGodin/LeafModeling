@@ -8,7 +8,7 @@
 
 namespace Math {
 
-    double Math::get_distance(Nodes::VenationPoint v1, Nodes::VenationPoint v2) {
+    double get_distance(Nodes::VenationPoint v1, Nodes::VenationPoint v2) {
 
         double x = v1.pos.getX() - v2.pos.getX();
         double y = v1.pos.getY() - v2.pos.getY();
@@ -19,7 +19,7 @@ namespace Math {
     }
 
 
-    Nodes::VenationPoint Math::get_newNode(Nodes::VenationPoint parent_node,
+    Nodes::VenationPoint get_newNode(Nodes::VenationPoint parent_node,
                                            std::vector<Nodes::VenationPoint> auxin_list, double step) {
 
         Vector3D dir = Vector3D(0, 0, 0);
