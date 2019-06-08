@@ -22,7 +22,9 @@ namespace Nodes {
 
     public:
 
+        VenationPoint(){};
         VenationPoint(Point3D position) : pos(position){};
+
 
 
     };
@@ -37,6 +39,7 @@ namespace Nodes {
 
     public:
 
+        AuxinPoint(){};
         AuxinPoint(Point3D position) : pos(position), closest(VenationPoint(Point3D(0, 0, 0))){};
 
 
@@ -56,6 +59,7 @@ namespace Nodes {
 
     public:
 
+        VenNodePlot(){};
         VenNodePlot(std::vector<VenNodePlot > child_list, Point3D position);
 
 
