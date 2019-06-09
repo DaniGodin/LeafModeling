@@ -20,7 +20,7 @@ namespace Shape{
         double x_lim = x + r.x_lim;
         double y_lim = y + r.y_lim;
 
-
+        std::cout << "hello" << std::endl;
         while(!find){
 
             std::uniform_real_distribution<double> unif(0,1);
@@ -29,8 +29,8 @@ namespace Shape{
             double r2 = y + unif(re) * ( y_lim - y);
             Point3D rand = Point3D(r1, r2, 0);
             double eval_point = equation(rand, growth_size);
-
-            if (0.05 >= eval_point && eval_point >= 0.02){
+            std::cout << "r1: " << r1 << "   r2: " << r2 << "  eval_point: " <<eval_point << std::endl;
+            if (0.05 >= eval_point && eval_point >= -0.05){
 
                 coord = rand;
                 find = true;
@@ -38,6 +38,7 @@ namespace Shape{
             }
 
         }
+        std::cout << "found" << std::endl;
 
         return coord;
 
