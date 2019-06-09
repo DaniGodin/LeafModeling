@@ -30,27 +30,24 @@ namespace Nodes {
     };
 
 
-    class AuxinPoint {
+    class AuxinPoint : public VenationPoint {
 
     public:
 
-        Point3D pos;
         VenationPoint closest;
 
     public:
 
         AuxinPoint(){};
-        AuxinPoint(Point3D position) : pos(position), closest(VenationPoint(Point3D(0, 0, 0))){};
+        AuxinPoint(Point3D position) : VenationPoint(position), closest(VenationPoint(Point3D(0, 0, 0))){};
 
 
     };
 
 
-    class VenNodePlot{
+    class VenNodePlot : public VenationPoint{
 
     public:
-
-        Point3D pos;
 
         double radius = 0;
 
@@ -60,9 +57,7 @@ namespace Nodes {
     public:
 
         VenNodePlot(){};
-        VenNodePlot(std::vector<VenNodePlot > child_list, Point3D position);
-
-
+        VenNodePlot(std::vector<VenNodePlot > child_list, Point3D position) ;
 
     };
 

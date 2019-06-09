@@ -5,7 +5,7 @@
 #ifndef ALGOLEAF_AUXIN_LEAF_HH
 #define ALGOLEAF_AUXIN_LEAF_HH
 
-#include <map>
+#include <unordered_map>
 #include <vector>
 #include "Nodes.hh"
 #include "Leafshape.hh"
@@ -18,7 +18,7 @@ namespace Leaf {
     public:
 
         //Kind of graph structure
-        std::map<Nodes::VenationPoint, std::vector<Nodes::VenationPoint>> VenationsList;
+        std::unordered_map<Nodes::VenationPoint, std::vector<Nodes::VenationPoint>> VenationsList;
         //Auxinlist
         std::vector<Nodes::AuxinPoint> AuxinsList;
         //shape of the leaf
