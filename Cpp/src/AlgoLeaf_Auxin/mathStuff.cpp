@@ -20,7 +20,7 @@ namespace Math {
 
 
     Nodes::VenationPoint get_newNode(Nodes::VenationPoint parent_node,
-                                           std::vector<Nodes::VenationPoint> auxin_list, double step) {
+                                           std::vector<Nodes::AuxinPoint> auxin_list, double step) {
 
         Vector3D dir = Vector3D(0, 0, 0);
         for (auto &aux : auxin_list){
