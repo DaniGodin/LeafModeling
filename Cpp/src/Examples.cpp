@@ -282,10 +282,25 @@ namespace Examples {
         double res = leaff.calculate(args);
 
 //        Object leafScheme = leaff.generateObjectOrthogonal(-2.1, 2.1, -2.1 ,2.1, 0.001, 0.1, Point3D(0, 0, 0));
-        Object *leafScheme = leaff.generateObjectRadial(4, 0.001, 0.01, 0.5, Point3D(0, 0.1, 0));
+        Object *leafScheme = leaff.generateObjectRadial(4, 0.001, 0.001, 0.05, Point3D(0, 0.1, 0));
+
+        // gen texture image & save to file
+        auto tex = TextureGenerator::fromObject(1000, 1000, *leafScheme, Color::greenLeaf(), Color::darkGreenLeaf(), Color::darkRed(), 50);
+        auto textFile = tex.writeToFile("leafParametric.jpg");
+
+        auto texMono = TextureGenerator::fromObject(1000, 1000, *leafScheme, Color::red(), Color::red(), Color::black(), 0, 50);
+        Texture::monoChannel(texMono, Texture::Channel::R).writeToFile("leafParametricBin.jpg");
+
+        // create material
+        Material *greenTextured = new Material("green", Color::white(), Color::white(), Color::white(), textFile);
+        leafScheme->setUniformMaterial(greenTextured);
+        leafScheme->genUniformVTs(1000, 1000, 0);
+
+
 
         Scene sc = Scene();
         sc.push(leafScheme);
+        sc.push(greenTextured);
         Generator gen = Generator("leafParam.obj");
         gen.write(&sc);
 
