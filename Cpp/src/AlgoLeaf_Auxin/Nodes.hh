@@ -24,9 +24,21 @@ namespace Nodes {
 
         VenationPoint(){};
         VenationPoint(Point3D position) : pos(position){};
+        bool operator==(const VenationPoint &ven);
 
+    };
 
+    bool operator==(const VenationPoint &ven1, const VenationPoint &ven2);
 
+    class VenHash {
+    public:
+
+        // Use sum of lengths of first and last names
+        // as hash function.
+        double operator()(const VenationPoint& p) const
+        {
+            return p.pos.getY() + p.pos.getX();
+        }
     };
 
 
@@ -40,6 +52,7 @@ namespace Nodes {
 
         AuxinPoint(){};
         AuxinPoint(Point3D position) : VenationPoint(position), closest(VenationPoint(Point3D(0, 0, 0))){};
+        bool operator==(const AuxinPoint &aux);
 
 
     };

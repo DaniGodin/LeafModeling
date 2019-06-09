@@ -30,4 +30,16 @@ VenNodePlot::VenNodePlot(std::vector<Nodes::VenNodePlot> child_list, Point3D pos
 }
 
 
+bool Nodes::AuxinPoint::operator==(const Nodes::AuxinPoint &aux) {
+
+        return pos == aux.pos;
+}
+
+
+bool operator==(const Nodes::VenationPoint &ven1, const Nodes::VenationPoint &ven2) {
+
+    return ven1.pos == ven2.pos;
+}
+
+
 }

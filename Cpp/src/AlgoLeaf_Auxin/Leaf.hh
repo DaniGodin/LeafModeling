@@ -13,12 +13,13 @@
 
 namespace Leaf {
 
+
     class Creation {
 
     public:
 
         //Kind of graph structure
-        std::unordered_map<Nodes::VenationPoint, std::vector<Nodes::VenationPoint>> VenationsList;
+        std::unordered_map<Nodes::VenationPoint, std::vector<Nodes::VenationPoint>, Nodes::VenHash> VenationsList;
         //Auxinlist
         std::vector<Nodes::AuxinPoint> AuxinsList;
         //shape of the leaf
@@ -46,6 +47,11 @@ namespace Leaf {
         void kill_auxins();
 
         void grow_shape();
+
+        Nodes::VenNodePlot build_tree(Nodes::VenationPoint c);
+
+        Nodes::VenNodePlot get_ventree();
+
 
 
     };

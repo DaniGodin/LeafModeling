@@ -112,8 +112,14 @@ namespace Leaf {
             key_list.push_back(pairs.first);
         }
 
+        unsigned int min_index = 0;
 
+        for (unsigned int i = 0; i < key_list.size(); i++){
+            if (Math::get_distance(key_list[i], *a) < Math::get_distance(*a, key_list[min_index]))
+                min_index = i;
+        }
 
+        a->closest = key_list[min_index];
     }
 
 
@@ -137,5 +143,29 @@ namespace Leaf {
 
 
 
+    Nodes::VenNodePlot Creation::get_ventree() {
+        Nodes::VenationPoint root = petiole;
+        std::vector<Nodes::VenationPoint > childrens = VenationsList[root];
+        std::vector<Nodes::VenNodePlot > venc_c = {};
+        for (auto &c : childrens){
+            venc_c.push_back(build_tree(c));
+        }
+        return Nodes::VenNodePlot(venc_c, root.pos);
+    }
 
+
+    Nodes::VenNodePlot Creation::build_tree(Nodes::VenationPoint c) {
+        std::vector<Nodes::VenationPoint > childrens = VenationsList[c];
+        if (childrens.empty())
+            return Nodes::VenNodePlot({}, c.pos);
+        else {
+            std::vector<Nodes::VenNodePlot > ven_c;
+            for (auto &c: childrens){
+                ven_c.push_back(build_tree(c));
+            }
+            return Nodes::VenNodePlot(ven_c, c.pos);
+
+        };
+    }
+    
 }
