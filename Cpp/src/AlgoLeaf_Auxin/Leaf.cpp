@@ -18,7 +18,7 @@ namespace Leaf {
         shape = _shape;
         dart_step = _dart_step;
         petiole = Nodes::VenationPoint(Point3D(0,0,0));
-        VenationsList = {};
+        VenationsList[petiole] = {};
         growth_step = _growth;
         gen_auxin(_initial);
 
@@ -65,11 +65,11 @@ namespace Leaf {
                 }
             }
 
+
             if (to_append){
                 get_closest(&Aux);
                 AuxinsList.push_back(Aux);
             }
-
 
         }
     }
@@ -111,14 +111,12 @@ namespace Leaf {
         for (auto &pairs : VenationsList){
             key_list.push_back(pairs.first);
         }
-
         unsigned int min_index = 0;
 
         for (unsigned int i = 0; i < key_list.size(); i++){
             if (Math::get_distance(key_list[i], *a) < Math::get_distance(*a, key_list[min_index]))
                 min_index = i;
         }
-
         a->closest = key_list[min_index];
     }
 
