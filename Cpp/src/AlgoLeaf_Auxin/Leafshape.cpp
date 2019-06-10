@@ -5,6 +5,9 @@
 #include "Leafshape.hh"
 #include <random>
 
+std::random_device rd;
+std::mt19937 gen(rd());
+std::uniform_real_distribution<> dis(0, 1);
 
 namespace Shape{
 
@@ -20,16 +23,12 @@ namespace Shape{
         double x_lim = x + r.x_lim;
         double y_lim = y + r.y_lim;
 
-        std::cout << "hello" << std::endl;
         while(!find){
 
-            std::uniform_real_distribution<double> unif(0,1);
-            std::default_random_engine re;
-            double r1 = x + unif(re) * ( x_lim - x);
-            double r2 = y + unif(re) * ( y_lim - y);
+            double r1 = x + dis(gen) * ( x_lim - x);
+            double r2 = y + dis(gen) * ( y_lim - y);
             Point3D rand = Point3D(r1, r2, 0);
             double eval_point = equation(rand, growth_size);
-            std::cout << "r1: " << r1 << "   r2: " << r2 << "  eval_point: " <<eval_point << std::endl;
             if (0.05 >= eval_point && eval_point >= -0.05){
 
                 coord = rand;
