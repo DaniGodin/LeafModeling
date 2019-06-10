@@ -15,6 +15,10 @@ public:
     static std::string rmExtension(const std::string &str);
 
     static std::string getPath(const std::string &fullpath);
+
+    static std::string nameId(const std::string &name);
+
+private:
 };
 
 

@@ -5,8 +5,9 @@
 #include <iostream>
 #include <cmath>
 #include "TreeTranslator.hh"
+#include "../Utils/Strutils.hh"
 
-std::vector<Object *> TreeTranslator::generate(Node *root, std::string name, GENTYPE gentype = GENTYPE::line) {
+std::vector<Object *> TreeTranslator::generate(Node *root, std::string name, const Color &rootCol, const Color &leafCol, GENTYPE gentype) {
     if (gentype == GENTYPE::line) {
 
         Object *o = new Object(name);
@@ -22,10 +23,11 @@ std::vector<Object *> TreeTranslator::generate(Node *root, std::string name, GEN
 
         double trunkHeight = 3;
         Cylinder *trunk = new Cylinder(root->getPt() + (Vector3D::up() * -trunkHeight), Vector3D::up(), trunkHeight, root->getEnergy(), name + "_trunk", 60);
+        scene.push(trunk);
         std::vector<Object*> objs(1, trunk);
 
         // push cylinders
-        genTreeCyl(root, name, objs, trunk);
+        genTreeCyl(root, name, objs, trunk, rootCol, leafCol);
 
         return objs;
     }
@@ -73,9 +75,11 @@ void TreeTranslator::genTreeO(Node *n, Object *o, long rootIndex) {
     }
 }
 
-void TreeTranslator::genTreeCyl(Node *n, const std::string &name, std::vector<Object*> &objs, const Cylinder *parentCyl) {
+void TreeTranslator::genTreeCyl(Node *n, const std::string &name, std::vector<Object*> &objs, const Cylinder *parentCyl, const Color &rootCol, const Color &leafCol) {
     static unsigned count = 0;
+    int depth = Node::depth(n);
     // iterate through children (tree structure so each child is a new node)
+    Color deltaCol = (leafCol - rootCol) / depth;
     for (auto &c : n->getChildren()) {
         Vector3D direction = c->getPt() - parentCyl->getCenterUp();
         // Generate cylinders with SAME bottom and top radius
@@ -83,17 +87,22 @@ void TreeTranslator::genTreeCyl(Node *n, const std::string &name, std::vector<Ob
         // Generate cylinders with DIFFERENT bottom and top radius
 //        Cylinder cyl = Cylinder(parentCyl.getCenterUp(), direction, direction.length(), n->getEnergy(), c->getEnergy(), name + "_" + std::to_string(count++));
 //        std::cout << cyl.getName() << " "  <<c->getEnergy() << std::endl;
+        // Create uniform texture
+        Material *m = new Material(Strutils::nameId("Vein"), Color::white(), rootCol + deltaCol, Color::white());
+        cyl->setUniformMaterial(m);
+        scene.push(m);
+        // Push cylinder
         objs.push_back(cyl);
-        ;
+        scene.push(cyl);
         // iterate through child
-        genTreeCyl(c, name, objs, cyl);
+        genTreeCyl(c, name, objs, cyl, rootCol + deltaCol, leafCol);
     }
 }
 
 std::vector<Object *>
-TreeTranslator::generate(algoLeaf::venationPoint *root, std::string name, int pointCount, TreeTranslator::GENTYPE genType) {
+TreeTranslator::generate(algoLeaf::venationPoint *root, std::string name, int pointCount, const Color &rootCol, const Color &leafCol) {
     Node *converted = convertVenationToNode(root, pointCount);
-    auto result = generate(converted, name, genType);
+    auto result = generate(converted, name, rootCol, leafCol);
     delete converted;
     return result;
 }
@@ -117,3 +126,5 @@ Node *TreeTranslator::convertVenationToNode(algoLeaf::venationPoint *root, int p
 
     return n;
 }
+
+TreeTranslator::TreeTranslator(Scene &scene) : scene(scene) {}

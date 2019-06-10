@@ -30,6 +30,7 @@ public:
 
     double getEnergy() const;
 
+    static int depth(Node *n);
 
 private:
     Point3D pt;

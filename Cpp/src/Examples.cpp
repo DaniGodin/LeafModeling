@@ -98,28 +98,21 @@ namespace Examples {
 
         f.getChildren().push_back(&g);
 
-        TreeTranslator translator = TreeTranslator();
+        Scene scene = Scene();
+        TreeTranslator translator = TreeTranslator(scene);
 
         //\\// LINE GENERATION
         // gen a leaf object based on the tree
-        std::vector<Object*> leaf1 = translator.generate(&a, "leaf1", TreeTranslator::GENTYPE::line);
-        // create a scene and put the object in it
-        Scene scene = Scene();
-        for (const auto &o : leaf1)
-            scene.push(o);
-//        scene.getObjects().push_back(o);
+        translator.generate(&a, "leaf1");
         // instanciate generator
         Generator gen = Generator("out_line.obj");
         // write scene to file
         gen.write(&scene);
 
         //\\// CYLINDER GENERATION
-        std::vector<Object*> leafCyl = translator.generate(&a, "Cyl", TreeTranslator::GENTYPE::cylinder);
-        // create a scene and put the object in it
         Scene scene2 = Scene();
-        for (const auto &o : leafCyl)
-            scene2.push(o);
-//        scene2.getObjects().push_back(o);
+        TreeTranslator translator2 = TreeTranslator(scene);
+        translator2.generate(&a, "Cyl");
         // instanciate generator
         Generator gen2 = Generator("out_cyl.obj");
         // write scene to file
@@ -241,30 +234,14 @@ namespace Examples {
         // merge
         algoLeaf::venationPoint *root = new algoLeaf::venationPoint(Point3D(0, 0, 0), tree);
 
-        TreeTranslator translator = TreeTranslator();
-//    Node *nroot = translator.convertVenationToNode(root, nodeCount);
-
-        std::vector<Object*> leafCyl = translator.generate(root, "Cyl", nodeCount, TreeTranslator::GENTYPE::cylinder);
-        // create a scene and put the object in it
         Scene scene2 = Scene();
-        for (const auto &o : leafCyl)
-            scene2.push(o);
-//        scene2.getObjects().push_back(o);
+        TreeTranslator translator = TreeTranslator(scene2);
+
+        translator.generate(root, "Cyl", nodeCount, Color::black(), Color::darkRed());
         // instanciate generator
         Generator gen2 = Generator("out_algoleaf.obj");
         // write scene to file
         gen2.write(&scene2);
-
-//    std::vector<Object> leafCyl = translator.generate(root, "Cyl", nodeCount, TreeTranslator::GENTYPE::line);
-//    // create a scene and put the object in it
-//    Scene scene2 = Scene();
-//    for (const auto &o : leafCyl)
-//        scene2.getObjects().push_back(o);
-//    // instanciate generator
-//    Generator gen2 = Generator("out_algoleaf.obj");
-//    // write scene to file
-//    gen2.write(&scene2);
-
     }
 
     double paramfun(double args[]) {
@@ -380,6 +357,43 @@ namespace Examples {
         auto dilated = Morphology::erode(texMono, Morphology::kerCircle(10), 5);
 
         dilated.writeToFile("LeafDilated.jpg");
+    }
+
+    void cylindersTexture() {
+        // create nodes and links
+        Node b = Node(Point3D(0.0, 0.0, 0.0), nullptr, 0.1);
+        Node c = Node(Point3D(0.0, 0.3, 0.0), &b, 0.1);
+        Node d = Node(Point3D(0.0, 0.6, 0.0), &c, 0.1);
+        Node e = Node(Point3D(0.0, 0.9, 0.0), &d, 0.1);
+        Node f = Node(Point3D(0.0, 1.2, 0.0), &e, 0.1);
+        Node g = Node(Point3D(0.0, 1.5, 0.0), &f, 0.1);
+        Node h = Node(Point3D(0.0, 1.8, 0.0), &g, 0.1);
+        Node i = Node(Point3D(0.0, 2.1, 0.0), &h, 0.1);
+        Node j = Node(Point3D(0.0, 2.4, 0.0), &i, 0.1);
+        Node k = Node(Point3D(0.0, 2.7, 0.0), &j, 0.1);
+        Node l = Node(Point3D(0.0, 3.0, 0.0), &k, 0.1);
+
+        b.getChildren().push_back(&c);
+        c.getChildren().push_back(&d);
+        d.getChildren().push_back(&e);
+        e.getChildren().push_back(&f);
+        f.getChildren().push_back(&g);
+        g.getChildren().push_back(&h);
+        h.getChildren().push_back(&i);
+        i.getChildren().push_back(&j);
+        j.getChildren().push_back(&k);
+        k.getChildren().push_back(&l);
+
+        Scene scene2 = Scene();
+        TreeTranslator translator = TreeTranslator(scene2);
+
+        //\\// CYLINDER GENERATION
+        translator.generate(&b, "Cyl", Color::greenLeaf(), Color::darkGreenLeaf());
+        // instanciate generator
+        Generator gen2 = Generator("out_cylTex.obj");
+        // write scene to file
+        gen2.write(&scene2);
+
     }
 
 }

@@ -26,3 +26,8 @@ std::string Strutils::getPath(const std::string &fullpath) {
     }
     return fullpath.substr(0, i+1);
 }
+
+std::string Strutils::nameId(const std::string &name) {
+    static int id = 0;
+    return name + std::to_string(id++);
+}

@@ -19,6 +19,7 @@ namespace Examples {
     void genJpeg();
     void rasterizeExample();
     void morphologyExample();
+    void cylindersTexture();
 
 }
 

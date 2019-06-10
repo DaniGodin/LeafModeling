@@ -37,3 +37,13 @@ void Node::setParent(Node *parent) {
 double Node::getEnergy() const {
     return energy;
 }
+
+int Node::depth(Node *n) {
+    int max = 0;
+    for (Node *child : n->getChildren()) {
+        int length = 1 + depth(child);
+        if (length > max)
+            max = length;
+    }
+    return max;
+}
