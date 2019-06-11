@@ -37,7 +37,6 @@ namespace Shape{
             }
 
         }
-        std::cout << "found" << std::endl;
 
         return coord;
 

@@ -22,7 +22,7 @@ if __name__ == '__main__':
     leaf_shape = first_param(None, 6, ([-0.7, -0.2], 2, 1.4))
     Bob = Leaf(0.05, 0.06, leaf_shape,75, 4, 0.004)
 
-    Bob.run_creation(1000)
+    Bob.run_creation(1)
 
     Bob.display(8, 15, ax)
 
