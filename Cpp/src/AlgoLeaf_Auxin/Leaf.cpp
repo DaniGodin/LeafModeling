@@ -117,6 +117,7 @@ namespace Leaf {
             if (Math::get_distance(key_list[i], *a) < Math::get_distance(*a, key_list[min_index]))
                 min_index = i;
         }
+        std::cout << min_index << std::endl;
         a->closest = key_list[min_index];
     }
 

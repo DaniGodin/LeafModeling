@@ -81,6 +81,7 @@ class Leaf:
     def get_closest(self, aux):
         all_vens = list(self.VenationsList.keys())
         closest_index = distance.cdist([aux.position], [x.position for x in all_vens]).argmin()
+        print(closest_index)
         aux.closest = all_vens[closest_index]
 
 

@@ -22,11 +22,12 @@ int main() {
 
     Leaf::Creation Creation_1 = Leaf::Creation(0.08, 0.08, leaf_shape1, 75, 4, 0.02);
 
-    Creation_1.run(10);
+    Creation_1.run(1);
 
     Nodes::VenNodePlot res = Creation_1.get_ventree();
 
+
     return 0;
 
-    
+
 }
