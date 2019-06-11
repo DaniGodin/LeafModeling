@@ -5,6 +5,18 @@
 #include "Leafshape.hh"
 #include "Leaf.hh"
 
+void recurse_display(Nodes::VenNodePlot res, int *number){
+    *number = *number+1;
+    std::cout << res.pos;
+    std::cout << res.childrens.size() << std::endl;
+
+    for (auto &a: res.childrens){
+        recurse_display(a, number);
+    }
+
+
+};
+
 
 int main() {
 
@@ -22,10 +34,9 @@ int main() {
 
     Leaf::Creation Creation_1 = Leaf::Creation(0.08, 0.08, leaf_shape1, 75, 4, 0.02);
 
-    Creation_1.run(1);
+    Creation_1.run(100);
 
     Nodes::VenNodePlot res = Creation_1.get_ventree();
-
 
     return 0;
 
