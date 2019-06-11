@@ -28,6 +28,7 @@ namespace Leaf {
     void Creation::run(unsigned int nb_iterations) {
 
         for (int i = 0; i < nb_iterations; i++){
+            std::cout << "new_loop" << std::endl;
             gen_nodes(0.003); //find better way
             kill_auxins();
             gen_auxin(dart_step);
@@ -67,6 +68,7 @@ namespace Leaf {
 
 
             if (to_append){
+                std::cout << "to_append" << std::endl;
                 get_closest(&Aux);
                 AuxinsList.push_back(Aux);
             }
@@ -80,19 +82,19 @@ namespace Leaf {
 
         std::vector<Nodes::VenationPoint > new_nodes = {};
         for (auto &ven : VenationsList){
-            std::vector<Nodes::AuxinPoint > aux;
+            std::vector<Nodes::AuxinPoint* > aux;
             for (auto &a : AuxinsList){
                 if (a.closest.pos == ven.first.pos){
-                    aux.push_back(a);
+                    aux.push_back(&a);
                 }
 
             }
-
             if (!aux.empty()){
                 Nodes::VenationPoint new_ven = Math::get_newNode(ven.first, aux, step);
+                std::cout <<"generating" << std::endl;
                 for (auto &a : aux){
-                    if (Math::get_distance(a, new_ven) < Math::get_distance(a, ven.first)){
-                        a.closest = new_ven;
+                    if (Math::get_distance(*a, new_ven) < Math::get_distance(*a, ven.first)){
+                        a->closest = new_ven;
                     }
                 }
                 new_nodes.push_back(new_ven);
@@ -108,16 +110,17 @@ namespace Leaf {
 
     void Creation::get_closest(Nodes::AuxinPoint *a) {
         std::vector<Nodes::VenationPoint > key_list = {};
+
         for (auto &pairs : VenationsList){
             key_list.push_back(pairs.first);
         }
-        unsigned int min_index = 0;
+        std::cout << "searching for nearest" << std::endl;
 
+        unsigned int min_index = 0;
         for (unsigned int i = 0; i < key_list.size(); i++){
             if (Math::get_distance(key_list[i], *a) < Math::get_distance(*a, key_list[min_index]))
                 min_index = i;
         }
-        std::cout << min_index << std::endl;
         a->closest = key_list[min_index];
     }
 
