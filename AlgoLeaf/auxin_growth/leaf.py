@@ -73,7 +73,7 @@ class Leaf:
 
 
         for i in range(nb_iterations):
-            self.gen_nodes(0.0006)
+            self.gen_nodes(0.003)
             self.kill_auxins()
             self.gen_auxin(self.dart_step)
             self.grow_shape(self.growth_step)
@@ -81,7 +81,6 @@ class Leaf:
     def get_closest(self, aux):
         all_vens = list(self.VenationsList.keys())
         closest_index = distance.cdist([aux.position], [x.position for x in all_vens]).argmin()
-        print(closest_index)
         aux.closest = all_vens[closest_index]
 
 
@@ -105,20 +104,6 @@ class Leaf:
 
     def gen_auxin(self, nb_auxin):
         for i in range(nb_auxin):
-            """
-            r1 = random.random()
-            r2 = random.random()
-
-            #general growth
-
-            x_rand = (1 - r1 ** 0.5) * Vertices[0][0] + (r1 ** 0.5) * (1 - r2) * Vertices[1][0] + Vertices[2][
-                0] * r2 * (r1 ** 0.5)
-            y_rand = (1 - r1 ** 0.5) * Vertices[0][1] + (r1 ** 0.5) * (1 - r2) * Vertices[1][1] + Vertices[2][
-                1] * r2 * (r1 ** 0.5)
-
-
-            #marginal growth
-            """
             x_rand, y_rand = self.shape.gen_point()
 
             A = AuxinNode([x_rand, y_rand])
@@ -153,4 +138,4 @@ class Leaf:
             v[1] += step * sign(v[1])
         vertices[1][1] += step * sign(vertices[1][1])
         """
-        self.shape.growth_size -= step
+        self.shape.growth_size -= (self.growth_step + self.shape.growth_size/100) ** 2
