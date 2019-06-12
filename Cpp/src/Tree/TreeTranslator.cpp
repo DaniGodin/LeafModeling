@@ -21,8 +21,11 @@ std::vector<Object *> TreeTranslator::generate(Node *root, std::string name, con
 
     if (gentype == GENTYPE::cylinder) {
 
-        double trunkHeight = 3;
-        Cylinder *trunk = new Cylinder(root->getPt() + (Vector3D::up() * -trunkHeight), Vector3D::up(), trunkHeight, root->getEnergy(), name + "_trunk", 60);
+        double trunkHeight = 0.1;
+        Cylinder *trunk = new Cylinder(root->getPt() + (Vector3D::up() * -trunkHeight), Vector3D::up(), trunkHeight, root->getEnergy(), name + "_trunk", 30);
+        Material *m = new Material(Strutils::nameId("Vein"), Color::white(), rootCol, Color::white());
+        trunk->setUniformMaterial(m);
+        scene.push(m);
         scene.push(trunk);
         std::vector<Object*> objs(1, trunk);
 
@@ -83,9 +86,9 @@ void TreeTranslator::genTreeCyl(Node *n, const std::string &name, std::vector<Ob
     for (auto &c : n->getChildren()) {
         Vector3D direction = c->getPt() - parentCyl->getCenterUp();
         // Generate cylinders with SAME bottom and top radius
-        Cylinder *cyl = new Cylinder(parentCyl->getCenterUp(), direction, direction.length(), c->getEnergy(), name + "_" + std::to_string(count++), 10);
+//        Cylinder *cyl = new Cylinder(parentCyl->getCenterUp(), direction, direction.length(), c->getEnergy(), name + "_" + std::to_string(count++), 6);
         // Generate cylinders with DIFFERENT bottom and top radius
-//        Cylinder cyl = Cylinder(parentCyl.getCenterUp(), direction, direction.length(), n->getEnergy(), c->getEnergy(), name + "_" + std::to_string(count++));
+        Cylinder *cyl = new Cylinder(parentCyl->getCenterUp(), direction, direction.length(), n->getEnergy(), c->getEnergy(), name + "_" + std::to_string(count++));
 //        std::cout << cyl.getName() << " "  <<c->getEnergy() << std::endl;
         // Create uniform texture
         Material *m = new Material(Strutils::nameId("Vein"), Color::white(), rootCol + deltaCol, Color::white());
@@ -155,4 +158,28 @@ Node *TreeTranslator::convertVenNodeToNode_rec(Nodes::VenNodePlot *venation, Nod
     }
 
     return n;
+}
+
+Node *TreeTranslator::simplifyTree_(Node *n, int step, int skipStep, Node *parent) {
+    Node *p = parent;
+    int sk = ++skipStep;
+    if (skipStep >= step || n->getChildren().empty()) {
+        Node *node = new Node(n->getPt(), parent, n->getEnergy());
+        parent->getChildren().push_back(node);
+        p = node;
+        sk = 0;
+    }
+    for (auto *c : n->getChildren()) {
+        simplifyTree_(c, step, sk, p);
+    }
+    return nullptr;
+}
+
+Node *TreeTranslator::simplifyTree(Node *root, int step) {
+    Node *node = new Node(root->getPt(), nullptr, root->getEnergy());
+
+    for (auto *c : root->getChildren()) {
+        simplifyTree_(c, step, 0, node);
+    }
+    return node;
 }

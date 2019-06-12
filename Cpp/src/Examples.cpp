@@ -274,7 +274,9 @@ namespace Examples {
         Scene scene2 = Scene();
         TreeTranslator translator = TreeTranslator(scene2);
 
-        std::vector<Object*> leafCyl = translator.generate(&res, "Cyl", 1000, Color::greenLeaf(), Color::darkGreenLeaf());
+        auto *res_ = translator.simplifyTree(translator.convertVenNodeToNode(&res, 1000), 6);
+
+        std::vector<Object*> leafCyl = translator.generate(res_, "Cyl", Color::greenLeaf(), Color::darkGreenLeaf());
         // create a scene and put the object in it
         for (const auto &o : leafCyl)
             scene2.push(o);
@@ -309,7 +311,7 @@ namespace Examples {
         using namespace std;
         double x = args[0];
         double y = args[1];
-        double g = 2;// args[2];
+        double g = 2.03;// args[2];
         return (
                 -pow(pow(g * x, 2) + pow(g * y -1, 2) - 1, 3)
                 -(pow(g * x, 2) * pow(g * y -1, 3))
@@ -339,10 +341,16 @@ namespace Examples {
 //        leafScheme->genUniformVTs(1000, 1000, 0);
 
 
-        Object *leafScheme = leaff.generateObjectRadial(4, 0.001, 0.01, 0.01, Point3D(0, 0.1, 0));
-        Material *greenTextured = new Material("green", Color::white(), Color::greenLeaf(), Color::darkGreenLeaf(), "leafTexture.jpg");
+        Object *leafScheme = leaff.generateObjectRadial(4, 0.001, 0.0001, 0.01, Point3D(0, 0.1, 0));
+//        Material *greenTextured = new Material("green", Color::white(), Color::greenLeaf(), Color::darkGreenLeaf(), "leafTexture.jpg");
+//        leafScheme->setUniformMaterial(greenTextured);
+//        leafScheme->genUniformVTs();
+
+        auto tex = TextureGenerator::fromObject(1000, 1000, *leafScheme, Color::greenLeaf(), Color::darkGreenLeaf(), Color::darkRed(), 10);
+        auto textFile = tex.writeToFile("leafParametric.jpg");
+        Material *greenTextured = new Material("greenLeaf", Color::white(), Color::white(), Color::white(), textFile);
         leafScheme->setUniformMaterial(greenTextured);
-        leafScheme->genUniformVTs();
+        leafScheme->genUniformVTs(1000, 1000, 0);
 
         Scene sc = Scene();
         sc.push(leafScheme);
@@ -454,10 +462,13 @@ namespace Examples {
         k.getChildren().push_back(&l);
 
         Scene scene2 = Scene();
+        TreeTranslator ttr = TreeTranslator(scene2);
+        auto b_ = ttr.simplifyTree(&b, 4);
+
         TreeTranslator translator = TreeTranslator(scene2);
 
         //\\// CYLINDER GENERATION
-        translator.generate(&b, "Cyl", Color::greenLeaf(), Color::darkGreenLeaf());
+        translator.generate(b_, "Cyl", Color::greenLeaf(), Color::darkGreenLeaf());
         // instanciate generator
         Generator gen2 = Generator("out_cylTex.obj");
         // write scene to file

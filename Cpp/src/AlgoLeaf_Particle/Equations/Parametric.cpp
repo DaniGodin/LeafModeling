@@ -10,6 +10,9 @@
 
 Parametric::Parametric(parametricF formula, double eq) : formula(formula), eq(eq) {}
 
+Parametric::Parametric(parametricF formula, double eq, double alpha) : formula(formula), eq(eq), alpha(alpha) {}
+
+
 double Parametric::calculate(double *args) {
     return formula(args);
 }
@@ -57,7 +60,7 @@ Parametric::generateObjectOrthogonal(double xmin=-2, double xmax=2, double ymin=
         for (double x = xmin; x < xmax; x += step) {
             Point3D pt = Point3D(x, y, 0);
             // calculate result
-            double args[] = { pt.getX(), pt.getY(), 1.0};
+            double args[] = { pt.getX(), pt.getY(), alpha};
             double res = calculate(args);
             // if equal to 0
             if (std::fabs(res) < precision) {
@@ -114,7 +117,7 @@ Parametric::generateObjectRadial(double radius=2.1, double step=0.01, double ang
         for (double r = 0.0; r < radius; r += step) {
             Point3D pt = center + (dir * r);
             // calculate result
-            double args[] = { pt.getX(), pt.getY(), 1.0};
+            double args[] = { pt.getX(), pt.getY(), alpha};
             double res = calculate(args);
             // if equal to 0
             if (std::fabs(res) < precision) {

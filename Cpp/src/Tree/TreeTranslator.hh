@@ -29,6 +29,7 @@ public:
 
     Node *convertVenationToNode(algoLeaf::venationPoint *root, int pointCount);
     Node *convertVenNodeToNode(Nodes::VenNodePlot *root, int pointCount);
+    Node *simplifyTree(Node *root, int step);
 
 private:
     void genTreeO(Node *n, Object *o, long rootIndex);
@@ -38,6 +39,9 @@ private:
     Node *convertVenationToNode_rec(algoLeaf::venationPoint *venation, Node *parent, int pointCount);
 
     Node *convertVenNodeToNode_rec(Nodes::VenNodePlot *ven, Node *parent, int pointCount);
+
+    Node *simplifyTree_(Node *n, int step, int skipStep, Node *parent);
+
 
 private:
     Scene &scene;

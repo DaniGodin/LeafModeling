@@ -18,6 +18,7 @@ class Parametric {
 
 public:
     Parametric(parametricF formula, double eq);
+    Parametric(parametricF formula, double eq, double alpha);
 
     double calculate(double args[]);
 
@@ -34,6 +35,7 @@ private:
 private:
     parametricF formula;
     double eq = 0.0;
+    double alpha = 1.0;
 
 };
 
