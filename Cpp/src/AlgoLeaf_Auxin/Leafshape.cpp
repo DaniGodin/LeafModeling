@@ -5,11 +5,12 @@
 #include "Leafshape.hh"
 #include <random>
 
-std::random_device rd;
-std::mt19937 gen(rd());
-std::uniform_real_distribution<> dis(0, 1);
 
 namespace Shape{
+
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<> dis(0, 1);
 
 
     Point3D Leafshape::gen_point() {

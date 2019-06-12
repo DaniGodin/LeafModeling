@@ -14,6 +14,7 @@ namespace Examples {
     void lSystemExample();
     void cylinderExample();
     void algoLeafExample();
+    void algoLeaf2Example();
     void parametricExample();
     void polarExample();
     void genJpeg();

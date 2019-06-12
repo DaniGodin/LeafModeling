@@ -16,8 +16,9 @@ int main() {
 //        Examples::treeExample();
 //        Examples::genJpeg();
 //        Examples::rasterizeExample();
-        Examples::algoLeafExample();
-//        Examples::cylindersTexture();
+        Examples::parametricExample();
+        Examples::algoLeaf2Example();
+//        Examples::algoLeafExample();
 //        Examples::parseFileExample();
 //        Examples::leafGrowthExample();
 //        Examples::lSystemExample();

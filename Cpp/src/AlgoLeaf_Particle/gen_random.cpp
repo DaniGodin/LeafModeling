@@ -6,13 +6,12 @@
 #include <random>
 #include "gen_random.hh"
 
-std::random_device rd;
-std::mt19937 gen(rd());
-std::uniform_real_distribution<> dis(0, 1);
 
 
 namespace gen_rand{
-
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<> dis(0, 1);
 
     std::vector<particles::Particle> gen_triangle(Point3D v1, Point3D v2, Point3D v3, unsigned int num_particle){
 

@@ -10,6 +10,8 @@
 #include <ctime>
 #include <cfloat>
 #include "Obj/Parser.hh"
+#include <functional>
+#include "Obj/Parser.hh"
 #include "Tree/Node.hh"
 #include "Obj/Generator.hh"
 #include "L-Systems/LRuleStoch.hh"
@@ -23,16 +25,18 @@
 #include "L-Systems/LRuleParametric.hh"
 #include "Obj/Meshes/Cylinder.hh"
 #include "Tree/TreeTranslator.hh"
-#include "AlgoLeaf/particle_object.hh"
-#include "AlgoLeaf/gen_random.hh"
-#include "AlgoLeaf/Growth/leafGrowth.hh"
-#include "AlgoLeaf/Equations/Parametric.hh"
-#include "AlgoLeaf/Equations/Polar.hh"
 #include "../include/jpge.h"
 #include "Texturing/Texture.hh"
 #include "Texturing/TextureGenerator.hh"
 #include "Texturing/Rasterize/Draw.hh"
 #include "Texturing/Morphology/Morphology.hh"
+#include "AlgoLeaf_Particle/particle_object.hh"
+#include "AlgoLeaf_Particle/gen_random.hh"
+#include "AlgoLeaf_Particle/Growth/leafGrowth.hh"
+#include "AlgoLeaf_Particle/Equations/Parametric.hh"
+#include "AlgoLeaf_Particle/Equations/Polar.hh"
+#include "AlgoLeaf_Auxin/Leafshape.hh"
+#include "AlgoLeaf_Auxin/Leaf.hh"
 
 namespace Examples {
 
@@ -244,6 +248,55 @@ namespace Examples {
         gen2.write(&scene2);
     }
 
+
+    void algoLeaf2Example() {
+
+        std::function<double(Point3D, double)> shape1 = [] (Point3D a, double g) {return (
+                -pow(pow(g * a.getX(), 2) + pow(g * a.getY() -1, 2) - 1, 3)
+                -(pow(g * a.getX(), 2) * pow(g * a.getY() -1, 3))
+        );};
+
+        Shape::rectangle r1 = Shape::rectangle();
+        r1.origin = Point3D(-0.7,-0.2, 0);
+        r1.x_lim = 2;
+        r1.y_lim = 1.4;
+
+        Shape::Leafshape leaf_shape1 = Shape::Leafshape(12, shape1, r1);
+
+        Leaf::Creation Creation_1 = Leaf::Creation(0.08, 0.08, leaf_shape1, 75, 4, 0.02);
+
+        Creation_1.run(1700);
+
+        Nodes::VenNodePlot res = Creation_1.get_ventree();
+
+        std::cout << Creation_1.shape.growth_size << std::endl;
+
+        Scene scene2 = Scene();
+        TreeTranslator translator = TreeTranslator(scene2);
+
+        std::vector<Object*> leafCyl = translator.generate(&res, "Cyl", 1000, Color::greenLeaf(), Color::darkGreenLeaf());
+        // create a scene and put the object in it
+        for (const auto &o : leafCyl)
+            scene2.push(o);
+//        scene2.getObjects().push_back(o);
+        // instanciate generator
+        Generator gen2 = Generator("out_algoleaf.obj");
+        // write scene to file
+        gen2.write(&scene2);
+
+//    std::vector<Object> leafCyl = translator.generate(root, "Cyl", nodeCount, TreeTranslator::GENTYPE::line);
+//    // create a scene and put the object in it
+//    Scene scene2 = Scene();
+//    for (const auto &o : leafCyl)
+//        scene2.getObjects().push_back(o);
+//    // instanciate generator
+//    Generator gen2 = Generator("out_algoleaf.obj");
+//    // write scene to file
+//    gen2.write(&scene2);
+
+    }
+
+
     double paramfun(double args[]) {
         using namespace std;
         double x = args[0];
@@ -252,28 +305,44 @@ namespace Examples {
         return -powf((powf((alpha * x), 2.0) + powf((alpha * y - 1.0), 2.0) - 1.0), 3.0) - powf((alpha * x), 2.0) * powf((alpha * y - 1.0), 3.0);
     };
 
+    double paramfun2(double args[]) {
+        using namespace std;
+        double x = args[0];
+        double y = args[1];
+        double g = 2;// args[2];
+        return (
+                -pow(pow(g * x, 2) + pow(g * y -1, 2) - 1, 3)
+                -(pow(g * x, 2) * pow(g * y -1, 3))
+        );
+    }
+
     void parametricExample() {
 
-        Parametric leaff = Parametric(paramfun, 0);
+        Parametric leaff = Parametric(paramfun2, 0);
         double args[] = { 0.0, 2.0, 1.0};
         double res = leaff.calculate(args);
 
 //        Object leafScheme = leaff.generateObjectOrthogonal(-2.1, 2.1, -2.1 ,2.1, 0.001, 0.1, Point3D(0, 0, 0));
-        Object *leafScheme = leaff.generateObjectRadial(4, 0.001, 0.001, 0.05, Point3D(0, 0.1, 0));
 
-        // gen texture image & save to file
-        auto tex = TextureGenerator::fromObject(1000, 1000, *leafScheme, Color::greenLeaf(), Color::darkGreenLeaf(), Color::darkRed(), 50);
-        auto textFile = tex.writeToFile("leafParametric.jpg");
+//        Object *leafScheme = leaff.generateObjectRadial(4, 0.001, 0.001, 0.05, Point3D(0, 0.1, 0));
+//
+//        // gen texture image & save to file
+//        auto tex = TextureGenerator::fromObject(1000, 1000, *leafScheme, Color::greenLeaf(), Color::darkGreenLeaf(), Color::darkRed(), 50);
+//        auto textFile = tex.writeToFile("leafParametric.jpg");
+//
+//        auto texMono = TextureGenerator::fromObject(1000, 1000, *leafScheme, Color::red(), Color::red(), Color::black(), 0, 50);
+//        Texture::monoChannel(texMono, Texture::Channel::R).writeToFile("leafParametricBin.jpg");
+//
+//        // create material
+//        Material *greenTextured = new Material("green", Color::white(), Color::white(), Color::white(), textFile);
+//        leafScheme->setUniformMaterial(greenTextured);
+//        leafScheme->genUniformVTs(1000, 1000, 0);
 
-        auto texMono = TextureGenerator::fromObject(1000, 1000, *leafScheme, Color::red(), Color::red(), Color::black(), 0, 50);
-        Texture::monoChannel(texMono, Texture::Channel::R).writeToFile("leafParametricBin.jpg");
 
-        // create material
-        Material *greenTextured = new Material("green", Color::white(), Color::white(), Color::white(), textFile);
+        Object *leafScheme = leaff.generateObjectRadial(4, 0.001, 0.01, 0.01, Point3D(0, 0.1, 0));
+        Material *greenTextured = new Material("green", Color::white(), Color::greenLeaf(), Color::darkGreenLeaf(), "leafTexture.jpg");
         leafScheme->setUniformMaterial(greenTextured);
-        leafScheme->genUniformVTs(1000, 1000, 0);
-
-
+        leafScheme->genUniformVTs();
 
         Scene sc = Scene();
         sc.push(leafScheme);

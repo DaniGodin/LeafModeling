@@ -70,17 +70,52 @@ add_executable(objParser
         src/Obj/Meshes/Cylinder.hh
         src/Tree/TreeTranslator.cpp
         src/Tree/TreeTranslator.hh
-        src/AlgoLeaf/gen_random.cpp
-        src/AlgoLeaf/gen_random.hh
-        src/AlgoLeaf/leaf_object.cpp
-        src/AlgoLeaf/leaf_object.hh
-        src/AlgoLeaf/math_stuff.cpp
-        src/AlgoLeaf/math_stuff.hh
-        src/AlgoLeaf/particle_object.cpp
-        src/AlgoLeaf/particle_object.hh
         src/Obj/Meshes/Linker.cpp
         src/Obj/Meshes/Linker.hh
         src/Obj/Meshes/Triangle.cpp
         src/Obj/Meshes/Triangle.hh
-        src/AlgoLeaf/Growth/leafGrowth.cpp
-        src/AlgoLeaf/Growth/leafGrowth.hh src/AlgoLeaf/Equations/Parametric.cpp src/AlgoLeaf/Equations/Parametric.hh src/Examples.cpp src/Examples.hh src/Utils/Chronometer.cpp src/Utils/Chronometer.hh src/AlgoLeaf/Equations/Polar.cpp src/AlgoLeaf/Equations/Polar.hh src/Constants.hh src/Utils/dblutils.cpp src/Utils/dblutils.hh src/Utils/Color.cpp src/Utils/Color.hh src/Texturing/TextureGenerator.cpp src/Texturing/TextureGenerator.hh src/Texturing/Texture.cpp src/Texturing/Texture.hh src/Texturing/Rasterize/Draw.cpp src/Texturing/Rasterize/Draw.hh src/Texturing/Rasterize/Edge.cpp src/Texturing/Rasterize/Edge.hh src/Texturing/Rasterize/Span.cpp src/Texturing/Rasterize/Span.hh src/Texturing/Rasterize/RasterPoint.cpp src/Texturing/Rasterize/RasterPoint.hh src/Texturing/Morphology/Morphology.cpp src/Texturing/Morphology/Morphology.hh)
+        src/Utils/Color.cpp
+        src/Utils/Color.hh
+        src/Utils/Chronometer.cpp
+        src/Utils/Chronometer.hh
+        src/Utils/dblutils.cpp
+        src/Utils/dblutils.hh
+        src/Texturing/TextureGenerator.cpp
+        src/Texturing/TextureGenerator.hh
+        src/Texturing/Texture.cpp
+        src/Texturing/Texture.hh
+        src/Texturing/Rasterize/Draw.cpp
+        src/Texturing/Rasterize/Draw.hh
+        src/Texturing/Rasterize/Edge.cpp
+        src/Texturing/Rasterize/Edge.hh
+        src/Texturing/Rasterize/Span.cpp
+        src/Texturing/Rasterize/Span.hh
+        src/Texturing/Rasterize/RasterPoint.cpp
+        src/Texturing/Rasterize/RasterPoint.hh
+        src/Texturing/Morphology/Morphology.cpp
+        src/Texturing/Morphology/Morphology.hh
+        src/AlgoLeaf_Particle/gen_random.cpp
+        src/AlgoLeaf_Particle/gen_random.hh
+        src/AlgoLeaf_Particle/leaf_object.cpp
+        src/AlgoLeaf_Particle/leaf_object.hh
+        src/AlgoLeaf_Particle/math_stuff.cpp
+        src/AlgoLeaf_Particle/math_stuff.hh
+        src/AlgoLeaf_Particle/particle_object.cpp
+        src/AlgoLeaf_Particle/particle_object.hh
+        src/AlgoLeaf_Particle/Growth/leafGrowth.cpp
+        src/AlgoLeaf_Particle/Growth/leafGrowth.hh
+        src/AlgoLeaf_Particle/Equations/Parametric.cpp
+        src/AlgoLeaf_Particle/Equations/Parametric.hh
+        src/AlgoLeaf_Particle/Equations/Polar.cpp
+        src/AlgoLeaf_Particle/Equations/Polar.hh
+        src/AlgoLeaf_Auxin/Leaf.cpp
+        src/AlgoLeaf_Auxin/Leaf.hh
+        src/AlgoLeaf_Auxin/Leafshape.cpp
+        src/AlgoLeaf_Auxin/Leafshape.hh
+        src/AlgoLeaf_Auxin/mathStuff.cpp
+        src/AlgoLeaf_Auxin/mathStuff.hh
+        src/AlgoLeaf_Auxin/Nodes.cpp
+        src/AlgoLeaf_Auxin/Nodes.hh
+        src/Examples.cpp
+        src/Examples.hh
+        )

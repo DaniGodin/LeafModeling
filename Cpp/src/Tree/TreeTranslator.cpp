@@ -107,6 +107,14 @@ TreeTranslator::generate(algoLeaf::venationPoint *root, std::string name, int po
     return result;
 }
 
+std::vector<Object *>
+TreeTranslator::generate(Nodes::VenNodePlot *root, std::string name, int pointCount, const Color &rootCol, const Color &leafCol) {
+    Node *converted = convertVenNodeToNode(root, pointCount);
+    auto result = generate(converted, name, rootCol, leafCol);
+    delete converted;
+    return result;
+}
+
 Node *TreeTranslator::convertVenationToNode_rec(algoLeaf::venationPoint *venation, Node *parent, int pointCount) {
     Node *n = new Node(venation->position, parent, static_cast<double>(venation->photoEnergy) / (static_cast<double>(pointCount) * 0.5));
 
@@ -128,3 +136,23 @@ Node *TreeTranslator::convertVenationToNode(algoLeaf::venationPoint *root, int p
 }
 
 TreeTranslator::TreeTranslator(Scene &scene) : scene(scene) {}
+
+Node *TreeTranslator::convertVenNodeToNode(Nodes::VenNodePlot *root, int pointCount) {
+    Node *n = new Node(root->pos, nullptr, static_cast<double>(root->radius) / (static_cast<double>(pointCount) * 0.5));
+
+    for (auto &c : root->childrens) {
+        n->getChildren().push_back(convertVenNodeToNode_rec(&c, n, pointCount));
+    }
+
+    return n;
+}
+
+Node *TreeTranslator::convertVenNodeToNode_rec(Nodes::VenNodePlot *venation, Node *parent, int pointCount) {
+    Node *n = new Node(venation->pos, parent, static_cast<double>(venation->radius) / (static_cast<double>(pointCount) * 0.5));
+
+    for (auto &c : venation->childrens) {
+        n->getChildren().push_back(convertVenNodeToNode_rec(&c, n, pointCount));
+    }
+
+    return n;
+}

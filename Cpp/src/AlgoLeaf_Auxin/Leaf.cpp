@@ -28,7 +28,7 @@ namespace Leaf {
     void Creation::run(unsigned int nb_iterations) {
 
         for (int i = 0; i < nb_iterations; i++){
-            std::cout << "new_loop" << std::endl;
+//            std::cout << "new_loop" << std::endl;
             gen_nodes(0.003); //find better way
             kill_auxins();
             gen_auxin(dart_step);
@@ -68,7 +68,7 @@ namespace Leaf {
 
 
             if (to_append){
-                std::cout << "to_append" << std::endl;
+//                std::cout << "to_append" << std::endl;
                 get_closest(&Aux);
                 AuxinsList.push_back(Aux);
             }
@@ -91,7 +91,7 @@ namespace Leaf {
             }
             if (!aux.empty()){
                 Nodes::VenationPoint new_ven = Math::get_newNode(ven.first, aux, step);
-                std::cout <<"generating" << std::endl;
+//                std::cout <<"generating" << std::endl;
                 for (auto &a : aux){
                     if (Math::get_distance(*a, new_ven) < Math::get_distance(*a, ven.first)){
                         a->closest = new_ven;
@@ -114,7 +114,7 @@ namespace Leaf {
         for (auto &pairs : VenationsList){
             key_list.push_back(pairs.first);
         }
-        std::cout << "searching for nearest" << std::endl;
+//        std::cout << "searching for nearest" << std::endl;
 
         unsigned int min_index = 0;
         for (unsigned int i = 0; i < key_list.size(); i++){
