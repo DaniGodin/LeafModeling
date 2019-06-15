@@ -46,7 +46,7 @@ namespace Leaf {
 
         void kill_auxins();
 
-        void grow_shape();
+        void grow_shape(unsigned int);
 
         Nodes::VenNodePlot build_tree(Nodes::VenationPoint c);
 

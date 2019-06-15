@@ -28,11 +28,12 @@ namespace Leaf {
     void Creation::run(unsigned int nb_iterations) {
 
         for (int i = 0; i < nb_iterations; i++){
-//            std::cout << "new_loop" << std::endl;
+            //std::cout << AuxinsList.size() << std::endl;
             gen_nodes(0.003); //find better way
             kill_auxins();
             gen_auxin(dart_step);
-            grow_shape();
+            grow_shape(i);
+
 
         }
 
@@ -52,6 +53,7 @@ namespace Leaf {
 
             for (auto &a : AuxinsList){
                 if (Math::get_distance(a, Aux) < birth_distance) {
+                    std::cout << "Disqualified 1" << std::endl;
                     to_append = false;
                     break;
                 }
@@ -68,7 +70,7 @@ namespace Leaf {
 
 
             if (to_append){
-//                std::cout << "to_append" << std::endl;
+                std::cout << "to_append" << std::endl;
                 get_closest(&Aux);
                 AuxinsList.push_back(Aux);
             }
@@ -127,9 +129,15 @@ namespace Leaf {
 
 
 
-    void Creation::grow_shape() {
+    void Creation::grow_shape(unsigned int i) {
 
-        shape.growth_size -= pow(growth_step + shape.growth_size/100, 2);
+        if (shape.growth_size > 1.255)
+            shape.growth_size -= pow(growth_step + shape.growth_size/100, 2);
+        if (shape.growth_x > 1)
+            shape.growth_x -= pow(growth_step + i/1000, 2);
+        if (shape.growth_y > 1)
+            shape.growth_y -= pow(growth_step + i/1000, 2);
+
     }
 
     void Creation::kill_auxins(){
