@@ -10,21 +10,24 @@ class first_param:
     equation = None
     rectangle = None #where to project the points
     ax = None
-
+    growth_x = None
+    growth_y = None
     points = []
 
-
-    def __init__(self, equation, _growth, rectangle):
+    def __init__(self, equation, _growth, rectangle, _growth_x = 1,
+                 _growth_y = 1):
         self.equation = equation
         self.growth_size = _growth
         self.rectangle = rectangle
+        self.growth_x = _growth_x
+        self.growth_y = _growth_y
 
 
     def plot_shape(self, ax):
         x = np.linspace(-1.0, 1.0, 1000)
-        y = np.linspace(-0.5, 1.0, 1000)
+        y = np.linspace(-0.5, 2.0, 1000)
         X, Y = np.meshgrid(x, y)
-        ax.contour(X, Y, self.equation(X, Y, self.growth_size), [0])
+        ax.contour(X, Y, self.equation(X, Y, self.growth_size, self.growth_x, self.growth_y), [0])
         x = self.rectangle[0][0]
         y = self.rectangle[0][1]
         x_lim = x + self.rectangle[1]
@@ -51,7 +54,7 @@ class first_param:
             r1 = x + random() * (x_lim - x)
             r2 = y + random() * (y_lim - y)
 
-            if 0.05 >= self.equation(r1, r2, self.growth_size) >= -0.05:
+            if 0.02 >= self.equation(r1, r2, self.growth_size,self.growth_x, self.growth_y) >= -0.01:
                 find = True
                 coord = [r1, r2]
         return coord

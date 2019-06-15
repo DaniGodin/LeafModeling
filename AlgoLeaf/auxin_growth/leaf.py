@@ -31,6 +31,8 @@ class Leaf:
         self.gen_auxin(_initial)
         self.growth_step = _growth
 
+
+
     def display(self, x, y, ax):
         self.shape.plot_shape(ax)
         self.display_auxins()
@@ -76,7 +78,7 @@ class Leaf:
             self.gen_nodes(0.003)
             self.kill_auxins()
             self.gen_auxin(self.dart_step)
-            self.grow_shape(self.growth_step)
+            self.grow_shape(self.growth_step, i)
 
     def get_closest(self, aux):
         all_vens = list(self.VenationsList.keys())
@@ -129,7 +131,7 @@ class Leaf:
         for aux in to_remove:
             self.AuxinsList.remove(aux)
 
-    def grow_shape(self, step):
+    def grow_shape(self, step, i):
         """
         vertices = self.shape.get_xy()
         sign = lambda a: 1 if a > 0 else -1 if a < 0 else 0
@@ -138,4 +140,12 @@ class Leaf:
             v[1] += step * sign(v[1])
         vertices[1][1] += step * sign(vertices[1][1])
         """
-        self.shape.growth_size -= (self.growth_step + self.shape.growth_size/100) ** 2
+
+        if self.shape.growth_size > 1.255:
+            self.shape.growth_size -= (self.growth_step + self.shape.growth_size/100)**2
+        if self.shape.growth_x > 1:
+            print("diff")
+            self.shape.growth_x -= (step * i/1000)**2
+        if self.shape.growth_y > 1:
+            print("diff")
+            self.shape.growth_y -= (step * i/1000)**2
