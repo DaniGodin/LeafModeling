@@ -30,9 +30,8 @@ namespace Shape{
             double r1 = x + dis(gen) * ( x_lim - x);
             double r2 = y + dis(gen) * ( y_lim - y);
             Point3D rand = Point3D(r1, r2, 0);
-            double eval_point = equation(rand, growth_size);
-            if (0.05 >= eval_point && eval_point >= -0.05){
-
+            double eval_point = equation(rand, growth_size, growth_x, growth_y);
+            if (0.02 >= eval_point && eval_point >= -0.01){
                 coord = rand;
                 find = true;
 

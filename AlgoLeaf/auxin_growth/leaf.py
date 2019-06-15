@@ -144,8 +144,6 @@ class Leaf:
         if self.shape.growth_size > 1.255:
             self.shape.growth_size -= (self.growth_step + self.shape.growth_size/100)**2
         if self.shape.growth_x > 1:
-            print("diff")
             self.shape.growth_x -= (step * i/1000)**2
         if self.shape.growth_y > 1:
-            print("diff")
             self.shape.growth_y -= (step * i/1000)**2

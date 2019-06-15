@@ -31,15 +31,16 @@ if __name__ == '__main__':
 
     leaf_shape2 = first_param(shape3, 12, ([-0.4, -0.2], 1.7, 2), 2, 4)
 
-    #Bob = Leaf(0.08, 0.09, leaf_shape2 ,85, 6, 0.04)
+    Bob = Leaf(0.08, 0.09, leaf_shape2 ,85, 6, 0.04)
 
-    Bob = Leaf(0.08, 0.08, leaf_shape1, 75, 4, 0.02)
+    #Bob = Leaf(0.08, 0.08, leaf_shape1, 75, 4, 0.02)
 
-    #Bob.run_creation(4800)
+    Bob.run_creation(600)
 
-    Bob.run_creation(1200)
+    #Bob.run_creation(1200)
 
     print(Bob.shape.growth_size)
+
     print(len(Bob.get_ventree().childrens))
 
     Bob.display(8, 15, ax)
