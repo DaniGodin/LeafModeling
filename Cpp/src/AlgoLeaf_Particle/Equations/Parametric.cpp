@@ -8,13 +8,30 @@
 #include <cfloat>
 #include "Parametric.hh"
 
-Parametric::Parametric(parametricF formula, double eq) : formula(formula), eq(eq) {}
+Parametric::Parametric(parametricF formula, double eq)
+        : f1(formula), eq(eq)
+{}
 
-Parametric::Parametric(parametricF formula, double eq, double alpha) : formula(formula), eq(eq), alpha(alpha) {}
+Parametric::Parametric(parametricF formula, double eq, double alpha)
+        : f1(formula), eq(eq), alpha(alpha)
+{}
 
+
+Parametric::Parametric(std::function<double(Point3D, double)> formula, double eq)
+    : f2(formula), eq(eq), ftype(FunctionType::FUNCTIONAL)
+{}
+
+Parametric::Parametric(std::function<double(Point3D, double)> formula, double eq, double alpha)
+    :f2(formula), eq(eq), alpha(alpha), ftype(FunctionType::FUNCTIONAL)
+{}
 
 double Parametric::calculate(double *args) {
-    return formula(args);
+    switch (ftype) {
+        case FunctionType::TYPEDEF:
+            return f1(args);
+        case FunctionType::FUNCTIONAL:
+            return f2(Point3D(args[0], args[1], 0), args[2]);
+    }
 }
 
 std::vector<int> Parametric::sortShape(const std::vector<Point3D> &pts) {
@@ -102,6 +119,8 @@ Parametric::generateObjectRadial(double radius=2.1, double step=0.01, double ang
     std::vector<Point3D> pts = std::vector<Point3D>();
     pts.push_back(center);
 
+    double force = 0.01;
+
     //  precision for "zero"
     double precision = 0.0001;
 
@@ -115,18 +134,21 @@ Parametric::generateObjectRadial(double radius=2.1, double step=0.01, double ang
                 0
         );
         for (double r = 0.0; r < radius; r += step) {
+
+
             Point3D pt = center + (dir * r);
             // calculate result
             double args[] = { pt.getX(), pt.getY(), alpha};
             double res = calculate(args);
             // if equal to 0
             if (std::fabs(res) < precision) {
+                float add = (static_cast <float> (std::rand()) / static_cast <float> (RAND_MAX)) * force;
 
                 // avoid clusters of pts
                 if (isClustering(pts, pt, minDistance))
                     continue;
                 // push new point
-                pts.push_back(pt);
+                pts.push_back(pt + (dir * add));
             }
         }
     }
@@ -164,4 +186,23 @@ bool Parametric::isClustering(const std::vector<Point3D> &pts, const Point3D &p,
     }
     // if point too close to previous ones -> skip it
     return (shortest < minDistance);
+}
+
+Object *Parametric::randomizeOutline(Object *obj, double force) {
+    Point3D *center = obj->getV()[0];
+
+    float signWeight = 0.5;
+    float deviation = 0;
+    for (int i = 1; i < obj->getV().size() - 1; ++i) {
+        Point3D *current = obj->getV()[i];
+        Vector3D dir = (*current - *center);
+        float sign = static_cast <float> (std::rand()) / static_cast <float> (RAND_MAX) < signWeight ? 1 : -1;
+        float add = (static_cast <float> (std::rand()) / static_cast <float> (RAND_MAX)) * force;
+        deviation += sign * add;
+        signWeight += sign * 0.1;
+        dir = dir + deviation;
+        current->setX(current->getX() + dir.getX());
+        current->setY(current->getY() + dir.getY());
+        current->setZ(current->getZ() + dir.getZ());
+    }
 }

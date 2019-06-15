@@ -25,6 +25,14 @@ public:
 
     double getW() const;
 
+    void setX(double x);
+
+    void setY(double y);
+
+    void setZ(double z);
+
+    void setW(double w);
+
     bool operator==(const Point3D &rhs) const;
 
     bool operator!=(const Point3D &rhs) const;

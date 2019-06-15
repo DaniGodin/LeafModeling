@@ -24,6 +24,8 @@ public:
 
     bool operator!=(const Vector3D &rhs) const;
 
+    Vector3D operator+(const double &rhs) const;
+
     double scalar(const Vector3D &rhs) const;
 
     Vector3D crossProduct(const Vector3D &rhs) const;

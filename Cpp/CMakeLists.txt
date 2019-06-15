@@ -3,6 +3,9 @@ project(objParser)
 
 set(CMAKE_CXX_STANDARD 17)
 
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m64 -march=native -fopt-info-vec-optimized -O3" )
+
+
 add_executable(objParser
         include/fast_marching_method.hpp
         include/jpge.cpp
@@ -118,4 +121,4 @@ add_executable(objParser
         src/AlgoLeaf_Auxin/Nodes.hh
         src/Examples.cpp
         src/Examples.hh
-        )
+        src/LeafWriter.cpp src/LeafWriter.hh)

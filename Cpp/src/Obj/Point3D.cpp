@@ -56,6 +56,22 @@ const Vector3D Point3D::operator-(const Point3D &rhs) const {
     return Vector3D(x - rhs.getX(), y - rhs.getY(), z - rhs.getZ());
 }
 
+void Point3D::setX(double x) {
+    Point3D::x = x;
+}
+
+void Point3D::setY(double y) {
+    Point3D::y = y;
+}
+
+void Point3D::setZ(double z) {
+    Point3D::z = z;
+}
+
+void Point3D::setW(double w) {
+    Point3D::w = w;
+}
+
 std::ostream& operator<<(std::ostream &out, const Point3D &p) {
     out << "X: " << p.getX() << std::endl;
     out << "Y: " << p.getY() << std::endl;

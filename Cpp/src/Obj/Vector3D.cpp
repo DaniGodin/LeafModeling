@@ -98,6 +98,10 @@ double Vector3D::angle(const Vector3D &lhs, const Vector3D &rhs) {
             ) / M_PI) * 180.0;
 }
 
+Vector3D Vector3D::operator+(const double &rhs) const {
+    return Vector3D(x + rhs, y + rhs, z + rhs);
+}
+
 std::size_t Vector3D::hash::operator()(const Vector3D &p) const {
     auto h1 = std::hash<double>{}(dblutils::trunc(p.x, constants::OBJ_DBL_PRECISION));
     auto h2 = std::hash<double>{}(dblutils::trunc(p.y, constants::OBJ_DBL_PRECISION));

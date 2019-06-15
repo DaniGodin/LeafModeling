@@ -341,7 +341,8 @@ namespace Examples {
 //        leafScheme->genUniformVTs(1000, 1000, 0);
 
 
-        Object *leafScheme = leaff.generateObjectRadial(4, 0.001, 0.0001, 0.01, Point3D(0, 0.1, 0));
+        Object *leafScheme = leaff.generateObjectRadial(4, 0.001, 0.001, 0.01, Point3D(0, 0.1, 0));
+//        leaff.randomizeOutline(leafScheme, 0.1);
 //        Material *greenTextured = new Material("green", Color::white(), Color::greenLeaf(), Color::darkGreenLeaf(), "leafTexture.jpg");
 //        leafScheme->setUniformMaterial(greenTextured);
 //        leafScheme->genUniformVTs();
