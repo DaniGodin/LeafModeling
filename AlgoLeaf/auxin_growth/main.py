@@ -35,7 +35,7 @@ if __name__ == '__main__':
 
     #Bob = Leaf(0.08, 0.08, leaf_shape1, 75, 4, 0.02)
 
-    Bob.run_creation(600)
+    #Bob.run_creation(600)
 
     #Bob.run_creation(1200)
 
