@@ -36,8 +36,6 @@ namespace Shape{
             }
 
         }
-
-        std::cout << "Hey morty" << coord << std::endl;
         return coord;
 
     }
