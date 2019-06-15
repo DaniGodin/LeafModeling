@@ -57,6 +57,7 @@ class first_param:
             if 0.02 >= self.equation(r1, r2, self.growth_size,self.growth_x, self.growth_y) >= -0.01:
                 find = True
                 coord = [r1, r2]
+        print(coord)
         return coord
 
 

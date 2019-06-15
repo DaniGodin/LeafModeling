@@ -23,8 +23,6 @@ namespace Shape{
         double x_lim = x + r.x_lim;
         double y_lim = y + r.y_lim;
 
-
-
         while(!find){
 
             double r1 = x + dis(gen) * ( x_lim - x);

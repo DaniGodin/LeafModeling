@@ -37,15 +37,15 @@ int main() {
     r1.y_lim = 1.4;
 
     Shape::rectangle r2 = Shape::rectangle();
-    r1.origin = Point3D(-0.4,-0.2, 0);
-    r1.x_lim = 1.7;
-    r1.y_lim = 2;
+    r2.origin = Point3D(-0.4,-0.2, 0);
+    r2.x_lim = 1.7;
+    r2.y_lim = 2;
 
     Shape::Leafshape leaf_shape1 = Shape::Leafshape(12, shape1, r1);
     Shape::Leafshape leaf_shape2 = Shape::Leafshape(12, shape2, r2, 2, 4);
 
 
-    Leaf::Creation Creation_1 = Leaf::Creation(0.08, 0.08, leaf_shape1, 75, 4, 0.02);
+    //Leaf::Creation Creation_1 = Leaf::Creation(0.08, 0.08, leaf_shape1, 75, 4, 0.02);
 
     Leaf::Creation Creation_2 = Leaf::Creation(0.08, 0.09, leaf_shape2, 85, 6, 0.04);
 
@@ -56,10 +56,7 @@ int main() {
 
     Nodes::VenNodePlot res2 = Creation_2.get_ventree();
 
-    int a = 0;
-    int *b = &a;
-    recurse_display(res2, b);
-    std::cout << "size :" << *b << std::endl;
+
 
     return 0;
 
