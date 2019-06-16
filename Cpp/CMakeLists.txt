@@ -1,12 +1,12 @@
 cmake_minimum_required(VERSION 3.10)
-project(objParser)
+project(leafGen)
 
 set(CMAKE_CXX_STANDARD 17)
 
-#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m64 -march=native -fopt-info-vec-optimized -O3" )
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m64 -march=native -fopt-info-vec-optimized -O3" )
 
 
-add_executable(objParser
+add_executable(leafGen
         include/fast_marching_method.hpp
         include/jpge.cpp
         include/jpge.h

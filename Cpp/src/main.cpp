@@ -12,12 +12,14 @@ int main() {
     {
         // start a chronometer
         Chronometer c = Chronometer();
-//        LeafWriter::catalpa("LEAF", 1700, 10);
-        std::function<double(Point3D, double)> customParametric = [] (Point3D a, double g) {return (
+        LeafWriter::catalpa("LEAF_CATALPA", 1700, 10);
+//        LeafWriter::rhododendron("LEAF_RHODODENDRON", 3000, 10);
+
+        std::function<double(Point3D, double, double, double)> customParametric = [] (Point3D a, double g, double, double) {return (
                 -pow(pow(g * a.getX(), 2) + pow(g * a.getY() - 0.5, 2), 3) + 0.05 + pow(g * a.getX(), 2) * pow(g * a.getY() + 4, 2)
         );};
 
-        LeafWriter::custom("LEAFCUSTOM", customParametric, 1200, 8, Point3D(0,0.1,0), 0.0001, 0.0001, Color::black(), Color::black(), Color::white(), Color::white());
+//        LeafWriter::custom("LEAFCUSTOM", customParametric, 1200, 8, Point3D(0,0.1,0), 0.0001, 0.0001, Color::black(), Color::black(), Color::white(), Color::white());
 
 //        Examples::parametricExample();
 //        Examples::parametricExample();

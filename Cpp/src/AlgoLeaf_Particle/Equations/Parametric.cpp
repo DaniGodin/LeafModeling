@@ -7,6 +7,7 @@
 #include <climits>
 #include <cfloat>
 #include "Parametric.hh"
+#include "../../Utils/dblutils.hh"
 
 Parametric::Parametric(parametricF formula, double eq)
         : f1(formula), eq(eq)
@@ -16,13 +17,16 @@ Parametric::Parametric(parametricF formula, double eq, double alpha)
         : f1(formula), eq(eq), alpha(alpha)
 {}
 
-
-Parametric::Parametric(std::function<double(Point3D, double)> formula, double eq)
-    : f2(formula), eq(eq), ftype(FunctionType::FUNCTIONAL)
+Parametric::Parametric(std::function<double(Point3D, double, double, double)> formula, double eq)
+        : f2(formula), eq(eq), ftype(FunctionType::FUNCTIONAL)
 {}
 
-Parametric::Parametric(std::function<double(Point3D, double)> formula, double eq, double alpha)
-    :f2(formula), eq(eq), alpha(alpha), ftype(FunctionType::FUNCTIONAL)
+Parametric::Parametric(std::function<double(Point3D, double, double, double)> formula, double eq, double alpha)
+        :f2(formula), eq(eq), alpha(alpha), ftype(FunctionType::FUNCTIONAL)
+{}
+
+Parametric::Parametric(std::function<double(Point3D, double, double, double)> formula, double eq, double alpha, double a_x, double a_y)
+        :f2(formula), eq(eq), alpha(alpha), ftype(FunctionType::FUNCTIONAL), a_x(a_x), a_y(a_y)
 {}
 
 double Parametric::calculate(double *args) {
@@ -30,7 +34,7 @@ double Parametric::calculate(double *args) {
         case FunctionType::TYPEDEF:
             return f1(args);
         case FunctionType::FUNCTIONAL:
-            return f2(Point3D(args[0], args[1], 0), args[2]);
+            return f2(Point3D(args[0], args[1], 0), args[2], a_x, a_y);
     }
 }
 
@@ -133,6 +137,7 @@ Parametric::generateObjectRadial(double radius=2.1, double step=0.01, double ang
                 up.getX() * std::sin(a) + up.getY() * std::cos(a),
                 0
         );
+        std::vector<double> radiuses = std::vector<double>();
         for (double r = 0.0; r < radius; r += step) {
 
 
@@ -142,14 +147,15 @@ Parametric::generateObjectRadial(double radius=2.1, double step=0.01, double ang
             double res = calculate(args);
             // if equal to 0
             if (std::fabs(res) < precision) {
-                float add = (static_cast <float> (std::rand()) / static_cast <float> (RAND_MAX)) * force;
-
-                // avoid clusters of pts
-                if (isClustering(pts, pt, minDistance))
-                    continue;
-                // push new point
-                pts.push_back(pt + (dir * add));
+                radiuses.push_back(r);
             }
+        }
+        if (!radiuses.empty()) {
+            int idx = dblutils::argmean(radiuses);
+            float add = (static_cast <float> (std::rand()) / static_cast <float> (RAND_MAX)) * force;
+            Point3D pt = center + (dir * radiuses[idx]);
+            if (!isClustering(pts, pt, minDistance))
+                pts.push_back(pt + (dir * add));
         }
     }
 

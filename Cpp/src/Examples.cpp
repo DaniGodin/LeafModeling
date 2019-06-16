@@ -251,7 +251,7 @@ namespace Examples {
 
     void algoLeaf2Example() {
 
-        std::function<double(Point3D, double)> shape1 = [] (Point3D a, double g) {return (
+        std::function<double(Point3D, double, double, double)> shape1 = [] (Point3D a, double g, double, double) {return (
                 -pow(pow(g * a.getX(), 2) + pow(g * a.getY() -1, 2) - 1, 3)
                 -(pow(g * a.getX(), 2) * pow(g * a.getY() -1, 3))
         );};

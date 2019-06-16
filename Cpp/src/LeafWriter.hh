@@ -14,7 +14,7 @@ namespace LeafWriter {
 
     void catalpa(std::string outputName, int auxinsIterations = 1700, int simplify = 6);
 
-    void tobacco(std::string outputName, int auxinsIterations = 1700, int simplify = 6);
+    void rhododendron(std::string outputName, int auxinsIterations = 4500, int simplify = 6);
 
     void custom(std::string outputName, std::function<double(Point3D, double)> fun,
                 int auxinsIterations, int simplify,

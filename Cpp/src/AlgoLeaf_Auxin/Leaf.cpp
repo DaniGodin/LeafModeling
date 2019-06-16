@@ -53,7 +53,7 @@ namespace Leaf {
 
             for (auto &a : AuxinsList){
                 if (Math::get_distance(a, Aux) < birth_distance) {
-                    std::cout << "Disqualified 1" << std::endl;
+//                    std::cout << "Disqualified 1" << std::endl;
                     to_append = false;
                     break;
                 }
@@ -70,7 +70,7 @@ namespace Leaf {
 
 
             if (to_append){
-                std::cout << "to_append" << std::endl;
+//                std::cout << "to_append" << std::endl;
                 get_closest(&Aux);
                 AuxinsList.push_back(Aux);
             }

@@ -67,6 +67,29 @@ public:
         return Color(61.0/100.0, 71.0/100.0, 2.0/100.0);
 
     }
+    // Japanese marple
+    static Color japMarpleVeins1() {
+        return Color::from255(154, 24, 0);
+    }
+    static Color japMarpleVeins2() {
+        return Color::from255(182, 83, 2);
+    }
+    static Color japMarpleRoot() {
+        return Color::from255(200, 31, 0);
+    }
+    static Color japMarpleLeaf() {
+        return Color::from255(215, 154, 4);
+    }
+    // Rhododendron
+    static Color RhodoVeins() {
+        return Color::from255(145, 162, 117);
+    }
+    static Color RhodoRoot() {
+        return Color::from255(137, 171, 82);
+    }
+    static Color RhodoLeaf() {
+        return Color::from255(108, 143, 55);
+    }
 
     static Color magenta() {
         return Color(1, 0, 1);

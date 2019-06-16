@@ -30,7 +30,7 @@ namespace LeafWriter {
     void catalpa(std::string outputName, int auxinsIterations, int simplify) {
 
         // define leafParametricFunction (redefinition, not clean)
-        std::function<double(Point3D, double)> catalpaParametricFunction = [] (Point3D a, double g) {return (
+        std::function<double(Point3D, double, double, double)> catalpaParametricFunction = [] (Point3D a, double g, double, double) {return (
                 -pow(pow(g * a.getX(), 2) + pow(g * a.getY() -1, 2) - 1, 3)
                 -(pow(g * a.getX(), 2) * pow(g * a.getY() -1, 3))
         );};
@@ -61,7 +61,7 @@ namespace LeafWriter {
         auto *res_ = translator.simplifyTree(translator.convertVenNodeToNode(&res, 1000), simplify);
 
         // generate cylinders for each node, generates the actual venation objects
-        translator.generate(res_, "vein", Color::catalpaVeins(), Color::catalpaVeins());
+        translator.generate(res_, "vein", Color::from255(219, 217, 178), Color::from255(219, 217, 178));
 
         // creates a parametric equation
         Parametric leaf = Parametric(catalpaParametricFunction, 0, leafSize);
@@ -87,11 +87,68 @@ namespace LeafWriter {
     }
 
 
-    void tobacco(std::string outputName, int auxinsIterations, int simplify) {
-            // FIXME
+    void rhododendron(std::string outputName, int auxinsIterations, int simplify) {
+
+        // define leafParametricFunction (redefinition, not clean)
+        std::function<double(Point3D, double, double, double)> tobaccoParametricFunction = [] (Point3D a, double g, double a_x, double a_y) {return (
+                -a_y * pow(pow(g * 2 * a_x * a.getX(), 2) + pow(g * a.getY() -1, 2) - 1, 3)
+                -(pow(g * a_y * a.getX(), 2) * pow(g * a.getY(), 3))
+        );};
+
+        // Setup auxin algorithm
+        Shape::rectangle r2 = Shape::rectangle();
+        r2.origin = Point3D(-0.4,-0.2, 0);
+        r2.x_lim = 1.7;
+        r2.y_lim = 2;
+        Shape::Leafshape leaf_shape2 = Shape::Leafshape(12, tobaccoParametricFunction, r2, 2, 4);
+
+        Leaf::Creation Creation_2 = Leaf::Creation(0.08, 0.1, leaf_shape2, 85, 6, 0.04);
+
+        // run auxin algorithm
+        Creation_2.run(auxinsIterations);
+
+        // Get nodes representing the venations
+        Nodes::VenNodePlot res = Creation_2.get_ventree();
+
+        // get the final size of the leaf
+        double leafSize = Creation_2.shape.growth_size -0.08;
+        double xSize = Creation_2.shape.growth_x -0.02;
+        double ySize = Creation_2.shape.growth_y -0.01;
+
+        // create a new scene
+        Scene scene = Scene();
+        // create a tranlator to tranform the nodes into objects in the scene
+        TreeTranslator translator = TreeTranslator(scene);
+
+        // simplify the tree to have less resulting nodes
+        auto *res_ = translator.simplifyTree(translator.convertVenNodeToNode(&res, 1000), simplify);
+
+        // generate cylinders for each node, generates the actual venation objects
+        translator.generate(res_, "vein", Color::RhodoVeins(), Color::RhodoVeins());
+
+        // creates a parametric equation
+        Parametric leaf = Parametric(tobaccoParametricFunction, 0, leafSize, xSize, ySize);
+
+        // generate lethe leaf shape
+        Object *leafObj= leaf.generateObjectRadial(4, 0.0001, 0.01, 0.01, Point3D(0, 0.1, 0));
+
+        // generate a texture from the above shape
+        auto tex = TextureGenerator::fromObject(1000, 1000, *leafObj, Color::RhodoLeaf(), Color::RhodoRoot(), Color::black(), 3);
+        auto textFile = tex.writeToFile(outputName + ".jpg");
+        Material *greenTextured = new Material("greenLeaf", Color::white(), Color::white(), Color::white(), textFile);
+        leafObj->setUniformMaterial(greenTextured);
+        leafObj->genUniformVTs(1000, 1000, 0);
+
+        // push the leaf shape into the scene + its material
+        scene.push(leafObj);
+        scene.push(greenTextured);
+
+        Generator gen = Generator(outputName + ".obj");
+        // write scene to file
+        gen.write(&scene);
     }
 
-    void custom(std::string outputName, std::function<double(Point3D, double)> fun,
+    void custom(std::string outputName, std::function<double(Point3D, double, double, double)> fun,
                 int auxinsIterations, int simplify,
                 const Point3D &center,
                 double parameticStep, double parameticAngleStep,

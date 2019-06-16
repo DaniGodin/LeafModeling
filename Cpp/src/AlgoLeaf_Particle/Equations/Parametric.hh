@@ -26,8 +26,9 @@ class Parametric {
 public:
     Parametric(parametricF formula, double eq);
     Parametric(parametricF formula, double eq, double alpha);
-    Parametric(std::function<double(Point3D, double)> formula, double eq);
-    Parametric(std::function<double(Point3D, double)> formula, double eq, double alpha);
+    Parametric(std::function<double(Point3D, double, double, double)> formula, double eq);
+    Parametric(std::function<double(Point3D, double, double, double)> formula, double eq, double alpha);
+    Parametric(std::function<double(Point3D, double, double, double)> formula, double eq, double alpha, double a_x, double a_y);
 
     double calculate(double args[]);
 
@@ -45,10 +46,11 @@ private:
 
 private:
     parametricF f1;
-    std::function<double(Point3D, double)> f2;
+    std::function<double(Point3D, double, double, double)> f2;
     double eq = 0.0;
     double alpha = 1.0;
     FunctionType ftype = FunctionType::TYPEDEF;
+    double a_x = 1, a_y = 1;
 
 
 };
