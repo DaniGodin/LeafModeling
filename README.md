@@ -17,7 +17,7 @@ Checkout the `README.md` in the `Cpp/` folder to build and run the project.
 
 
 ![Result example](https://github.com/DaniGodin/LeafModeling/blob/master/AlgoLeaf/Documentation/Pictures/leaf.jpg)
-
+![growth example](https://github.com/DaniGodin/LeafModeling/blob/master/AlgoLeaf/Documentation/Pictures/growth.gif)
 
 
 ## Link:
