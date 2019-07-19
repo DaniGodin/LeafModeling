@@ -2,8 +2,6 @@
 
 The goal of this project is to generate realistic .OBJ file of leaves. It will be focused on the venation pattern inside the leaf.
 
-![](./Documentation/Pictures/RenderGreen.png)
-
 
 ## Project structure:
 
@@ -14,6 +12,13 @@ Cpp: this folder contains the actual leaf generator implementation (C++)
 ## How to use ?
 
 Checkout the `README.md` in the `Cpp/` folder to build and run the project.
+
+## Results
+
+
+![Result example](https://github.com/DaniGodin/LeafModeling/blob/master/AlgoLeaf/Documentation/Pictures/leaf.jpg)
+
+
 
 ## Link:
 
