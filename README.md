@@ -2,7 +2,7 @@
 
 The goal of this project is to generate realistic .OBJ file of leaves. It will be focused on the venation pattern inside the leaf.
 
-![](./Documentation/Pictures/RenderGreen.png)
+![](./Documentation/Pictures/leaf.jpg)
 
 
 ## Project structure:
