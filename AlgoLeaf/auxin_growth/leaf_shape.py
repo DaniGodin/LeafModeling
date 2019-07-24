@@ -54,10 +54,9 @@ class first_param:
             r1 = x + random() * (x_lim - x)
             r2 = y + random() * (y_lim - y)
 
-            if 0.05 >= self.equation(r1, r2, self.growth_size,self.growth_x, self.growth_y) >= -0.05:
+            if 0.02 >= self.equation(r1, r2, self.growth_size,self.growth_x, self.growth_y) >= -0.01:
                 find = True
                 coord = [r1, r2]
-        print(coord)
         return coord
 
 

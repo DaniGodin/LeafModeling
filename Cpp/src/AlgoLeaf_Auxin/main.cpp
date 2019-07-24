@@ -51,7 +51,7 @@ int main() {
 
     //Creation_1.run(1700);
 
-    Creation_2.run(4500);
+    Creation_2.run(1500);
     //Nodes::VenNodePlot res1 = Creation_1.get_ventree();
 
     Nodes::VenNodePlot res2 = Creation_2.get_ventree();
